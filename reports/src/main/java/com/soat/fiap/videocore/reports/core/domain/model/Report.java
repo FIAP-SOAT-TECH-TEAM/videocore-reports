@@ -16,46 +16,45 @@ public class Report {
     /**
      * Identificador único do reporte. Gerado por fontes externas.
      */
-    private final String id;
+    private String id;
 
     /**
      * Nome do vídeo.
      */
-    private final VideoName videoName;
+    private VideoName videoName;
 
     /**
      * Duração total do vídeo em minutos.
      */
-    private final DurationMinutes durationMinutes;
+    private DurationMinutes durationMinutes;
 
     /**
      * Tempo de corte dos frames para captura de imagens.
      */
-    private final MinuteFrameCut minuteFrameCut;
+    private MinuteFrameCut minuteFrameCut;
 
     /**
      * Metadados de rastreabilidade do processamento.
      */
-    private final Metadata metadata;
+    private Metadata metadata;
 
     /**
      * Percentual de progresso no processamento do vídeo.
      */
-    private final PercentStatusProcess percentStatusProcess;
+    private PercentStatusProcess percentStatusProcess;
 
     /**
      * Momento em que o reporte foi realizado.
      */
-    private final Instant reportTime;
+    private Instant reportTime;
 
     /**
      * Status de processamento.
      */
-    private final ProcessStatus status;
+    private ProcessStatus status;
 
-    public Report(String id, VideoName videoName, DurationMinutes durationMinutes, MinuteFrameCut minuteFrameCut,
+    public Report(VideoName videoName, DurationMinutes durationMinutes, MinuteFrameCut minuteFrameCut,
                   Metadata metadata, PercentStatusProcess percentStatusProcess, Instant reportTime, ProcessStatus status) {
-        this.id = id;
         this.videoName = videoName;
         this.durationMinutes = durationMinutes;
         this.minuteFrameCut = minuteFrameCut;
@@ -75,6 +74,93 @@ public class Report {
         Objects.requireNonNull(percentStatusProcess, "percentStatusProcess não pode ser nulo");
         Objects.requireNonNull(reportTime, "reportTime não pode ser nulo");
         Objects.requireNonNull(status, "status não pode ser nulo");
+    }
+
+    /**
+     * Define o identificador único do reporte.
+     *
+     * @param id identificador único do reporte
+     * @throws NullPointerException se {@code id} for {@code null}
+     * @throws ReportException se {@code id} estiver em branco
+     */
+    public void setId(String id) {
+        Objects.requireNonNull(id, "id não pode ser nulo");
+
+        if (id.isBlank()) {
+            throw new ReportException("id não pode ser branco");
+        }
+
+        this.id = id;
+    }
+
+    /**
+     * Define o nome do vídeo.
+     *
+     * @param videoName nome do vídeo
+     * @throws NullPointerException se {@code videoName} for {@code null}
+     */
+    public void setVideoName(VideoName videoName) {
+        this.videoName = Objects.requireNonNull(videoName, "videoName não pode ser nulo");
+    }
+
+    /**
+     * Define a duração total do vídeo em minutos.
+     *
+     * @param durationMinutes duração total em minutos
+     * @throws NullPointerException se {@code durationMinutes} for {@code null}
+     */
+    public void setDurationMinutes(DurationMinutes durationMinutes) {
+        this.durationMinutes = Objects.requireNonNull(durationMinutes, "durationMinutes não pode ser nulo");
+    }
+
+    /**
+     * Define o tempo de corte dos frames para captura de imagens.
+     *
+     * @param minuteFrameCut intervalo de captura em minutos
+     * @throws NullPointerException se {@code minuteFrameCut} for {@code null}
+     */
+    public void setMinuteFrameCut(MinuteFrameCut minuteFrameCut) {
+        this.minuteFrameCut = Objects.requireNonNull(minuteFrameCut, "minuteFrameCut não pode ser nulo");
+    }
+
+    /**
+     * Define os metadados de rastreabilidade do processamento.
+     *
+     * @param metadata metadados de rastreabilidade
+     * @throws NullPointerException se {@code metadata} for {@code null}
+     */
+    public void setMetadata(Metadata metadata) {
+        this.metadata = Objects.requireNonNull(metadata, "metadata não pode ser nulo");
+    }
+
+    /**
+     * Define o percentual de progresso do processamento do vídeo.
+     *
+     * @param percentStatusProcess percentual de progresso do processamento
+     * @throws NullPointerException se {@code percentStatusProcess} for {@code null}
+     */
+    public void setPercentStatusProcess(PercentStatusProcess percentStatusProcess) {
+        this.percentStatusProcess = Objects.requireNonNull(percentStatusProcess, "percentStatusProcess não pode ser nulo");
+    }
+
+    /**
+     * Define o momento em que o reporte foi realizado.
+     *
+     * @param reportTime instante do reporte
+     * @throws NullPointerException se {@code reportTime} for {@code null}
+     */
+    public void setReportTime(Instant reportTime) {
+        this.reportTime = Objects.requireNonNull(reportTime, "reportTime não pode ser nulo");
+    }
+
+    /**
+     * Define o status de processamento.
+     *
+     * @param status status do processamento
+     * @throws NullPointerException se {@code status} for {@code null}
+     */
+    public void setStatus(ProcessStatus status) {
+        this.status = Objects.requireNonNull(status, "status não pode ser nulo");
     }
 
     /**

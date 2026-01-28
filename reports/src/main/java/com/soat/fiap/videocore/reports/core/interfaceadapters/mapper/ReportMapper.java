@@ -3,8 +3,10 @@ package com.soat.fiap.videocore.reports.core.interfaceadapters.mapper;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.domain.vo.*;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 /**
  * Mapper responsável por converter entre objetos de domínio {@link Report}

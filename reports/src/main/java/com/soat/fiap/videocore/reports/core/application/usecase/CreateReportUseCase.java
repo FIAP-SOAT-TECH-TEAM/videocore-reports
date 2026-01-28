@@ -37,7 +37,6 @@ public class CreateReportUseCase {
         }
 
         return new Report(
-                null,
                 videoName,
                 durationMinutes,
                 minuteFrameCut,

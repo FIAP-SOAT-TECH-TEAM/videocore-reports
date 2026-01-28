@@ -15,7 +15,7 @@ import java.util.UUID;
  * Entidade de infraestrutura que representa um reporte de atualização do status de processamento de um vídeo.
  */
 @Data
-@Container(containerName = "reports")
+@Container(containerName = "report")
 public class ReportEntity {
     @Id
     @GeneratedValue
@@ -24,9 +24,9 @@ public class ReportEntity {
     private String videoName;
 
     @PartitionKey
-    private UUID userId;
+    private String userId;
 
-    private UUID requestId;
+    private String requestId;
 
     private long durationMinutes;
 

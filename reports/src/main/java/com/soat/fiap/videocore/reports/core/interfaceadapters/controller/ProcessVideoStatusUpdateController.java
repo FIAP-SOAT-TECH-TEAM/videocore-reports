@@ -1,7 +1,9 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
 import com.soat.fiap.videocore.reports.core.application.usecase.CreateReportUseCase;
+import com.soat.fiap.videocore.reports.core.application.usecase.GetExistingReportUseCase;
 import com.soat.fiap.videocore.reports.core.application.usecase.SaveReportUseCase;
+import com.soat.fiap.videocore.reports.core.application.usecase.UpdateReportUseCase;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.EventMapper;
 import com.soat.fiap.videocore.reports.infrastructure.in.event.listener.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,8 @@ public class ProcessVideoStatusUpdateController {
 
     private final EventMapper reportMapper;
     private final CreateReportUseCase createReportUseCase;
+    private final UpdateReportUseCase updateReportUseCase;
+    private final GetExistingReportUseCase getExistingReportUseCase;
     private final SaveReportUseCase saveReportUseCase;
 
     /**
@@ -25,8 +29,13 @@ public class ProcessVideoStatusUpdateController {
      */
     public void processVideoStatusUpdate(ProcessVideoStatusUpdatePayload entity) {
         var input = reportMapper.toInput(entity);
-        var report = createReportUseCase.createReport(input);
+        var newReport = createReportUseCase.createReport(input);
 
-        saveReportUseCase.saveReport(report);
+        var existingReport = getExistingReportUseCase.getExistingReport(input.userId(), input.requestId(), input.videoName(), input.percentStatusProcess());
+        if (existingReport.isPresent()) {
+            newReport = updateReportUseCase.updateReport(existingReport.get(), newReport);
+        }
+
+        saveReportUseCase.saveReport(newReport);
     }
 }

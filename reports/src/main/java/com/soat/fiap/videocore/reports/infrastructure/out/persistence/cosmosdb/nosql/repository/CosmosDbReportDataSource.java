@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+import java.util.UUID;
+
 /**
  * Implementação de {@link ReportDataSource} usando Cosmos DB.
  */
@@ -29,4 +32,23 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 
         return reportEntityMapper.toDto(savedEntity);
     }
+
+    /**
+     * Recupera um reporte já existente a partir de {@code userId}, {@code requestId}, {@code videoName}
+     * e {@code percentStatusProcess}.
+     *
+     * @param userId               identificador do usuário (partition key)
+     * @param requestId            identificador da requisição
+     * @param videoName            nome do vídeo
+     * @param percentStatusProcess percentual do status do processamento
+     * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
+     */
+    @Override @Transactional(readOnly = true)
+    public Optional<ReportDto> getExistingReport(UUID userId, UUID requestId, String videoName, Double percentStatusProcess) {
+
+        return cosmosDbReportRepository
+                .findByUserIdAndRequestIdAndVideoNameAndPercentStatusProcess(userId.toString(), requestId.toString(), videoName, percentStatusProcess)
+                .map(reportEntityMapper::toDto);
+    }
+
 }
