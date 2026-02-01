@@ -5,20 +5,11 @@ package com.soat.fiap.videocore.reports.infrastructure.common.event;
  */
 public final class EventMessagingChannel {
 
-    private EventMessagingChannel() {
-    }
-
     /**
-     * Fila principal de processamento de eventos.
-     * <p>Responsável pelo fluxo normal de processamento.</p>
+     * Fila principal de processamento de eventos - DLQ.
+     * <p>Responsável pelo fluxo de erros no processamento do vídeo.</p>
      */
-    public static final String PROCESS_QUEUE = "process.queue";
-
-    /**
-     * Fila principal de erro no processamento do vídeo.
-     * <p>Complemento a DLQ da fila de processamento do vídeo.</p>
-     */
-    public static final String PROCESS_ERROR_QUEUE = "process.error.queue";
+    public static final String PROCESS_QUEUE_DLQ = "process.queue/$DeadLetterQueue";
 
     /**
      * Tópico de status do processamento.
@@ -27,10 +18,14 @@ public final class EventMessagingChannel {
     public static final String PROCESS_STATUS_TOPIC = "process.status.topic";
 
     /**
+     * Fila principal para processamentos de erro no processamento de um video.
+     * <p>Responsável pelo fluxo de erros no processamento do vídeo.</p>
+     */
+    public static final String PROCESS_ERROR_QUEUE = "process.error.queue";
+
+    /**
      * Assinatura do Tópico de status do processamento.
      * <p>Microsserviço de reports.</p>
      */
     public static final String REPORTS_PROCESS_STATUS_TOPIC_SUBSCRIPTION = "reports.process.status.topic.subscription";
-
-
 }

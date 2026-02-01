@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.core.application.usecase;
 
+import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGateway;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class GetExistingReportUseCase {
      * @param percentStatusProcess percentual do status do processamento
      * @return {@link Optional} com o reporte encontrado, ou vazio se não existir
      */
+    @WithSpan(name = "usecase.get.report.existing")
     public Optional<Report> getExistingReport(UUID userId, UUID requestId, String videoName, Double percentStatusProcess) {
         return reportGateway.getExistingReport(userId, requestId, videoName, percentStatusProcess);
     }

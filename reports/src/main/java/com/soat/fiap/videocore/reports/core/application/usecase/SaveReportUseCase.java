@@ -22,7 +22,7 @@ public class SaveReportUseCase {
      * @return Reporte salvo.
      * @throws ProcessReportException Se ocorrer erro ao salvar o reporte.
      */
-    @WithSpan(name = "process.report.save-report")
+    @WithSpan(name = "usecase.save.report")
     public Report saveReport(Report report) {
         try {
             return reportGateway.save(report);

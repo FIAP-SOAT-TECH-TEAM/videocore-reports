@@ -29,4 +29,15 @@ public interface ReportDataSource {
      * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
      */
     Optional<ReportDto> getExistingReport(UUID userId, UUID requestId, String videoName, Double percentStatusProcess);
+
+
+    /**
+     * Recupera o último reporte persistido para {@code userId}, {@code requestId} e {@code videoName},
+     *
+     * @param userId    identificador do usuário (partition key)
+     * @param requestId identificador da requisição
+     * @param videoName nome do vídeo
+     * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
+     */
+    Optional<ReportDto> getLastExistingReport(UUID userId, UUID requestId, String videoName);
 }

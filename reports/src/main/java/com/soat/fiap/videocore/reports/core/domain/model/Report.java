@@ -24,9 +24,9 @@ public class Report {
     private VideoName videoName;
 
     /**
-     * Duração total do vídeo em minutos.
+     * Minuto em que a imagem foi capturada.
      */
-    private DurationMinutes durationMinutes;
+    private ImageMinute imageMinute;
 
     /**
      * Tempo de corte dos frames para captura de imagens.
@@ -53,10 +53,10 @@ public class Report {
      */
     private ProcessStatus status;
 
-    public Report(VideoName videoName, DurationMinutes durationMinutes, MinuteFrameCut minuteFrameCut,
+    public Report(VideoName videoName, ImageMinute imageMinute, MinuteFrameCut minuteFrameCut,
                   Metadata metadata, PercentStatusProcess percentStatusProcess, Instant reportTime, ProcessStatus status) {
         this.videoName = videoName;
-        this.durationMinutes = durationMinutes;
+        this.imageMinute = imageMinute;
         this.minuteFrameCut = minuteFrameCut;
         this.metadata = metadata;
         this.percentStatusProcess = percentStatusProcess;
@@ -68,7 +68,7 @@ public class Report {
 
     private void validate() {
         Objects.requireNonNull(videoName, "videoName não pode ser nulo");
-        Objects.requireNonNull(durationMinutes, "durationMinutes não pode ser nulo");
+        Objects.requireNonNull(imageMinute, "imageMinute não pode ser nulo");
         Objects.requireNonNull(minuteFrameCut, "minuteFrameCut não pode ser nulo");
         Objects.requireNonNull(metadata, "metadata não pode ser nulo");
         Objects.requireNonNull(percentStatusProcess, "percentStatusProcess não pode ser nulo");
@@ -104,13 +104,13 @@ public class Report {
     }
 
     /**
-     * Define a duração total do vídeo em minutos.
+     * Define o minuto em que uma imagem foi capturada.
      *
-     * @param durationMinutes duração total em minutos
-     * @throws NullPointerException se {@code durationMinutes} for {@code null}
+     * @param imageMinute duração total em minutos
+     * @throws NullPointerException se {@code imageMinute} for {@code null}
      */
-    public void setDurationMinutes(DurationMinutes durationMinutes) {
-        this.durationMinutes = Objects.requireNonNull(durationMinutes, "durationMinutes não pode ser nulo");
+    public void setImageMinute(ImageMinute imageMinute) {
+        this.imageMinute = Objects.requireNonNull(imageMinute, "imageMinute não pode ser nulo");
     }
 
     /**
@@ -173,12 +173,12 @@ public class Report {
     }
 
     /**
-     * Retorna a duração total do vídeo em minutos.
+     * Retorna o minuto em que a imagem foi capturada.
      *
-     * @return duração em minutos
+     * @return o minuto em que a imagem foi capturada
      */
-    public long getDurationMinutes() {
-        return durationMinutes.value();
+    public long getImageMinute() {
+        return imageMinute.value();
     }
 
     /**

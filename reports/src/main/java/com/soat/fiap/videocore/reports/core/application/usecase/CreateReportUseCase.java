@@ -19,10 +19,10 @@ public class CreateReportUseCase {
      * @param reportInput dados de entrada do reporte
      * @return reporte criado
      */
-    @WithSpan(name = "process.report.create-report")
+    @WithSpan(name = "usecase.create.report")
     public Report createReport(ReportInput reportInput) {
         var videoName = new VideoName(reportInput.videoName());
-        var durationMinutes = new DurationMinutes(reportInput.durationMinutes());
+        var imageMinute = new ImageMinute(reportInput.imageMinute());
         var minuteFrameCut = new MinuteFrameCut(reportInput.frameCutMinutes());
         var metadata = new Metadata(reportInput.userId(), reportInput.requestId());
         var percentStatusProcess = new PercentStatusProcess(reportInput.percentStatusProcess());
@@ -38,7 +38,7 @@ public class CreateReportUseCase {
 
         return new Report(
                 videoName,
-                durationMinutes,
+                imageMinute,
                 minuteFrameCut,
                 metadata,
                 percentStatusProcess,

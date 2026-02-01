@@ -51,4 +51,23 @@ public class CosmosDbReportDataSource implements ReportDataSource {
                 .map(reportEntityMapper::toDto);
     }
 
+    /**
+     * Recupera o último reporte persistido para {@code userId}, {@code requestId} e {@code videoName},
+     * utilizando o atributo nativo {@code _ts} do Cosmos DB para determinar o registro mais recente.
+     *
+     * @param userId    identificador do usuário (partition key)
+     * @param requestId identificador da requisição
+     * @param videoName nome do vídeo
+     * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ReportDto> getLastExistingReport(UUID userId, UUID requestId, String videoName) {
+
+        return cosmosDbReportRepository
+                .findLastByUserIdAndRequestIdAndVideoName(userId.toString(), requestId.toString(), videoName)
+                .map(reportEntityMapper::toDto);
+    }
+
+
 }
