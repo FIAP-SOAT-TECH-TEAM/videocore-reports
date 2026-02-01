@@ -65,7 +65,7 @@ public class CosmosDbReportDataSource implements ReportDataSource {
     public Optional<ReportDto> getLastExistingReport(UUID userId, UUID requestId, String videoName) {
 
         return cosmosDbReportRepository
-                .findLastByUserIdAndRequestIdAndVideoName(userId.toString(), requestId.toString(), videoName)
+                .findTopByUserIdAndRequestIdAndVideoNameOrderByReportTimeDesc(userId.toString(), requestId.toString(), videoName)
                 .map(reportEntityMapper::toDto);
     }
 
