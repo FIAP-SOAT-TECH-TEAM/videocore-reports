@@ -1,6 +1,7 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.websocket.config;
 
 import com.soat.fiap.videocore.reports.infrastructure.common.websocket.WebSocketConstants;
+import com.soat.fiap.videocore.reports.infrastructure.in.websocket.handlers.WebSocketErrorHandler;
 import com.soat.fiap.videocore.reports.infrastructure.in.websocket.interceptors.channel.ReportTopicChannelInterceptor;
 import com.soat.fiap.videocore.reports.infrastructure.in.websocket.interceptors.handshake.AuthSubjectHandshakeInterceptor;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     private final AuthSubjectHandshakeInterceptor authSubjectHandshakeInterceptor;
     private final ReportTopicChannelInterceptor reportTopicChannelInterceptor;
+    private final WebSocketErrorHandler webSocketErrorHandler;
 
     /**
      * Registra o endpoint STOMP utilizado pelos clientes para estabelecer a conexão WebSocket.
@@ -34,6 +36,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint(WebSocketConstants.ENDPOINT_PREFIX)
                 .addInterceptors(authSubjectHandshakeInterceptor);
+
+        registry.setErrorHandler(webSocketErrorHandler);
     }
 
     /**

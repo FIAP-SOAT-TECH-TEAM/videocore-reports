@@ -1,6 +1,8 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.websocket.interceptors.channel;
 
 import com.soat.fiap.videocore.reports.infrastructure.common.websocket.WebSocketConstants;
+import com.soat.fiap.videocore.reports.infrastructure.in.websocket.exceptions.ForbiddenWebSocketException;
+import com.soat.fiap.videocore.reports.infrastructure.in.websocket.exceptions.UnauthorizedWebSocketException;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -46,10 +48,10 @@ public class ReportTopicChannelInterceptor implements ChannelInterceptor {
         var authSubject = authSubjectObj != null ? authSubjectObj.toString() : null;
 
         if (authSubject == null || authSubject.isBlank()) {
-            throw new IllegalStateException("AuthSubject ausente na sessão WebSocket");
+            throw new UnauthorizedWebSocketException("AuthSubject ausente na sessão WebSocket");
         }
         if (!authSubject.equals(requestedUserId)) {
-            throw new IllegalStateException("Acesso negado ao tópico: " + destination);
+            throw new ForbiddenWebSocketException("Acesso negado ao tópico: " + destination);
         }
 
         return message;
