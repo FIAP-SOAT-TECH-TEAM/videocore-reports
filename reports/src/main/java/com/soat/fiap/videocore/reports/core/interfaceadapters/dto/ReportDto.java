@@ -3,7 +3,6 @@ package com.soat.fiap.videocore.reports.core.interfaceadapters.dto;
 import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * DTO utilizado para representar dados da entidade Report. Serve como objeto
@@ -21,8 +20,8 @@ import java.util.UUID;
 public record ReportDto(
         String id,
         String videoName,
-        UUID userId,
-        UUID requestId,
+        String userId,
+        String requestId,
         long imageMinute,
         long frameCutMinutes,
         Double percentStatusProcess,

@@ -3,7 +3,6 @@ package com.soat.fiap.videocore.reports.infrastructure.common.source;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Fonte de dados para operações de persistência de reportes.
@@ -28,7 +27,7 @@ public interface ReportDataSource {
      * @param percentStatusProcess percentual do status do processamento
      * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
      */
-    Optional<ReportDto> getExistingReport(UUID userId, UUID requestId, String videoName, Double percentStatusProcess);
+    Optional<ReportDto> getExistingReport(String userId, String requestId, String videoName, Double percentStatusProcess);
 
 
     /**
@@ -39,5 +38,5 @@ public interface ReportDataSource {
      * @param videoName nome do vídeo
      * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
      */
-    Optional<ReportDto> getLastExistingReport(UUID userId, UUID requestId, String videoName);
+    Optional<ReportDto> getLastExistingReport(String userId, String requestId, String videoName);
 }

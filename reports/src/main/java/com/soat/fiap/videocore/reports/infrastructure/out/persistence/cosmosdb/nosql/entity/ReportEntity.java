@@ -9,7 +9,6 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Entidade de infraestrutura que representa um reporte de atualização do status de processamento de um vídeo.

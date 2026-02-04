@@ -5,12 +5,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Mapper MapStruct para converter metadados do Blob Storage em {@link VideoDto}.
  */
-@Mapper(componentModel = "spring", imports = {UUID.class, Integer.class})
+@Mapper(componentModel = "spring", imports = {Integer.class})
 public interface VideoBlobMapper {
 
     /**
@@ -26,11 +25,11 @@ public interface VideoBlobMapper {
     )
     @Mapping(
             target = "userId",
-            expression = "java(UUID.fromString(metadata.get(\"user_id\")))"
+            expression = "java(metadata.get(\"user_id\"))"
     )
     @Mapping(
             target = "requestId",
-            expression = "java(UUID.fromString(metadata.get(\"request_id\")))"
+            expression = "java(metadata.get(\"request_id\"))"
     )
     @Mapping(
             target = "minuteFrameCut",

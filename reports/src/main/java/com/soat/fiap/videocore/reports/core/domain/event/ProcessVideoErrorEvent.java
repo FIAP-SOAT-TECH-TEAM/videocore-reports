@@ -1,7 +1,6 @@
 package com.soat.fiap.videocore.reports.core.domain.event;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Evento de domínio que representa um erro no processamento do vídeo.
@@ -15,8 +14,8 @@ import java.util.UUID;
  */
 public record ProcessVideoErrorEvent(
         String videoName,
-        UUID userId,
-        UUID requestId,
+        String userId,
+        String requestId,
         long frameCutMinutes,
         Double percentStatusProcess,
         Instant reportTime

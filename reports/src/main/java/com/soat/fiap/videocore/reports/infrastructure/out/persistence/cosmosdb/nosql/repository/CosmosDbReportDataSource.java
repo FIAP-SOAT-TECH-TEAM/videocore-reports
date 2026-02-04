@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Implementação de {@link ReportDataSource} usando Cosmos DB.
@@ -44,10 +43,10 @@ public class CosmosDbReportDataSource implements ReportDataSource {
      * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
      */
     @Override @Transactional(readOnly = true)
-    public Optional<ReportDto> getExistingReport(UUID userId, UUID requestId, String videoName, Double percentStatusProcess) {
+    public Optional<ReportDto> getExistingReport(String userId, String requestId, String videoName, Double percentStatusProcess) {
 
         return cosmosDbReportRepository
-                .findByUserIdAndRequestIdAndVideoNameAndPercentStatusProcess(userId.toString(), requestId.toString(), videoName, percentStatusProcess)
+                .findByUserIdAndRequestIdAndVideoNameAndPercentStatusProcess(userId, requestId, videoName, percentStatusProcess)
                 .map(reportEntityMapper::toDto);
     }
 
@@ -62,10 +61,10 @@ public class CosmosDbReportDataSource implements ReportDataSource {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<ReportDto> getLastExistingReport(UUID userId, UUID requestId, String videoName) {
+    public Optional<ReportDto> getLastExistingReport(String userId, String requestId, String videoName) {
 
         return cosmosDbReportRepository
-                .findTopByUserIdAndRequestIdAndVideoNameOrderByReportTimeDesc(userId.toString(), requestId.toString(), videoName)
+                .findTopByUserIdAndRequestIdAndVideoNameOrderByReportTimeDesc(userId, requestId, videoName)
                 .map(reportEntityMapper::toDto);
     }
 

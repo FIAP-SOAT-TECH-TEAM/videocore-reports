@@ -1,26 +1,31 @@
-package com.soat.fiap.videocore.reports.core.application.input;
+package com.soat.fiap.videocore.reports.infrastructure.in.websocket.payload;
+
+import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
 
 import java.time.Instant;
 
 /**
- * Representa um DTO de entrada da aplicação (Application Layer), contendo
- * apenas os dados necessários para processar um reporte de atualização no status de processamento de um vídeo.
+ * Payload que representa um reporte de atualização do status de processamento de um vídeo
+ * @param id                    Identificador único do reporte. Gerado por fontes externas
  * @param videoName             Nome do vídeo.
  * @param userId                Identificador do usuário dono do vídeo.
  * @param requestId             Identificador da requisição de processamento.
- * @param imageMinute           Minuto em que a imagem foi capturada.
+ * @param imageMinute           Minuto em que a imagem foi capturada
  * @param frameCutMinutes       Intervalo de corte de frames em minutos.
  * @param percentStatusProcess  Percentual do vídeo já processado.
  * @param reportTime            Momento em que o reporte foi realizado.
+ * @param status                Status de processamento.
  */
-public record ReportInput(
+public record ReportPayload(
+        String id,
         String videoName,
         String userId,
         String requestId,
         long imageMinute,
         long frameCutMinutes,
         Double percentStatusProcess,
-        Instant reportTime
+        Instant reportTime,
+        ProcessStatus status
 ) {
 
 }

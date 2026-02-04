@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Caso de uso responsável por buscar um reporte já existente a partir de chaves de negócio.
@@ -29,7 +28,7 @@ public class GetExistingReportUseCase {
      * @return {@link Optional} com o reporte encontrado, ou vazio se não existir
      */
     @WithSpan(name = "usecase.get.report.existing")
-    public Optional<Report> getExistingReport(UUID userId, UUID requestId, String videoName, Double percentStatusProcess) {
+    public Optional<Report> getExistingReport(String userId, String requestId, String videoName, Double percentStatusProcess) {
         return reportGateway.getExistingReport(userId, requestId, videoName, percentStatusProcess);
     }
 }

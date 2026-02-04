@@ -6,7 +6,6 @@ import lombok.Getter;
 
 import java.time.Instant;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Objeto de domínio que representa um reporte de atualização no status de processamento de um vídeo.
@@ -195,7 +194,7 @@ public class Report {
      *
      * @return userId
      */
-    public UUID getUserId() {
+    public String getUserId() {
         return metadata.userId();
     }
 
@@ -204,7 +203,7 @@ public class Report {
      *
      * @return requestId
      */
-    public UUID getRequestId() {
+    public String getRequestId() {
         return metadata.requestId();
     }
 

@@ -1,7 +1,6 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.event.listener.azsvcbus.payload;
 
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Entidade de infraestrutura que representa a atualização do status de processamento de um vídeo.
@@ -16,8 +15,8 @@ import java.util.UUID;
  */
 public record ProcessVideoStatusUpdatePayload(
         String videoName,
-        UUID userId,
-        UUID requestId,
+        String userId,
+        String requestId,
         long imageMinute,
         long frameCutMinutes,
         Double percentStatusProcess,

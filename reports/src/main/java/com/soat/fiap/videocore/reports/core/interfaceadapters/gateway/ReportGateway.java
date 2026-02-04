@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Gateway responsável por persistir objetos {@link Report} usando a camada de persistência subjacente.
@@ -46,7 +45,7 @@ public class ReportGateway {
      * @return {@link Optional} com o {@link Report} encontrado, ou vazio se não existir
      */
     @WithSpan(name = "gateway.get.report.existing")
-    public Optional<Report> getExistingReport(UUID userId, UUID requestId, String videoName, Double percentStatusProcess) {
+    public Optional<Report> getExistingReport(String userId, String requestId, String videoName, Double percentStatusProcess) {
         var dto = reportDataSource.getExistingReport(userId, requestId, videoName, percentStatusProcess);
 
         TraceContext.addEvent("report.object", dto);
@@ -64,7 +63,7 @@ public class ReportGateway {
      * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
      */
     @WithSpan(name = "gateway.get.last.report.existing")
-    public Optional<Report> getLastExistingReport(UUID userId, UUID requestId, String videoName) {
+    public Optional<Report> getLastExistingReport(String userId, String requestId, String videoName) {
 
         var dto = reportDataSource.getLastExistingReport(userId, requestId, videoName);
 
