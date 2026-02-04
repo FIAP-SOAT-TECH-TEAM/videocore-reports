@@ -1,4 +1,4 @@
-package com.soat.fiap.videocore.reports.infrastructure.in.event.listener.azsvcbus.payload;
+package com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload;
 
 import java.time.Instant;
 

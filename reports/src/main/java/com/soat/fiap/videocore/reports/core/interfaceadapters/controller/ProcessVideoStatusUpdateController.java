@@ -2,7 +2,7 @@ package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
 import com.soat.fiap.videocore.reports.core.application.usecase.*;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.EventMapper;
-import com.soat.fiap.videocore.reports.infrastructure.in.event.listener.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
+import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

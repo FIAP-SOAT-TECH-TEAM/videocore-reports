@@ -3,7 +3,7 @@ package com.soat.fiap.videocore.reports.core.interfaceadapters.mapper;
 import com.soat.fiap.videocore.reports.core.application.input.ReportInput;
 import com.soat.fiap.videocore.reports.core.domain.event.ProcessVideoErrorEvent;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ProcessVideoErrorEventDto;
-import com.soat.fiap.videocore.reports.infrastructure.in.event.listener.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
+import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
 import org.mapstruct.Mapper;
 
 /**

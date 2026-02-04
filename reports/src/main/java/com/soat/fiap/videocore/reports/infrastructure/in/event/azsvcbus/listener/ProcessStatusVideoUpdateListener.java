@@ -1,4 +1,4 @@
-package com.soat.fiap.videocore.reports.infrastructure.in.event.listener.azsvcbus.listener;
+package com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.listener;
 
 import com.azure.messaging.servicebus.ServiceBusReceivedMessage;
 import com.azure.spring.messaging.servicebus.implementation.core.annotation.ServiceBusListener;
@@ -7,7 +7,7 @@ import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.ProcessVideoStatusUpdateController;
 import com.soat.fiap.videocore.reports.infrastructure.common.event.EventMessagingChannel;
-import com.soat.fiap.videocore.reports.infrastructure.in.event.listener.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
+import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
