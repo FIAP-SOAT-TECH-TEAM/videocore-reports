@@ -2,13 +2,13 @@ package com.soat.fiap.videocore.reports.infrastructure.common.config.azure.blobs
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * Spring Properties do Azure Blob Storage.
  */
 @Data
-@Configuration
+@Component
 @ConfigurationProperties(prefix = "azure.blob-storage")
 public class AzureBlobStorageProperties {
 
