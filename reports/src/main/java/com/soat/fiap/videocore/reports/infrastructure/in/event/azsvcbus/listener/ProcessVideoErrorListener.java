@@ -39,7 +39,7 @@ public class ProcessVideoErrorListener {
             var body = objectMapper.readValue(rawBody, BlobCreatedCloudEventSchemaPayload.class);
             CanonicalContext.add("event_object", body);
 
-            processVideoErrorController.processVideoError(body.getData().getUrl());
+            processVideoErrorController.processVideoError(body.data().url());
 
             log.info("request_completed");
         } finally {
