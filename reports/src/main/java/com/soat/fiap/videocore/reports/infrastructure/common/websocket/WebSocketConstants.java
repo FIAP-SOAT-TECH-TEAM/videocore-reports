@@ -13,9 +13,6 @@ public class WebSocketConstants {
     /** Prefixo de destino STOMP utilizado para assinatura. */
     public static final String SUBSCRIBE_PREFIX_PATH_NAME = "/topic";
 
-    /** Prefixo do destino STOMP utilizado para publicação/assinatura de reportes. */
-    public static final String REPORTS_PATH_NAME = "/reports";
-
     /** Prefixo do destino STOMP completo utilizado para publicação/assinatura de reportes. */
-    public static final String REPORTS_FULL_PATH_NAME = SUBSCRIBE_PREFIX_PATH_NAME + REPORTS_PATH_NAME;
+    public static final String REPORTS_FULL_PATH_NAME = SUBSCRIBE_PREFIX_PATH_NAME;
 }

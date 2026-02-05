@@ -1,6 +1,8 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.websocket.interceptors.handshake;
 
+import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.infrastructure.common.websocket.WebSocketConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -15,6 +17,7 @@ import java.util.Map;
  * para os atributos da sessão.
  */
 @Component
+@Slf4j
 public class AuthSubjectHandshakeInterceptor implements HandshakeInterceptor {
 
     /**
@@ -33,17 +36,37 @@ public class AuthSubjectHandshakeInterceptor implements HandshakeInterceptor {
             WebSocketHandler wsHandler,
             Map<String, Object> attributes
     ) {
-        var values = request.getHeaders().get(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME);
+        try {
+            var values = request.getHeaders().get(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME);
 
-        if (values == null || values.isEmpty() || values.getFirst().isBlank()) {
-            response.setStatusCode(HttpStatusCode.valueOf(401));
+            CanonicalContext.add("remote_address", request.getRemoteAddress().toString());
 
-            return false;
+            if (values == null || values.isEmpty() || values.getFirst().isBlank()) {
+                var statusCode = HttpStatusCode.valueOf(401);
+                response.setStatusCode(statusCode);
+
+                CanonicalContext.add("event", "WEBSOCKET_HANDSHAKE_REJECTED");
+                CanonicalContext.add("auth_subject", "");
+                CanonicalContext.add("response_status_code", statusCode);
+
+                log.warn("request_completed");
+
+                return false;
+            }
+
+            var subject = values.getFirst();
+            attributes.put(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME, subject);
+
+            CanonicalContext.add("event", "WEBSOCKET_HANDSHAKE_ACCEPTED");
+            CanonicalContext.add("auth_subject", subject);
+
+            log.info("request_completed");
+
+            return true;
         }
-
-        attributes.put(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME, values.getFirst());
-
-        return true;
+        finally {
+            CanonicalContext.clear();
+        }
     }
 
     /**
