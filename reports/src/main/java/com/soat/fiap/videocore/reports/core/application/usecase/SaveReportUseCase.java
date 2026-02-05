@@ -21,14 +21,14 @@ public class SaveReportUseCase {
      *
      * @param report reporte a ser salvo.
      * @return Reporte salvo.
-     * @throws ProcessReportException Se ocorrer erro ao salvar o reporte.
+     * @throws ProcessReportException Se ocorrer erro ao salvar o reporte ou o reporte for vazio.
      */
     @WithSpan(name = "usecase.save.report")
     public Report saveReport(Report report) {
-        try {
-            if (report == null)
-                throw new ReportException("O reporte a ser persistido não pode ser nulo");
+        if (report == null)
+            throw new ProcessReportException("O reporte a ser persistido não pode ser nulo");
 
+        try {
             return reportGateway.save(report);
         }
         catch (Exception e) {
