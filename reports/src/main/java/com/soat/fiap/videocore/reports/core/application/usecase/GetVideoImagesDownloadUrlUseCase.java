@@ -3,7 +3,7 @@ package com.soat.fiap.videocore.reports.core.application.usecase;
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
-import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoImageDownloadUrlNotFound;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoImageDownloadUrlNotFoundException;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.VideoGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -54,7 +54,7 @@ public class GetVideoImagesDownloadUrlUseCase {
         CanonicalContext.add("download_url", downloadUrl);
 
         if (downloadUrl == null || downloadUrl.isBlank())
-            throw new VideoImageDownloadUrlNotFound("URL de download do arquivo de imagens do vídeo informado não encontrada. UserID: %s, RequestID: %s e VideoName: %s", userId, requestId, videoName);
+            throw new VideoImageDownloadUrlNotFoundException("URL de download do arquivo de imagens do vídeo informado não encontrada. UserID: %s, RequestID: %s e VideoName: %s", userId, requestId, videoName);
 
 
         return downloadUrl;
