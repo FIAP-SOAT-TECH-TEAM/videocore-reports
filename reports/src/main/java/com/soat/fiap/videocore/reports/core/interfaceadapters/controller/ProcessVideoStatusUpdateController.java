@@ -24,11 +24,11 @@ public class ProcessVideoStatusUpdateController {
     /**
      * Processa a atualização no status de processamento de um vídeo através do payload de evento: {@link ProcessVideoStatusUpdatePayload}.
      *
-     * @param entity Payload de atualização de status do vídeo.
+     * @param payload Payload de atualização de status do vídeo.
      */
     @WithSpan(name = "controller.process.video.status.update")
-    public void processVideoStatusUpdate(ProcessVideoStatusUpdatePayload entity) {
-        var input = reportMapper.toInput(entity);
+    public void processVideoStatusUpdate(ProcessVideoStatusUpdatePayload payload) {
+        var input = reportMapper.toInput(payload);
         var newReport = createReportUseCase.createReport(input);
 
         var existingReport = getExistingReportUseCase.getExistingReport(input.userId(), input.requestId(), input.videoName(), input.percentStatusProcess());
