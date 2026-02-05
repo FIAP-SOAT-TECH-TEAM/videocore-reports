@@ -56,7 +56,7 @@ public class AzureBlobStorageRepository implements VideoDataSource {
      * @param videoName Nome do vídeo
      * @param expirationMinuteTime Minutos de expiração para a URL de download
      *
-     * @return a URL para download das imagens do vídeo
+     * @return a URL para download das imagens do vídeo, ou nulo caso o blob não exista
      */
     @Override
     public String getVideoImagesDownloadUrl(String userId, String requestId, String videoName, long expirationMinuteTime) {
@@ -67,6 +67,9 @@ public class AzureBlobStorageRepository implements VideoDataSource {
                 .containerName(properties.getImageContainerName())
                 .blobName(blobName)
                 .buildClient();
+
+        if (!blobClient.exists())
+            return null;
 
         var permissions = new BlobSasPermission()
                 .setReadPermission(true);

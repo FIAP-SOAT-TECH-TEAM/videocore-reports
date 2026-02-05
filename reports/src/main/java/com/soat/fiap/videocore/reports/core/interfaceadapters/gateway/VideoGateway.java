@@ -36,7 +36,7 @@ public class VideoGateway {
      * @param videoName Nome do vídeo
      * @param expirationMinuteTime Minutos de expiração para a URL de download
      *
-     * @return a URl para download das imagens do vídeo
+     * @return a URl para download das imagens do vídeo, ou nulo caso o arquivo de imagens não exista
      */
     @WithSpan(name = "gateway.get.video.image.download.url")
     public String getVideoImagesDownloadUrl(String userId, String requestId, String videoName, long expirationMinuteTime) {

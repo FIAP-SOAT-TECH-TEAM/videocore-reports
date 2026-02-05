@@ -4,7 +4,7 @@ import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImag
 import org.mapstruct.Mapper;
 
 /**
- * Presenter responsável por converter objetos relacionados a respostas HTTPs das imagens processadas de um vídeo.
+ * Presenter responsável por converter objetos relacionados a respostas HTTPs das imagens capturadas de um vídeo.
  */
 @Mapper(componentModel = "spring")
 public interface ImagePresenter {

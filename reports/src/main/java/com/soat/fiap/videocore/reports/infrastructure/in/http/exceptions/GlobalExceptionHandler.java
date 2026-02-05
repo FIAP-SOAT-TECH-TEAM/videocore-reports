@@ -3,6 +3,7 @@ package com.soat.fiap.videocore.reports.infrastructure.in.http.exceptions;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.NotAuthorizedException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoImageDownloadUrlNotFound;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -75,6 +76,17 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
+
+    /**
+     * Trata erros de url de download do arquivo de imagens de um vídeo não encontrada
+     */
+    @ExceptionHandler(VideoImageDownloadUrlNotFound.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(VideoImageDownloadUrlNotFound ex, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(), request.getServletPath());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 
     /**
      * Trata erros de falha na autenticação
