@@ -3,7 +3,7 @@ package com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload
 import java.time.Instant;
 
 /**
- * Entidade de infraestrutura que representa a atualização do status de processamento de um vídeo.
+ * Payload que representa a atualização do status de processamento de um vídeo.
  *
  * @param videoName             Nome do vídeo.
  * @param userId                Identificador do usuário dono do vídeo.
