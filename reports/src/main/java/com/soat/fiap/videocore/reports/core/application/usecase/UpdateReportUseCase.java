@@ -1,6 +1,7 @@
 package com.soat.fiap.videocore.reports.core.application.usecase;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.domain.vo.ImageMinute;
 import com.soat.fiap.videocore.reports.core.domain.vo.MinuteFrameCut;
@@ -29,6 +30,9 @@ public class UpdateReportUseCase {
      */
     @WithSpan(name = "usecase.update.report")
     public Report updateReport(Report report, Report newReport) {
+
+        if (report == null || newReport == null)
+            throw new ReportException("O antigo ou o novo reporte não podem ser nulos para atualização");
 
         var videoName = new VideoName(newReport.getVideoName());
         var imageMinute = new ImageMinute(newReport.getImageMinute());

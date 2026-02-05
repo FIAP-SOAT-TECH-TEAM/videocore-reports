@@ -2,6 +2,7 @@ package com.soat.fiap.videocore.reports.core.application.usecase;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ProcessReportException;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGateway;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,9 @@ public class SaveReportUseCase {
     @WithSpan(name = "usecase.save.report")
     public Report saveReport(Report report) {
         try {
+            if (report == null)
+                throw new ReportException("O reporte a ser persistido não pode ser nulo");
+
             return reportGateway.save(report);
         }
         catch (Exception e) {

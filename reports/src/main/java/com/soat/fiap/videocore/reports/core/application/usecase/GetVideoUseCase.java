@@ -25,11 +25,13 @@ public class GetVideoUseCase {
      */
     @WithSpan(name = "usecase.get.video")
     public VideoDto getVideo(String videoUrl) {
+        if (videoUrl == null || videoUrl.isBlank())
+            throw new ProcessReportException("A URL do vídeo não pode ser vazia");
+
         var video = videoGateway.getVideo(videoUrl);
 
-        if (video == null) {
+        if (video == null)
             throw new ProcessReportException("Video não encontrado para URL: " + videoUrl);
-        }
 
         return video;
     }

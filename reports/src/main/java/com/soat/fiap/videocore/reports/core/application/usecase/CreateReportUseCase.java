@@ -2,6 +2,7 @@ package com.soat.fiap.videocore.reports.core.application.usecase;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.application.input.ReportInput;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.domain.vo.*;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,10 @@ public class CreateReportUseCase {
      */
     @WithSpan(name = "usecase.create.report")
     public Report createReport(ReportInput reportInput) {
+
+        if (reportInput == null)
+            throw new ReportException("Os dados do reporte não podem ser nulos para criação do objeto de domínio");
+
         var videoName = new VideoName(reportInput.videoName());
         var imageMinute = new ImageMinute(reportInput.imageMinute());
         var minuteFrameCut = new MinuteFrameCut(reportInput.frameCutMinutes());

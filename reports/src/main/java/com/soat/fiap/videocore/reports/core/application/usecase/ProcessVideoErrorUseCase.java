@@ -1,6 +1,7 @@
 package com.soat.fiap.videocore.reports.core.application.usecase;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.domain.vo.*;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.VideoDto;
@@ -29,6 +30,9 @@ public class ProcessVideoErrorUseCase {
      */
     @WithSpan(name = "usecase.process.video.error")
     public void processVideoError(VideoDto videoDto) {
+        if (videoDto == null)
+            throw new ReportException("O video não pode ser nulo para o processamento de erros");
+
         Report report;
         var now = Instant.now();
 
