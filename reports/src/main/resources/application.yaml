@@ -21,6 +21,18 @@ spring:
         key: ${SPRING_AZURE_COSMOS_KEY:}
         connection-mode: direct
 
+  springdoc:
+    api-docs:
+      enabled: true
+    swagger-ui:
+      enabled: true
+      path: /swagger-ui.html
+      operations-sorter: alpha
+      tags-sorter: alpha
+      disable-swagger-default-url: true
+      doc-expansion: none
+      show-actuator: true
+
 server:
   address: ${SERVER_ADDRESS:}
   port: ${SERVER_PORT:}

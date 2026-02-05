@@ -2,6 +2,7 @@ package com.soat.fiap.videocore.reports.infrastructure.common.source;
 
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,7 +22,7 @@ public interface ReportDataSource {
      * Recupera um reporte já existente a partir de {@code userId}, {@code requestId}, {@code videoName}
      * e {@code percentStatusProcess}.
      *
-     * @param userId               identificador do usuário (partition key)
+     * @param userId               identificador do usuário
      * @param requestId            identificador da requisição
      * @param videoName            nome do vídeo
      * @param percentStatusProcess percentual do status do processamento
@@ -33,10 +34,18 @@ public interface ReportDataSource {
     /**
      * Recupera o último reporte persistido para {@code userId}, {@code requestId} e {@code videoName},
      *
-     * @param userId    identificador do usuário (partition key)
+     * @param userId    identificador do usuário
      * @param requestId identificador da requisição
      * @param videoName nome do vídeo
      * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
      */
     Optional<ReportDto> getLastExistingReport(String userId, String requestId, String videoName);
+
+    /**
+     * Recupera os reportes mais recentes dos videos enviados por um usuário.
+     *
+     * @param userId identificador do usuário
+     * @return lista com os últimos reportes encontrados (pode ser vazia)
+     */
+    List<ReportDto> getLastReportsByUserId(String userId);
 }

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ProcessStatusVideoUpdateListener {
+public class ProcessVideoStatusUpdateListener {
 
     private final ObjectMapper objectMapper;
     private final ProcessVideoStatusUpdateController processVideoStatusUpdateController;
@@ -28,7 +28,7 @@ public class ProcessStatusVideoUpdateListener {
      *
      * @param message Wrapper da mensagem recebida
      */
-    @WithSpan(name = "process.report.event")
+    @WithSpan(name = "listener.process.video.status.update.event")
     @ServiceBusListener(destination = EventMessagingChannel.PROCESS_STATUS_TOPIC,
             group = EventMessagingChannel.REPORTS_PROCESS_STATUS_TOPIC_SUBSCRIPTION)
     public void processEvent(ServiceBusReceivedMessage message) throws Exception {

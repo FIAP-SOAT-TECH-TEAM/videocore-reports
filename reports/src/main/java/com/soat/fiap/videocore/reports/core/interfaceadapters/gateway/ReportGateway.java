@@ -9,6 +9,7 @@ import com.soat.fiap.videocore.reports.infrastructure.common.source.ReportDataSo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,7 +39,7 @@ public class ReportGateway {
      * Recupera um reporte já existente a partir de {@code userId}, {@code requestId}, {@code videoName}
      * e {@code percentStatusProcess}.
      *
-     * @param userId               identificador do usuário (partition key)
+     * @param userId               identificador do usuário
      * @param requestId            identificador da requisição
      * @param videoName            nome do vídeo
      * @param percentStatusProcess percentual do status do processamento
@@ -57,7 +58,7 @@ public class ReportGateway {
     /**
      * Recupera o último reporte persistido para {@code userId}, {@code requestId} e {@code videoName},
      *
-     * @param userId    identificador do usuário (partition key)
+     * @param userId    identificador do usuário
      * @param requestId identificador da requisição
      * @param videoName nome do vídeo
      * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não existir
@@ -71,5 +72,23 @@ public class ReportGateway {
 
         return dto.map(reportMapper::toModel);
 
+    }
+
+    /**
+     * Recupera os reportes mais recentes dos videos enviados por um usuário.
+     *
+     * @param userId identificador do usuário
+     * @return lista de {@link Report} encontrados (pode ser vazia)
+     */
+    @WithSpan(name = "gateway.get.last.reports.by.userId")
+    public List<Report> getLastReportsByUserId(String userId) {
+
+        var dtos = reportDataSource.getLastReportsByUserId(userId);
+
+        TraceContext.addEvent("report.object.list", dtos);
+
+        return dtos.stream()
+                .map(reportMapper::toModel)
+                .toList();
     }
 }

@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
+import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.application.usecase.*;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.EventMapper;
 import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
@@ -25,6 +26,7 @@ public class ProcessVideoStatusUpdateController {
      *
      * @param entity Payload de atualização de status do vídeo.
      */
+    @WithSpan(name = "controller.process.video.status.update")
     public void processVideoStatusUpdate(ProcessVideoStatusUpdatePayload entity) {
         var input = reportMapper.toInput(entity);
         var newReport = createReportUseCase.createReport(input);

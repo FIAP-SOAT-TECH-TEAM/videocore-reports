@@ -29,7 +29,7 @@ public class ProcessVideoErrorListener {
      * @param message Mensagem recebida do Azure Service Bus.
      * @throws Exception Em caso de falha ao desserializar ou processar o evento.
      */
-    @WithSpan(name = "process.video.error")
+    @WithSpan(name = "listener.process.video.error")
     @ServiceBusListener(destination = EventMessagingChannel.PROCESS_QUEUE_DLQ)
     public void processEvent(ServiceBusReceivedMessage message) throws Exception {
         try {

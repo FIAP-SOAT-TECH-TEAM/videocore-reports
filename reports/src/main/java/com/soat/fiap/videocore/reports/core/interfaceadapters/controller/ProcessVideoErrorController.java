@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
+import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.application.usecase.GetVideoUseCase;
 import com.soat.fiap.videocore.reports.core.application.usecase.ProcessVideoErrorUseCase;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class ProcessVideoErrorController {
      *
      * @param videoUrl URL do vídeo a ser consultado e processado.
      */
+    @WithSpan(name = "controller.process.video.error")
     public void processVideoError(String videoUrl) {
         var dto = getVideoUseCase.getVideo(videoUrl);
 
