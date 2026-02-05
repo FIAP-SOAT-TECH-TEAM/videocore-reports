@@ -3,6 +3,7 @@ package com.soat.fiap.videocore.reports.infrastructure.in.http.exceptions;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.NotAuthorizedException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoImageDownloadUrlNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -78,10 +79,21 @@ public class GlobalExceptionHandler {
 	}
 
     /**
+     * Trata erros de regra de negócio
+     */
+    @ExceptionHandler(VideoException.class)
+    public ResponseEntity<ErrorResponse> handleVideoException(VideoException ex, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(), request.getServletPath());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
      * Trata erros de url de download do arquivo de imagens de um vídeo não encontrada
      */
     @ExceptionHandler(VideoImageDownloadUrlNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleBusinessException(VideoImageDownloadUrlNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handleVideoImageDownloadUrlNotFoundException(VideoImageDownloadUrlNotFoundException ex, HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(), request.getServletPath());
 
@@ -92,7 +104,7 @@ public class GlobalExceptionHandler {
      * Trata erros de falha na autenticação
      */
     @ExceptionHandler(NotAuthorizedException.class)
-    public ResponseEntity<ErrorResponse> handleBusinessException(NotAuthorizedException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handleNotAuthorizedException(NotAuthorizedException ex, HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(),
                 ex.getMessage(), request.getServletPath());
 

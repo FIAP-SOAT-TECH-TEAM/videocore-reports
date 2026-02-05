@@ -2,7 +2,7 @@ package com.soat.fiap.videocore.reports.core.application.usecase;
 
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
-import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoImageDownloadUrlNotFoundException;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.VideoGateway;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +34,15 @@ public class GetVideoImagesDownloadUrlUseCase {
         CanonicalContext.add("video_name", videoName);
 
         if (userId == null || userId.isBlank()) {
-            throw new ReportException("userId não pode ser nulo ou vazio");
+            throw new VideoException("userId não pode ser nulo ou vazio para pesquisa de URL de download das imagens");
         }
 
         if (requestId == null || requestId.isBlank()) {
-            throw new ReportException("requestId não pode ser nulo ou vazio");
+            throw new VideoException("requestId não pode ser nulo ou vazio para pesquisa de URL de download das imagens");
         }
 
         if (videoName == null || videoName.isBlank()) {
-            throw new ReportException("videoName não pode ser nulo ou vazio");
+            throw new VideoException("videoName não pode ser nulo ou vazio para pesquisa de URL de download das imagens");
         }
 
         var expirationMinuteTime = 30L;
