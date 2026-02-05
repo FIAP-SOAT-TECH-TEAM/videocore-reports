@@ -53,11 +53,9 @@ public class GetVideoImagesDownloadUrlUseCase {
 
         CanonicalContext.add("download_url", downloadUrl);
 
-        if (downloadUrl == null || downloadUrl.isBlank()){
-            var message = String.format("URL de download do arquivo de imagens do vídeo informado não encontrada. UserID: %s, RequestID: %s e VideoName: %s", userId, requestId, videoName);
+        if (downloadUrl == null || downloadUrl.isBlank())
+            throw new VideoImageDownloadUrlNotFound("URL de download do arquivo de imagens do vídeo informado não encontrada. UserID: %s, RequestID: %s e VideoName: %s", userId, requestId, videoName);
 
-            throw new VideoImageDownloadUrlNotFound(message);
-        }
 
         return downloadUrl;
     }

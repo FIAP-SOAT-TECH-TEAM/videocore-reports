@@ -12,4 +12,8 @@ public class VideoImageDownloadUrlNotFound extends RuntimeException {
 	public VideoImageDownloadUrlNotFound(String message, Throwable cause) {
 		super(message, cause);
 	}
+
+    public VideoImageDownloadUrlNotFound(String message, Object... args) {
+        super(String.format(message, args));
+    }
 }
