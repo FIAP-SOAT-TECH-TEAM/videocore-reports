@@ -1,7 +1,7 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.http.controllers;
 
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
-import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetUserLastReportsController;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthenticatedUserLastReportsController;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,12 +30,12 @@ import java.util.List;
 @Slf4j
 public class ReportController {
 
-    private final GetUserLastReportsController getUserLastReportsController;
+    private final GetAuthenticatedUserLastReportsController getAuthenticatedUserLastReportsController;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/latest")
     @Operation(
-            summary = "Buscar reports por ID do usuário",
-            description = "Retorna todos os reports associados a um usuário específico pelo seu ID",
+            summary = "Buscar reports mais recentes do usuário autenticado",
+            description = "Retorna a lista de reportes mais recentes dos videos enviados pelo usuário autenticado",
             tags = { "Reports" }
     )
     @ApiResponses(value = {
@@ -50,15 +49,13 @@ public class ReportController {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Quando o ID do usuário estiver vazio ou não for informado",
+                    description = "Quando não for possível obter o ID do usuário autenticado",
                     content = @Content
             )
     })
-    public ResponseEntity<List<ReportResponse>> getReports(@PathVariable String userId) {
+    public ResponseEntity<List<ReportResponse>> getAuthenticatedUserLastReports() {
         try {
-            CanonicalContext.add("user_id", userId);
-
-            var reports = getUserLastReportsController.getAllUserReports(userId);
+            var reports = getAuthenticatedUserLastReportsController.getAuthenticatedUserLastReports();
 
             log.info("request_completed");
 

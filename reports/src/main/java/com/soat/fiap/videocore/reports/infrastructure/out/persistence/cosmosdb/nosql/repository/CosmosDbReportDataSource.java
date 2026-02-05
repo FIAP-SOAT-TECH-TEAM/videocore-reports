@@ -88,6 +88,9 @@ public class CosmosDbReportDataSource implements ReportDataSource {
                 .map(IdProjection::id)
                 .toList();
 
+        if (ids.isEmpty())
+            return List.of();
+
         return cosmosDbReportRepository
                 .findByIdIn(ids)
                 .stream()

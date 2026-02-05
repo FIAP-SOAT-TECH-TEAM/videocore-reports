@@ -1,6 +1,7 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.http.exceptions;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.NotAuthorizedException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -60,6 +61,17 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
+
+    /**
+     * Trata erros de falha na autenticação
+     */
+    @ExceptionHandler(NotAuthorizedException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(NotAuthorizedException ex, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(), request.getServletPath());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
 
 	/**
 	 * Trata erros de integridade de dados (ex: violação de chave estrangeira)
