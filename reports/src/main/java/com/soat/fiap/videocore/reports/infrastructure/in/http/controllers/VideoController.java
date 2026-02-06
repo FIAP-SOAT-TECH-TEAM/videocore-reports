@@ -1,7 +1,7 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.http.controllers;
 
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
-import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetVideoImagesDownloadUrlController;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserVideoImagesDownloadUrlController;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImagesDownloadUrlResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -29,12 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class VideoController {
 
-    private final GetVideoImagesDownloadUrlController getVideoImagesDownloadUrlController;
+    private final GetAuthUserVideoImagesDownloadUrlController getAuthUserVideoImagesDownloadUrlController;
 
     @GetMapping("/image/url")
     @Operation(
-            summary = "Buscar URL de download das imagens de um vídeo",
-            description = "Retorna a URL de download das imagens capturadas de um vídeo"
+            summary = "Buscar URL de download das imagens de um vídeo enviado pelo usuário autenticado",
+            description = "Retorna a URL de download das imagens capturadas de um vídeo enviado pelo usuário autenticado"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -47,19 +47,24 @@ public class VideoController {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Quando o ID do usuário, da requisição o nome do vídeo forem informados incorretamente",
+                    description = "Quando o ID da requisição ou o nome do vídeo forem informados incorretamente",
                     content = @Content
             ),
             @ApiResponse(
                     responseCode = "404",
                     description = "Quando a URL de download do arquivo de imagens do vídeo informado não for encontrada",
                     content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Quando não for possível obter o ID do usuário autenticado (Header HTTTP Auth-Subject)",
+                    content = @Content
             )
     })
-    public ResponseEntity<VideoImagesDownloadUrlResponse> getVideoImagesDownloadUrl(@RequestParam String userId, @RequestParam String requestId, @RequestParam String videoName
+    public ResponseEntity<VideoImagesDownloadUrlResponse> getAuthUserVideoImagesDownloadUrl(@RequestParam String requestId, @RequestParam String videoName
     ) {
         try {
-            var downloadUrl = getVideoImagesDownloadUrlController.getVideoImagesDownloadUrl(userId, requestId, videoName);
+            var downloadUrl = getAuthUserVideoImagesDownloadUrlController.getVideoImagesDownloadUrl(requestId, videoName);
 
             log.info("request_completed");
 

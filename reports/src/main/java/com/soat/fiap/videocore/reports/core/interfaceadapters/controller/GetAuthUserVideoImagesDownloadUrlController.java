@@ -1,7 +1,7 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
-import com.soat.fiap.videocore.reports.core.application.usecase.GetVideoImagesDownloadUrlUseCase;
+import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserVideoImagesDownloadUrlUseCase;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ImagePresenter;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImagesDownloadUrlResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,26 +9,25 @@ import org.springframework.stereotype.Component;
 
 /**
  * Controller responsável por orquestrar a recuperação da URL de download
- * das imagens capturadas de um vídeo.
+ * das imagens capturadas de um vídeo, enviado pelo usuário autenticado.
  */
 @Component
 @RequiredArgsConstructor
-public class GetVideoImagesDownloadUrlController {
+public class GetAuthUserVideoImagesDownloadUrlController {
 
-    private final GetVideoImagesDownloadUrlUseCase getVideoImagesDownloadUrlUseCase;
+    private final GetAuthUserVideoImagesDownloadUrlUseCase getAuthUserVideoImagesDownloadUrlUseCase;
     private final ImagePresenter imagePresenter;
 
     /**
-     * Retorna a URL de download das imagens de um vídeo.
+     * Retorna a URL de download das imagens de um vídeo, enviado pelo usuário autenticado
      *
-     * @param userId identificador do usuário
      * @param requestId identificador da requisição
      * @param videoName nome do vídeo
      * @return URL para download das imagens do vídeo
      */
-    @WithSpan(name = "controller.get.video.images.download.url")
-    public VideoImagesDownloadUrlResponse getVideoImagesDownloadUrl(String userId, String requestId, String videoName) {
-        var videoUrl = getVideoImagesDownloadUrlUseCase.getVideoImagesDownloadUrl(userId, requestId, videoName);
+    @WithSpan(name = "controller.get.authenticated.user.video.images.download.url")
+    public VideoImagesDownloadUrlResponse getVideoImagesDownloadUrl(String requestId, String videoName) {
+        var videoUrl = getAuthUserVideoImagesDownloadUrlUseCase.getVideoImagesDownloadUrl(requestId, videoName);
 
         return imagePresenter.toResponse(videoUrl);
     }

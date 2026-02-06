@@ -52,7 +52,7 @@ public class ReportController {
                     content = @Content
             )
     })
-    public ResponseEntity<List<ReportResponse>> getAuthenticatedUserLastReports() {
+    public ResponseEntity<List<ReportResponse>> getAuthUserLastReports() {
         try {
             var reports = getAuthenticatedUserLastReportsController.getAuthenticatedUserLastReports();
 

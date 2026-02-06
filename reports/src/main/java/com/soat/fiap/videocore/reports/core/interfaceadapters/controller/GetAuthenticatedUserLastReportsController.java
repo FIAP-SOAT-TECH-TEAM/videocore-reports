@@ -1,7 +1,7 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
-import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthenticatedUserLastReportsUseCase;
+import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastReportsUseCase;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ReportPresenter;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetAuthenticatedUserLastReportsController {
 
-    private final GetAuthenticatedUserLastReportsUseCase getAuthenticatedUserLastReportsUseCase;
+    private final GetAuthUserLastReportsUseCase getAuthUserLastReportsUseCase;
     private final ReportPresenter reportPresenter;
 
     /**
@@ -24,9 +24,9 @@ public class GetAuthenticatedUserLastReportsController {
      *
      * @return lista de reportes convertidos para resposta HTTP
      */
-    @WithSpan(name = "controller.get.all.authenticated.user.reports")
+    @WithSpan(name = "controller.get.authenticated.user.all.reports")
     public List<ReportResponse> getAuthenticatedUserLastReports() {
-        var reports = getAuthenticatedUserLastReportsUseCase.getAuthenticatedUserLastReports();
+        var reports = getAuthUserLastReportsUseCase.getAuthenticatedUserLastReports();
 
         return reportPresenter.toResponse(reports);
     }
