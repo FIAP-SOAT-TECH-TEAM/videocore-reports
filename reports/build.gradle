@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'com.fiap.videocore'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 description = 'Microsserviço de gerenciamento dos reportes de atualização do status de processamento de um vídeo'
 
 java {
