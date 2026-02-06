@@ -3,11 +3,12 @@ package com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.ReportDataSource;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.mapper.ReportEntityMapper;
-import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.IdProjection;
+import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -73,7 +74,7 @@ public class CosmosDbReportDataSource implements ReportDataSource {
      * Recupera os reportes mais recentes dos videos enviados por um usuário.
      *
      * <p><b>Aviso:</b> Cosmos DB não suporta non-correlated queries.
-     * Por isso, primeiro buscamos apenas os IDs dos últimos reportes, e depois os reportes efetivamente.
+     * Por isso, primeiro buscamos s momentos de reporte mais recentes, e depois os reportes efetivamente.
      * <a href="https://learn.microsoft.com/en-us/cosmos-db/query/subquery#types-of-subqueries">How to use subquery (SQL) in azure cosmos db</a>
      * <a href="https://learn.microsoft.com/en-us/answers/questions/528514/how-to-use-subquery-(sql)-in-azure-cosmos-db">Types of subqueries</a>
      *
@@ -83,16 +84,20 @@ public class CosmosDbReportDataSource implements ReportDataSource {
     @Override
     @Transactional(readOnly = true)
     public List<ReportDto> getLastReportsByUserId(String userId) {
-        var ids = cosmosDbReportRepository.findLatestReportsIdsByUser(userId)
+        var reportTimes = cosmosDbReportRepository.findLatestReportsTimesByUser(userId)
                 .stream()
-                .map(IdProjection::id)
+                .map(ReportTimeProjection::id)
                 .toList();
 
-        if (ids.isEmpty())
+        if (reportTimes.isEmpty())
             return List.of();
 
+        var reportTimesAsText = reportTimes.stream()
+                .map(Instant::toString)
+                .toList();
+
         return cosmosDbReportRepository
-                .findByIdIn(ids)
+                .findByReportTimeIn(reportTimesAsText)
                 .stream()
                 .map(reportEntityMapper::toDto)
                 .toList();

@@ -3,9 +3,10 @@ package com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.
 import com.azure.spring.data.cosmos.repository.CosmosRepository;
 import com.azure.spring.data.cosmos.repository.Query;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.entity.ReportEntity;
-import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.IdProjection;
+import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,21 +49,21 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 
 
     /**
-     * Retorna os IDs dos últimos reports de cada requestId e videoName de um usuário.
+     * Retorna o momento de reporte dos últimos reports de cada requestId e videoName de um usuário.
      *
      * @param userId identificador do usuário
-     * @return lista de IDs dos reports mais recentes
+     * @return lista de momentos de reporte mais recentes
      */
-    @Query("SELECT MAX(r.id) AS id FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
-    List<IdProjection> findLatestReportsIdsByUser(String userId);
+    @Query("SELECT MAX(r.reportTime) AS id FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
+    List<ReportTimeProjection> findLatestReportsTimesByUser(String userId);
 
     /**
-     * Busca os reportes correspondentes aos IDs fornecidos.
+     * Busca os reportes correspondentes aos momentos de reporte fornecidos.
      *
-     * @param ids lista de IDs de report
+     * @param reportTimes lista de momentos de reporte
      * @return lista de entidades de report
      */
-    List<ReportEntity> findByIdIn(List<String> ids);
+    List<ReportEntity> findByReportTimeIn(List<String> reportTimes);
 
 
 }
