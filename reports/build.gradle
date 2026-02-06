@@ -84,19 +84,15 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+    finalizedBy(jacocoTestReport)
 }
 
 sonar {
     properties {
         property 'sonar.projectKey', 'FIAP-SOAT-TECH-TEAM_videocore-reports'
-        property "sonar.organization", "fiap-soat-tech-team"
+        property 'sonar.organization', 'fiap-soat-tech-team'
         property 'sonar.projectName', 'videocore-reports'
-        property 'sonar.host.url', 'https://sonarcloud.io'
         property 'sonar.token', System.getenv("SONAR_CLOUD_TOKEN") ?: env.SONAR_CLOUD_TOKEN.value
-        property 'sonar.sources', 'src/main/java'
-        property 'sonar.tests', 'src/test/java'
-        property 'sonar.java.binaries', 'build/classes/java/main'
-        property 'sonar.java.test.binaries', 'build/classes/java/test'
         property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
         property 'sonar.exclusions', [
                 // Application main class
