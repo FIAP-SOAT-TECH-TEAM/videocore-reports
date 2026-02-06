@@ -9,6 +9,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -72,7 +73,7 @@ public class ReportTopicChannelInterceptor implements ChannelInterceptor {
 
             log.info("request_completed");
 
-            return message;
+            return MessageBuilder.createMessage(message.getPayload(),accessor.getMessageHeaders());
         }
         finally {
             CanonicalContext.clear();
