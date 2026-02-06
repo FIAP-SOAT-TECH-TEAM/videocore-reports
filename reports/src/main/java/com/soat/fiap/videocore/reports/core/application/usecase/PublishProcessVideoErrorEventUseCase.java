@@ -8,8 +8,6 @@ import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.EventPubli
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-
 /**
  * Caso de uso responsável por publicar o evento de erro no processamento de vídeo.
  */
@@ -23,10 +21,9 @@ public class PublishProcessVideoErrorEventUseCase {
      * Publica um evento de erro de processamento a partir do reporte informado.
      *
      * @param report Reporte base para montagem do evento.
-     * @param errorMoment Momento em que o erro ocorreu.
      */
     @WithSpan(name = "usecase.publish.process.video.error.event")
-    public void publishProcessVideoErrorEvent(Report report, Instant errorMoment) {
+    public void publishProcessVideoErrorEvent(Report report) {
 
         if (report == null)
             throw new ReportException("O reporte não pode ser vazio para o disparo de eventos");
@@ -37,7 +34,7 @@ public class PublishProcessVideoErrorEventUseCase {
                 report.getRequestId(),
                 report.getMinuteFrameCut(),
                 report.getPercentStatusProcess(),
-                errorMoment
+                report.getReportTime()
         );
 
         eventPublisherGateway.publishProcessVideoErrorEvent(event);

@@ -2,6 +2,7 @@ package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.application.usecase.*;
+import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.EventMapper;
 import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ProcessVideoStatusUpdateController {
     private final GetExistingReportUseCase getExistingReportUseCase;
     private final SaveReportUseCase saveReportUseCase;
     private final NotificationReportUseCase notificationReportUseCase;
+    private final PublishProcessVideoErrorEventUseCase publishProcessVideoErrorEventUseCase;
 
     /**
      * Processa a atualização no status de processamento de um vídeo através do payload de evento: {@link ProcessVideoStatusUpdatePayload}.
@@ -38,5 +40,8 @@ public class ProcessVideoStatusUpdateController {
 
         var savedReport = saveReportUseCase.saveReport(newReport);
         notificationReportUseCase.notificationReport(savedReport);
+
+        if (savedReport.getStatus() == ProcessStatus.FAILED)
+            publishProcessVideoErrorEventUseCase.publishProcessVideoErrorEvent(savedReport);
     }
 }

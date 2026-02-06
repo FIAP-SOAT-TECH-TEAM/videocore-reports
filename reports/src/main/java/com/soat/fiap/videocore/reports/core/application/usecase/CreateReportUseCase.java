@@ -41,6 +41,9 @@ public class CreateReportUseCase {
             processStatus = ProcessStatus.COMPLETED;
         }
 
+        if (reportInput.isError())
+            processStatus = ProcessStatus.FAILED;
+
         return new Report(
                 videoName,
                 imageMinute,

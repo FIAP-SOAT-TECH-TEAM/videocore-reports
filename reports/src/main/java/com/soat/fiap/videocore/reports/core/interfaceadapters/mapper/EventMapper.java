@@ -28,6 +28,4 @@ public interface EventMapper {
      */
     ProcessVideoErrorEventDto toDto(ProcessVideoErrorEvent event);
 
-
-
 }

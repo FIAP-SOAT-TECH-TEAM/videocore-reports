@@ -6,12 +6,6 @@ package com.soat.fiap.videocore.reports.infrastructure.common.event;
 public final class EventMessagingChannel {
 
     /**
-     * Fila principal de processamento de eventos - DLQ.
-     * <p>Responsável pelo fluxo de erros no processamento do vídeo.</p>
-     */
-    public static final String PROCESS_QUEUE_DLQ = "process.queue/$DeadLetterQueue";
-
-    /**
      * Tópico de status do processamento.
      * <p>Publica atualizações de estado dos processos.</p>
      */
