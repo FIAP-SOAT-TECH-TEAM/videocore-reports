@@ -4,8 +4,6 @@ package com.soat.fiap.videocore.reports.infrastructure.common.websocket;
  * Constantes utilizadas na infraestrutura de WebSocket/STOMP.
  */
 public class WebSocketConstants {
-    /** Prefixo de endpoint WebSocket. */
-    public static final String ENDPOINT_PREFIX = "/ws";
 
     /** Nome do atributo de sessão que armazena o subject autenticado. */
     public static final String AUTH_SUBJECT_ATTR_NAME = "Auth-Subject";

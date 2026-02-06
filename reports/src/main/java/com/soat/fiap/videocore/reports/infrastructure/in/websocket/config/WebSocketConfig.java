@@ -5,6 +5,7 @@ import com.soat.fiap.videocore.reports.infrastructure.in.websocket.handlers.WebS
 import com.soat.fiap.videocore.reports.infrastructure.in.websocket.interceptors.channel.ReportTopicChannelInterceptor;
 import com.soat.fiap.videocore.reports.infrastructure.in.websocket.interceptors.handshake.AuthSubjectHandshakeInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -27,6 +28,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     private final ReportTopicChannelInterceptor reportTopicChannelInterceptor;
     private final WebSocketErrorHandler webSocketErrorHandler;
 
+    @Value("${websocket.base-endpoint}")
+    private String webSocketBaseEndpoint;
+
     /**
      * Registra o endpoint STOMP utilizado pelos clientes para estabelecer a conexão WebSocket.
      *
@@ -34,7 +38,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint(WebSocketConstants.ENDPOINT_PREFIX)
+        registry.addEndpoint(webSocketBaseEndpoint)
                 .addInterceptors(authSubjectHandshakeInterceptor);
 
         registry.setErrorHandler(webSocketErrorHandler);
