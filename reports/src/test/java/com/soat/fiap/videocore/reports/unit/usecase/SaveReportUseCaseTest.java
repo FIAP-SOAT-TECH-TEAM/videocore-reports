@@ -1,0 +1,55 @@
+package com.soat.fiap.videocore.reports.unit.usecase;
+
+import com.soat.fiap.videocore.reports.core.application.usecase.SaveReportUseCase;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.ProcessReportException;
+import com.soat.fiap.videocore.reports.core.domain.model.Report;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGateway;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+/**
+ * Testes unitários do {@link SaveReportUseCase}.
+ */
+class SaveReportUseCaseTest {
+
+    @Test
+    void shouldSaveReportSuccessfully() {
+        // arrange
+        ReportGateway gateway = mock(ReportGateway.class);
+        Report report = mock(Report.class);
+        when(gateway.save(report)).thenReturn(report);
+
+        SaveReportUseCase useCase = new SaveReportUseCase(gateway);
+
+        // act
+        Report saved = useCase.saveReport(report);
+
+        // assert
+        assertEquals(report, saved);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenReportIsNull() {
+        // arrange
+        ReportGateway gateway = mock(ReportGateway.class);
+        SaveReportUseCase useCase = new SaveReportUseCase(gateway);
+
+        // act + assert
+        assertThrows(ProcessReportException.class, () -> useCase.saveReport(null));
+    }
+
+    @Test
+    void shouldWrapExceptionWhenGatewayThrowsError() {
+        // arrange
+        ReportGateway gateway = mock(ReportGateway.class);
+        Report report = mock(Report.class);
+        when(gateway.save(report)).thenThrow(new RuntimeException("db error"));
+
+        SaveReportUseCase useCase = new SaveReportUseCase(gateway);
+
+        // act + assert
+        assertThrows(ProcessReportException.class, () -> useCase.saveReport(report));
+    }
+}

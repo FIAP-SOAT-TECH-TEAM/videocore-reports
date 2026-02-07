@@ -117,6 +117,8 @@ sonar {
                 '**/infrastructure/out/**',
                 // Common infrastructure
                 '**/infrastructure/common/**',
+                // Common Observability
+                '**/common/observability/**',
                 // Package info files
                 '**/package-info.java'
         ].join(',')
