@@ -96,6 +96,7 @@ public class VideoController {
             ),
             @ApiResponse(responseCode = "400", description = "Lista de nome dos vídeos vazia", content = @Content),
             @ApiResponse(responseCode = "400", description = "Nome na lista de nomes inválido", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Lista de nome dos videos maior que 3 (Somente 3 videos pode ser enviados por vez)", content = @Content),
             @ApiResponse(responseCode = "401", description = "Usuário não autenticado", content = @Content)
     })
     public ResponseEntity<List<VideoUploadUrlResponse>> getAuthUserVideoUploadUrl(
