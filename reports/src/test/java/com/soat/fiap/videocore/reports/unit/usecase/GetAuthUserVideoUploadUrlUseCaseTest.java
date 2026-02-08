@@ -7,6 +7,8 @@ import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.Authentica
 import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.VideoGateway;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -16,32 +18,40 @@ import static org.mockito.Mockito.*;
 class GetAuthUserVideoUploadUrlUseCaseTest {
 
     @Test
-    void shouldReturnUploadUrlWhenAllParametersAreValid() {
+    void shouldReturnUploadUrlsWhenAllParametersAreValid() {
         // arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
+        List<String> videoNames = List.of("video1.mp4", "video2.mp4");
+        List<String> expectedUrls = List.of(
+                "http://upload-url-1",
+                "http://upload-url-2"
+        );
+
         when(authenticatedUserGateway.getSubject()).thenReturn("user");
-        when(videoGateway.getVideoUploadUrl(anyString(), anyString(), eq("video.mp4"), eq(30L)))
-                .thenReturn("http://upload-url");
+        when(videoGateway.getVideoUploadUrl(anyString(), anyString(), eq(videoNames), eq(30L)))
+                .thenReturn(expectedUrls);
 
         GetAuthUserVideoUploadUrlUseCase useCase =
                 new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
 
         // act
-        String url = useCase.getVideoUploadUrl("video.mp4");
+        List<String> urls = useCase.getVideoUploadUrl(videoNames);
 
         // assert
-        assertEquals("http://upload-url", url);
+        assertEquals(expectedUrls, urls);
         verify(videoGateway, times(1))
-                .getVideoUploadUrl(eq("user"), anyString(), eq("video.mp4"), eq(30L));
+                .getVideoUploadUrl(eq("user"), anyString(), eq(videoNames), eq(30L));
     }
 
     @Test
-    void shouldThrowExceptionWhenVideoNameIsNull() {
+    void shouldThrowExceptionWhenVideoNamesListIsNull() {
         // arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
+
+        when(authenticatedUserGateway.getSubject()).thenReturn("user");
 
         GetAuthUserVideoUploadUrlUseCase useCase =
                 new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
@@ -54,10 +64,12 @@ class GetAuthUserVideoUploadUrlUseCaseTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenVideoNameIsBlank() {
+    void shouldThrowExceptionWhenVideoNamesListIsEmpty() {
         // arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
+
+        when(authenticatedUserGateway.getSubject()).thenReturn("user");
 
         GetAuthUserVideoUploadUrlUseCase useCase =
                 new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
@@ -65,7 +77,45 @@ class GetAuthUserVideoUploadUrlUseCaseTest {
         // act + assert
         assertThrows(
                 VideoException.class,
-                () -> useCase.getVideoUploadUrl(" ")
+                () -> useCase.getVideoUploadUrl(List.of())
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionWhenVideoNamesContainsNullOrBlank() {
+        // arrange
+        VideoGateway videoGateway = mock(VideoGateway.class);
+        AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
+
+        when(authenticatedUserGateway.getSubject()).thenReturn("user");
+
+        GetAuthUserVideoUploadUrlUseCase useCase =
+                new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
+
+        // act + assert
+        assertThrows(
+                VideoException.class,
+                () -> useCase.getVideoUploadUrl(List.of("video.mp4", " "))
+        );
+    }
+
+    @Test
+    void shouldThrowExceptionWhenVideoNamesSizeIsGreaterThanThree() {
+        // arrange
+        VideoGateway videoGateway = mock(VideoGateway.class);
+        AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
+
+        when(authenticatedUserGateway.getSubject()).thenReturn("user");
+
+        GetAuthUserVideoUploadUrlUseCase useCase =
+                new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
+
+        // act + assert
+        assertThrows(
+                VideoException.class,
+                () -> useCase.getVideoUploadUrl(
+                        List.of("v1.mp4", "v2.mp4", "v3.mp4", "v4.mp4")
+                )
         );
     }
 
@@ -83,7 +133,7 @@ class GetAuthUserVideoUploadUrlUseCaseTest {
         // act + assert
         assertThrows(
                 NotAuthorizedException.class,
-                () -> useCase.getVideoUploadUrl("video.mp4")
+                () -> useCase.getVideoUploadUrl(List.of("video.mp4"))
         );
     }
 
@@ -93,17 +143,19 @@ class GetAuthUserVideoUploadUrlUseCaseTest {
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
+        List<String> videoNames = List.of("video.mp4");
+
         when(authenticatedUserGateway.getSubject()).thenReturn("user");
-        when(videoGateway.getVideoUploadUrl(anyString(), anyString(), anyString(), anyLong()))
+        when(videoGateway.getVideoUploadUrl(anyString(), anyString(), eq(videoNames), anyLong()))
                 .thenReturn(null);
 
         GetAuthUserVideoUploadUrlUseCase useCase =
                 new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
 
         // act
-        String url = useCase.getVideoUploadUrl("video.mp4");
+        List<String> urls = useCase.getVideoUploadUrl(videoNames);
 
         // assert
-        assertNull(url);
+        assertNull(urls);
     }
 }

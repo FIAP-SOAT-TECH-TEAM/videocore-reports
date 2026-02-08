@@ -2,6 +2,8 @@ package com.soat.fiap.videocore.reports.infrastructure.common.source;
 
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.VideoDto;
 
+import java.util.List;
+
 /**
  * Fonte de dados para obtenção de um vídeo.
  */
@@ -36,11 +38,11 @@ public interface VideoDataSource {
      *
      * @param userId ID do usuário responsável pelo upload do vídeo
      * @param requestId ID da requisição associada ao upload
-     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param videoNames Nome dos vídeos (arquivos com extensão)
      * @param expirationMinuteTime Minutos de expiração da URL
      *
-     * @return a URL para upload do vídeo
+     * @return as URLs para upload dos vídeos
      */
-    String getVideoUploadUrl(String userId, String requestId, String videoName, long expirationMinuteTime);
+    List<String> getVideoUploadUrls(String userId, String requestId, List<String> videoNames, long expirationMinuteTime);
 
 }

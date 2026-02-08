@@ -6,6 +6,8 @@ import com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ImagePre
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoUploadUrlResponse;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -15,24 +17,27 @@ import static org.mockito.Mockito.*;
 class GetAuthUserVideoUploadUrlControllerTest {
 
     @Test
-    void shouldReturnUploadUrlResponse() {
+    void shouldReturnUploadUrlResponseList() {
         // Arrange
         GetAuthUserVideoUploadUrlUseCase useCase = mock(GetAuthUserVideoUploadUrlUseCase.class);
         ImagePresenter presenter = mock(ImagePresenter.class);
 
-        when(useCase.getVideoUploadUrl("video.mp4")).thenReturn("url");
+        List<String> videoNames = List.of("video.mp4");
+        List<String> urls = List.of("url");
 
-        var response = mock(VideoUploadUrlResponse.class);
-        when(presenter.toUploadResponse("url")).thenReturn(response);
+        when(useCase.getVideoUploadUrl(videoNames)).thenReturn(urls);
+
+        List<VideoUploadUrlResponse> responseList = List.of(mock(VideoUploadUrlResponse.class));
+        when(presenter.toUploadResponse(urls)).thenReturn(responseList);
 
         var controller = new GetAuthUserVideoUploadUrlController(useCase, presenter);
 
         // Act
-        var result = controller.getVideoUploadUrl("video.mp4");
+        var result = controller.getVideoUploadUrl(videoNames);
 
         // Assert
-        assertSame(response, result);
-        verify(useCase).getVideoUploadUrl("video.mp4");
-        verify(presenter).toUploadResponse("url");
+        assertSame(responseList, result);
+        verify(useCase).getVideoUploadUrl(videoNames);
+        verify(presenter).toUploadResponse(urls);
     }
 }

@@ -6,6 +6,8 @@ import com.soat.fiap.videocore.reports.infrastructure.common.source.VideoDataSou
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Gateway responsável por abstrair o acesso a vídeos armazenados externamente.
  * Atua como intermediário entre a camada de aplicação e a fonte de dados.
@@ -51,13 +53,13 @@ public class VideoGateway {
      *
      * @param userId ID do usuário responsável pelo upload do vídeo
      * @param requestId ID da requisição associada ao upload
-     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param videoNames Nome dos vídeos (arquivos com extensão)
      * @param expirationMinuteTime Minutos de expiração da URL
      *
-     * @return a URL para upload do vídeo
+     * @return as URLs para upload dos vídeos
      */
     @WithSpan(name = "gateway.get.video.upload.url")
-    public String getVideoUploadUrl(String userId, String requestId, String videoName, long expirationMinuteTime) {
-        return videoDataSource.getVideoUploadUrl(userId, requestId, videoName, expirationMinuteTime);
+    public List<String> getVideoUploadUrl(String userId, String requestId, List<String> videoNames, long expirationMinuteTime) {
+        return videoDataSource.getVideoUploadUrls(userId, requestId, videoNames, expirationMinuteTime);
     }
 }

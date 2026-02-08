@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Controlador REST para gerenciamento de videos
  */
@@ -92,14 +94,15 @@ public class VideoController {
                             schema = @Schema(implementation = VideoUploadUrlResponse.class)
                     )
             ),
-            @ApiResponse(responseCode = "400", description = "Nome do vídeo inválido", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Lista de nome dos vídeos vazia", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Nome na lista de nomes inválido", content = @Content),
             @ApiResponse(responseCode = "401", description = "Usuário não autenticado", content = @Content)
     })
-    public ResponseEntity<VideoUploadUrlResponse> getAuthUserVideoUploadUrl(
-            @RequestParam String videoName
+    public ResponseEntity<List<VideoUploadUrlResponse>> getAuthUserVideoUploadUrl(
+            @RequestParam List<String> videoNames
     ) {
         try {
-            var uploadUrl = getAuthUserVideoUploadUrlController.getVideoUploadUrl(videoName);
+            var uploadUrl = getAuthUserVideoUploadUrlController.getVideoUploadUrl(videoNames);
 
             log.info("request_completed");
 

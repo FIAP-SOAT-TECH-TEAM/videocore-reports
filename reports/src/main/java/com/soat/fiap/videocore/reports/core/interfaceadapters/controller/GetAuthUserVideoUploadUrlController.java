@@ -7,6 +7,8 @@ import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoUplo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Controller responsável por orquestrar a recuperação da URL de upload
  * de um vídeo para processamento, para o usuário autenticado.
@@ -21,13 +23,13 @@ public class GetAuthUserVideoUploadUrlController {
     /**
      * Retorna a URL de upload de um vídeo para o usuário autenticado
      *
-     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param videoNames Nome dos vídeos (arquivos com extensão)
      *
-     * @return URL para upload do vídeo
+     * @return URLs para upload dos vídeos
      */
     @WithSpan(name = "controller.get.authenticated.user.video.upload.url")
-    public VideoUploadUrlResponse getVideoUploadUrl(String videoName) {
-        var uploadUrl = getAuthUserVideoUploadUrlUseCase.getVideoUploadUrl(videoName);
+    public List<VideoUploadUrlResponse> getVideoUploadUrl(List<String> videoNames) {
+        var uploadUrl = getAuthUserVideoUploadUrlUseCase.getVideoUploadUrl(videoNames);
 
         return imagePresenter.toUploadResponse(uploadUrl);
     }

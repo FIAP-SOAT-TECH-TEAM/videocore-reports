@@ -9,6 +9,7 @@ import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.VideoGatew
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -28,17 +29,12 @@ public class GetAuthUserVideoUploadUrlUseCase {
      * A URL retornada permite apenas operações de criação e escrita, o caminho do arquivo
      * é construído a partir do {@code userId} e {@code requestId}. Utiliza um tempo de expiração de 30 minutos.
      *
-     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param videoNames Nome do vídeo (arquivo com extensão)
      *
-     * @return a URL para upload do vídeo
+     * @return as URLs para upload dos vídeos
      */
     @WithSpan(name = "usecase.get.authenticated.user.video.upload.url")
-    public String getVideoUploadUrl(String videoName) {
-        if (videoName == null || videoName.isBlank())
-            throw new VideoException("O nome do vídeo não pode estar em branco para criação da URL de upload.");
-
-        var expirationMinuteTime = 30L;
-        var requestId = UUID.randomUUID().toString();
+    public List<String> getVideoUploadUrl(List<String> videoNames) {
         var userId = authenticatedUserGateway.getSubject();
 
         CanonicalContext.add("user_id", userId);
@@ -46,6 +42,19 @@ public class GetAuthUserVideoUploadUrlUseCase {
         if (userId == null || userId.isBlank())
             throw new NotAuthorizedException("O ID do usuário não pode estar em branco para pesquisa de reportes. Verifique a autenticação.");
 
-        return videoGateway.getVideoUploadUrl(userId, requestId, videoName, expirationMinuteTime);
+        if (videoNames == null || videoNames.isEmpty())
+            throw new VideoException("A lista de nome dos vídeos não pode estar vazia para criação da URL de upload.");
+
+        if (videoNames.stream().anyMatch(name -> name == null || name.isBlank()))
+            throw new VideoException("A lista de nome dos vídeos não pode conter nomes em branco para criação da URL de upload.");
+
+        if (videoNames.size() > 3) {
+            throw new VideoException("É permitido o upload de 3 videos por vez");
+        }
+
+        var expirationMinuteTime = 30L;
+        var requestId = UUID.randomUUID().toString();
+
+        return videoGateway.getVideoUploadUrl(userId, requestId, videoNames, expirationMinuteTime);
     }
 }

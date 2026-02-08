@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 
 /**
@@ -98,34 +99,35 @@ public class AzureBlobStorageRepository implements VideoDataSource {
      *
      * @param userId ID do usuário responsável pelo upload do arquivo
      * @param requestId ID da requisição associada ao upload
-     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param videoNames Nome dos vídeos (arquivos com extensão)
      * @param expirationMinuteTime Minutos de expiração da URL SAS
-     * @return URL SAS para upload do arquivo
+     * @return URLs SAS para upload dos vídeos
      */
     @Override
-    public String getVideoUploadUrl(String userId, String requestId, String videoName, long expirationMinuteTime) {
-        var blobName = String.format("%s/%s/%s", userId, requestId, videoName);
-
-        var blobClient = new BlobClientBuilder()
-                .connectionString(properties.getConnectionString())
-                .containerName(properties.getVideoContainerName())
-                .blobName(blobName)
-                .buildClient();
-
+    public List<String> getVideoUploadUrls(String userId, String requestId, List<String> videoNames, long expirationMinuteTime) {
         var permissions = new BlobSasPermission()
                 .setCreatePermission(true)
                 .setWritePermission(true);
-
         var expiryTime = OffsetDateTime.now().plusMinutes(expirationMinuteTime);
-
         var sasValues = new BlobServiceSasSignatureValues(expiryTime, permissions);
 
         if (environmentProperties.isProd())
             sasValues.setProtocol(SasProtocol.HTTPS_ONLY);
 
-        var sasToken = blobClient.generateSas(sasValues);
+        return videoNames.stream()
+                .map(videoName -> {
+                    var blobName = String.format("%s/%s/%s", userId, requestId, videoName);
 
-        return blobClient.getBlobUrl() + "?" + sasToken;
+                    var blobClient = new BlobClientBuilder()
+                            .connectionString(properties.getConnectionString())
+                            .containerName(properties.getVideoContainerName())
+                            .blobName(blobName)
+                            .buildClient();
+
+                    var sasToken = blobClient.generateSas(sasValues);
+                    return blobClient.getBlobUrl() + "?" + sasToken;
+                })
+                .toList();
     }
 
 

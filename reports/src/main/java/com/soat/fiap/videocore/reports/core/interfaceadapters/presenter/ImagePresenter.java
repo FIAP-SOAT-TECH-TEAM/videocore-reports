@@ -4,6 +4,8 @@ import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImag
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoUploadUrlResponse;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 /**
  * Presenter responsável por converter objetos relacionados a respostas HTTPs das imagens capturadas de um vídeo.
  */
@@ -25,4 +27,12 @@ public interface ImagePresenter {
      * @return response contendo a URL
      */
     VideoUploadUrlResponse toUploadResponse(String url);
+
+    /**
+     * Converte uma URL de upload em {@link VideoUploadUrlResponse}.
+     *
+     * @param url URL de upload do vídeo
+     * @return responses contendo as URLs
+     */
+    List<VideoUploadUrlResponse> toUploadResponse(List<String> url);
 }
