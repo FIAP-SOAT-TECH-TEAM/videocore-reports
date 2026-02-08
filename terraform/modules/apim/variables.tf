@@ -52,3 +52,23 @@ variable "api_ingress_path" {
   type        = string
   description = "Caminho de ingress da API."
 }
+
+variable "ws_operation_id" {
+  description = "Identificador único da operação WebSocket, utilizado para referência interna na definição do recurso"
+  type        = string
+}
+
+variable "ws_display_name" {
+  description = "Nome legível da operação WebSocket, exibido em portais, dashboards ou documentação"
+  type        = string
+}
+
+variable "ws_method" {
+  description = "Método HTTP associado à operação WebSocket"
+  type        = string
+}
+
+variable "ws_url_template" {
+  description = "Template do caminho da URL exposta pela operação WebSocket"
+  type        = string
+}
