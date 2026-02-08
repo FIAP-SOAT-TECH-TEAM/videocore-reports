@@ -2,7 +2,9 @@ package com.soat.fiap.videocore.reports.infrastructure.in.http.controllers;
 
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserVideoImagesDownloadUrlController;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserVideoUploadUrlController;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImagesDownloadUrlResponse;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoUploadUrlResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,8 +32,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class VideoController {
 
     private final GetAuthUserVideoImagesDownloadUrlController getAuthUserVideoImagesDownloadUrlController;
+    private final GetAuthUserVideoUploadUrlController getAuthUserVideoUploadUrlController;
 
-    @GetMapping("/image/url")
+    @GetMapping("/download/url")
     @Operation(
             summary = "Buscar URL de download das imagens de um vídeo enviado pelo usuário autenticado",
             description = "Retorna a URL de download das imagens capturadas de um vídeo enviado pelo usuário autenticado"
@@ -71,6 +74,37 @@ public class VideoController {
             return ResponseEntity.ok(downloadUrl);
         }
         finally {
+            CanonicalContext.clear();
+        }
+    }
+
+    @GetMapping("/upload/url")
+    @Operation(
+            summary = "Obter URL de upload de vídeo para o usuário autenticado",
+            description = "Retorna a URL de upload de um vídeo para processamento"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "URL de upload gerada com sucesso",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = VideoUploadUrlResponse.class)
+                    )
+            ),
+            @ApiResponse(responseCode = "400", description = "Nome do vídeo inválido", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Usuário não autenticado", content = @Content)
+    })
+    public ResponseEntity<VideoUploadUrlResponse> getAuthUserVideoUploadUrl(
+            @RequestParam String videoName
+    ) {
+        try {
+            var uploadUrl = getAuthUserVideoUploadUrlController.getVideoUploadUrl(videoName);
+
+            log.info("request_completed");
+
+            return ResponseEntity.ok(uploadUrl);
+        } finally {
             CanonicalContext.clear();
         }
     }

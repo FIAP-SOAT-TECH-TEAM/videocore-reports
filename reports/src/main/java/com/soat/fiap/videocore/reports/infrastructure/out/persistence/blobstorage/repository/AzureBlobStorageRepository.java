@@ -89,6 +89,47 @@ public class AzureBlobStorageRepository implements VideoDataSource {
     }
 
     /**
+     * Gera uma URL SAS para upload de um arquivo no Azure Blob Storage.
+     * <p>
+     * A URL retornada permite apenas a operação de escrita (upload) no blob,
+     * com tempo de expiração definido em minutos. O caminho do blob é construído
+     * a partir do {@code userId} e {@code requestId}, garantindo isolamento lógico
+     * por usuário e requisição.
+     *
+     * @param userId ID do usuário responsável pelo upload do arquivo
+     * @param requestId ID da requisição associada ao upload
+     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param expirationMinuteTime Minutos de expiração da URL SAS
+     * @return URL SAS para upload do arquivo
+     */
+    @Override
+    public String getVideoUploadUrl(String userId, String requestId, String videoName, long expirationMinuteTime) {
+        var blobName = String.format("%s/%s/%s", userId, requestId, videoName);
+
+        var blobClient = new BlobClientBuilder()
+                .connectionString(properties.getConnectionString())
+                .containerName(properties.getVideoContainerName())
+                .blobName(blobName)
+                .buildClient();
+
+        var permissions = new BlobSasPermission()
+                .setCreatePermission(true)
+                .setWritePermission(true);
+
+        var expiryTime = OffsetDateTime.now().plusMinutes(expirationMinuteTime);
+
+        var sasValues = new BlobServiceSasSignatureValues(expiryTime, permissions);
+
+        if (environmentProperties.isProd())
+            sasValues.setProtocol(SasProtocol.HTTPS_ONLY);
+
+        var sasToken = blobClient.generateSas(sasValues);
+
+        return blobClient.getBlobUrl() + "?" + sasToken;
+    }
+
+
+    /**
      * Remove a extensão do nome de um arquivo, considerando apenas o último ponto.
      * <p>
      * Exemplo:

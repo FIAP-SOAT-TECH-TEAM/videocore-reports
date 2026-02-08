@@ -26,4 +26,21 @@ public interface VideoDataSource {
      * @return a URl para download das imagens do vídeo, ou nulo caso o arquivo de imagens não exista
      */
     String getVideoImagesDownloadUrl(String userId, String requestId, String videoName, long expirationMinuteTime);
+
+    /**
+     * Obtém uma URL para upload de um vídeo para processamento.
+     * <p>
+     * A URL retornada permite apenas operações de criação e escrita,
+     * sendo válida por um período definido em minutos. O caminho do arquivo
+     * é construído a partir do {@code userId} e {@code requestId}.
+     *
+     * @param userId ID do usuário responsável pelo upload do vídeo
+     * @param requestId ID da requisição associada ao upload
+     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param expirationMinuteTime Minutos de expiração da URL
+     *
+     * @return a URL para upload do vídeo
+     */
+    String getVideoUploadUrl(String userId, String requestId, String videoName, long expirationMinuteTime);
+
 }

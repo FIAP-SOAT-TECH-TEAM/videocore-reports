@@ -24,7 +24,6 @@ public class VideoGateway {
      */
     @WithSpan(name = "gateway.get.video")
     public VideoDto getVideo(String videoUrl) {
-
         return videoDataSource.getVideo(videoUrl);
     }
 
@@ -41,5 +40,24 @@ public class VideoGateway {
     @WithSpan(name = "gateway.get.video.image.download.url")
     public String getVideoImagesDownloadUrl(String userId, String requestId, String videoName, long expirationMinuteTime) {
         return videoDataSource.getVideoImagesDownloadUrl(userId, requestId, videoName, expirationMinuteTime);
+    }
+
+    /**
+     * Obtém uma URL para upload de um vídeo para processamento.
+     * <p>
+     * A URL retornada permite apenas operações de criação e escrita,
+     * sendo válida por um período definido em minutos. O caminho do arquivo
+     * é construído a partir do {@code userId} e {@code requestId}.
+     *
+     * @param userId ID do usuário responsável pelo upload do vídeo
+     * @param requestId ID da requisição associada ao upload
+     * @param videoName Nome do vídeo (arquivo com extensão)
+     * @param expirationMinuteTime Minutos de expiração da URL
+     *
+     * @return a URL para upload do vídeo
+     */
+    @WithSpan(name = "gateway.get.video.upload.url")
+    public String getVideoUploadUrl(String userId, String requestId, String videoName, long expirationMinuteTime) {
+        return videoDataSource.getVideoUploadUrl(userId, requestId, videoName, expirationMinuteTime);
     }
 }
