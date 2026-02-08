@@ -16,6 +16,18 @@ public record VideoUploadUrlResponse(
                 description = "URL para upload do vídeo",
                 example = "https://storage.exemplo.com/videos/123/456/video.mp4?token=1707055200"
         )
-        String url
+        String url,
+
+        @Schema(
+                description = "Identificador do usuário dono do vídeo",
+                example = "3f1e2c4a-8b7d-4e5f-9a1b-2c3d4e5f6a7b"
+        )
+        String userId,
+
+        @Schema(
+                description = "Identificador da requisição de processamento",
+                example = "9a8b7c6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d"
+        )
+        String requestId
 ) {
 }

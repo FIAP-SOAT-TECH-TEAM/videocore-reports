@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.presenter;
 
+import com.soat.fiap.videocore.reports.core.application.output.VideoUploadUrlOutput;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImagesDownloadUrlResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoUploadUrlResponse;
 import org.mapstruct.Mapper;
@@ -21,18 +22,16 @@ public interface ImagePresenter {
     VideoImagesDownloadUrlResponse toResponse(String url);
 
     /**
-     * Converte uma URL de upload em {@link VideoUploadUrlResponse}.
+     * Converte um objeto {@link VideoUploadUrlOutput} em {@link VideoUploadUrlResponse}.
      *
-     * @param url URL de upload do vídeo
-     * @return response contendo a URL
+     * @return {@link VideoUploadUrlResponse} contendo as URLs para upload dos vídeos
      */
-    VideoUploadUrlResponse toUploadResponse(String url);
+    VideoUploadUrlResponse toUploadResponse(VideoUploadUrlOutput output);
 
     /**
-     * Converte uma URL de upload em {@link VideoUploadUrlResponse}.
+     * Converte uma lista de objetos {@link VideoUploadUrlOutput} em uma lista de {@link VideoUploadUrlResponse}.
      *
-     * @param url URL de upload do vídeo
-     * @return responses contendo as URLs
+     * @return Lista de {@link VideoUploadUrlResponse} contendo as URLs para upload dos vídeos
      */
-    List<VideoUploadUrlResponse> toUploadResponse(List<String> url);
+    List<VideoUploadUrlResponse> toUploadResponse(List<VideoUploadUrlOutput> outputs);
 }

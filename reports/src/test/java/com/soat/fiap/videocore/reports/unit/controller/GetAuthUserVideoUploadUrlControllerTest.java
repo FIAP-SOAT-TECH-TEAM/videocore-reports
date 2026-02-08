@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.unit.controller;
 
+import com.soat.fiap.videocore.reports.core.application.output.VideoUploadUrlOutput;
 import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserVideoUploadUrlUseCase;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserVideoUploadUrlController;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ImagePresenter;
@@ -23,12 +24,14 @@ class GetAuthUserVideoUploadUrlControllerTest {
         ImagePresenter presenter = mock(ImagePresenter.class);
 
         List<String> videoNames = List.of("video.mp4");
-        List<String> urls = List.of("url");
+        List<VideoUploadUrlOutput> outputs = List.of(
+                new VideoUploadUrlOutput("url", "user", "request")
+        );
 
-        when(useCase.getVideoUploadUrl(videoNames)).thenReturn(urls);
+        when(useCase.getVideoUploadUrl(videoNames)).thenReturn(outputs);
 
         List<VideoUploadUrlResponse> responseList = List.of(mock(VideoUploadUrlResponse.class));
-        when(presenter.toUploadResponse(urls)).thenReturn(responseList);
+        when(presenter.toUploadResponse(outputs)).thenReturn(responseList);
 
         var controller = new GetAuthUserVideoUploadUrlController(useCase, presenter);
 
@@ -38,6 +41,6 @@ class GetAuthUserVideoUploadUrlControllerTest {
         // Assert
         assertSame(responseList, result);
         verify(useCase).getVideoUploadUrl(videoNames);
-        verify(presenter).toUploadResponse(urls);
+        verify(presenter).toUploadResponse(outputs);
     }
 }

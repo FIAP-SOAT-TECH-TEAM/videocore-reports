@@ -6,8 +6,10 @@ import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuth
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImagesDownloadUrlResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoUploadUrlResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -38,7 +40,7 @@ public class VideoController {
 
     @GetMapping("/download/url")
     @Operation(
-            summary = "Buscar URL de download das imagens de um vídeo enviado pelo usuário autenticado",
+            summary = "Obter URL de download das imagens de um vídeo enviado pelo usuário autenticado",
             description = "Retorna a URL de download das imagens capturadas de um vídeo enviado pelo usuário autenticado"
     )
     @ApiResponses(value = {
@@ -66,7 +68,18 @@ public class VideoController {
                     content = @Content
             )
     })
-    public ResponseEntity<VideoImagesDownloadUrlResponse> getAuthUserVideoImagesDownloadUrl(@RequestParam String requestId, @RequestParam String videoName
+    public ResponseEntity<VideoImagesDownloadUrlResponse> getAuthUserVideoImagesDownloadUrl(
+            @Parameter(
+                    description = "Identificador único da requisição",
+                    example = "req-9f8c7a12-1234-4cde-a321-abcdef123456"
+            )
+            @RequestParam String requestId,
+
+            @Parameter(
+                    description = "Nome do vídeo enviado pelo usuário",
+                    example = "video-aula-matematica.mp4"
+            )
+            @RequestParam String videoName
     ) {
         try {
             var downloadUrl = getAuthUserVideoImagesDownloadUrlController.getVideoImagesDownloadUrl(requestId, videoName);
@@ -82,8 +95,8 @@ public class VideoController {
 
     @GetMapping("/upload/url")
     @Operation(
-            summary = "Obter URL de upload de vídeo para o usuário autenticado",
-            description = "Retorna a URL de upload de um vídeo para processamento"
+            summary = "Obter URLs de upload a partir de uma lista de vídeos para processamento, para o usuário autenticado",
+            description = "Retorna URLs de uploads de vídeos para processamento"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -94,12 +107,28 @@ public class VideoController {
                             schema = @Schema(implementation = VideoUploadUrlResponse.class)
                     )
             ),
-            @ApiResponse(responseCode = "400", description = "Lista de nome dos vídeos vazia", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Nome na lista de nomes inválido", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Lista de nome dos videos maior que 3 (Somente 3 videos pode ser enviados por vez)", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Usuário não autenticado", content = @Content)
+            @ApiResponse(
+                    responseCode = "400",
+                    description = """
+                    Erro de validação:
+                    - Lista de nomes vazia
+                    - Nome inválido na lista
+                    - Mais de 3 vídeos enviados
+                    - Nomes duplicados
+                    """,
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Usuário não autenticado",
+                    content = @Content
+            )
     })
     public ResponseEntity<List<VideoUploadUrlResponse>> getAuthUserVideoUploadUrl(
+            @Parameter(
+                    description = "Lista de nomes dos vídeos para upload (máximo 3)",
+                    example = "video1.mp4,video2.mp4"
+            )
             @RequestParam List<String> videoNames
     ) {
         try {

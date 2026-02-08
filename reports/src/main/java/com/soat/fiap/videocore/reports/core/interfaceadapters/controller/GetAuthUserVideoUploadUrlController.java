@@ -1,6 +1,7 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
+import com.soat.fiap.videocore.reports.core.application.output.VideoUploadUrlOutput;
 import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserVideoUploadUrlUseCase;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ImagePresenter;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoUploadUrlResponse;
@@ -25,7 +26,7 @@ public class GetAuthUserVideoUploadUrlController {
      *
      * @param videoNames Nome dos vídeos (arquivos com extensão)
      *
-     * @return URLs para upload dos vídeos
+     @return {@link VideoUploadUrlResponse} contendo as URLs para upload dos vídeos
      */
     @WithSpan(name = "controller.get.authenticated.user.video.upload.url")
     public List<VideoUploadUrlResponse> getVideoUploadUrl(List<String> videoNames) {

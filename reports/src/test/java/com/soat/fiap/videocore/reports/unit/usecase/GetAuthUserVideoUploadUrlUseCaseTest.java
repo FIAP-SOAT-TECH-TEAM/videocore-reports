@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.unit.usecase;
 
+import com.soat.fiap.videocore.reports.core.application.output.VideoUploadUrlOutput;
 import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserVideoUploadUrlUseCase;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.NotAuthorizedException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoException;
@@ -24,23 +25,28 @@ class GetAuthUserVideoUploadUrlUseCaseTest {
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
         List<String> videoNames = List.of("video1.mp4", "video2.mp4");
-        List<String> expectedUrls = List.of(
+        List<String> gatewayUrls = List.of(
                 "http://upload-url-1",
                 "http://upload-url-2"
         );
 
         when(authenticatedUserGateway.getSubject()).thenReturn("user");
         when(videoGateway.getVideoUploadUrl(anyString(), anyString(), eq(videoNames), eq(30L)))
-                .thenReturn(expectedUrls);
+                .thenReturn(gatewayUrls);
 
         GetAuthUserVideoUploadUrlUseCase useCase =
                 new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
 
         // act
-        List<String> urls = useCase.getVideoUploadUrl(videoNames);
+        List<VideoUploadUrlOutput> urls = useCase.getVideoUploadUrl(videoNames);
 
         // assert
-        assertEquals(expectedUrls, urls);
+        assertEquals(2, urls.size());
+        assertEquals("http://upload-url-1", urls.get(0).url());
+        assertEquals("http://upload-url-2", urls.get(1).url());
+        assertEquals("user", urls.get(0).userId());
+        assertEquals("user", urls.get(1).userId());
+
         verify(videoGateway, times(1))
                 .getVideoUploadUrl(eq("user"), anyString(), eq(videoNames), eq(30L));
     }
@@ -138,7 +144,7 @@ class GetAuthUserVideoUploadUrlUseCaseTest {
     }
 
     @Test
-    void shouldReturnNullWhenGatewayReturnsNull() {
+    void shouldThrowExceptionWhenGatewayReturnsNull() {
         // arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
@@ -152,10 +158,38 @@ class GetAuthUserVideoUploadUrlUseCaseTest {
         GetAuthUserVideoUploadUrlUseCase useCase =
                 new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act
-        List<String> urls = useCase.getVideoUploadUrl(videoNames);
-
-        // assert
-        assertNull(urls);
+        // act + assert
+        assertThrows(
+                NullPointerException.class,
+                () -> useCase.getVideoUploadUrl(videoNames)
+        );
     }
+
+    @Test
+    void shouldThrowExceptionWhenVideoNamesContainsDuplicatedNames() {
+        // arrange
+        VideoGateway videoGateway = mock(VideoGateway.class);
+        AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
+
+        when(authenticatedUserGateway.getSubject()).thenReturn("user");
+
+        List<String> videoNames = List.of("video.mp4", "video.mp4");
+
+        GetAuthUserVideoUploadUrlUseCase useCase =
+                new GetAuthUserVideoUploadUrlUseCase(videoGateway, authenticatedUserGateway);
+
+        // act + assert
+        VideoException exception = assertThrows(
+                VideoException.class,
+                () -> useCase.getVideoUploadUrl(videoNames)
+        );
+
+        assertEquals(
+                "A lista de nome dos vídeos não pode conter valores repetidos para criação da URL de upload.",
+                exception.getMessage()
+        );
+
+        verifyNoInteractions(videoGateway);
+    }
+
 }

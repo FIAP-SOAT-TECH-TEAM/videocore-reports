@@ -34,7 +34,7 @@ public class ReportController {
 
     @GetMapping("/latest")
     @Operation(
-            summary = "Buscar reports mais recentes do usuário autenticado",
+            summary = "Obter reports mais recentes do usuário autenticado",
             description = "Retorna a lista de reportes mais recentes dos videos enviados pelo usuário autenticado"
     )
     @ApiResponses(value = {
