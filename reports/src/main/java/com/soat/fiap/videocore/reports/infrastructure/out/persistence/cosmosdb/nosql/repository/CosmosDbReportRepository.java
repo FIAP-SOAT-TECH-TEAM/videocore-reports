@@ -4,9 +4,9 @@ import com.azure.spring.data.cosmos.repository.CosmosRepository;
 import com.azure.spring.data.cosmos.repository.Query;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.entity.ReportEntity;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +14,7 @@ import java.util.Optional;
  * Repositório para operações de persistência de {@link ReportEntity} no Cosmos DB.
  */
 @Repository
+@Primary
 public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity, String> {
     /**
      * Busca um {@link ReportEntity} por {@code userId}, {@code requestId}, {@code videoName}
