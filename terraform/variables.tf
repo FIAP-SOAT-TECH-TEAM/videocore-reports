@@ -41,7 +41,7 @@
   variable "release_namespace" {
     type        = string
     description = "Namespace Kubernetes onde o release será instalado."
-    default = "default"
+    default     = "default"
   }
 
   variable "chart_name" {
