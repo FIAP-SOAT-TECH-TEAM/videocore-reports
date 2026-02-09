@@ -18,7 +18,7 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
 
     @Test
     void shouldReturnDownloadUrlWhenAllParametersAreValid() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
@@ -29,23 +29,23 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act
+        // Act
         String url = useCase.getVideoImagesDownloadUrl("request", "video.mp4");
 
-        // assert
+        // Assert
         assertEquals("http://download-url", url);
     }
 
     @Test
     void shouldThrowExceptionWhenRequestIdIsNull() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 VideoException.class,
                 () -> useCase.getVideoImagesDownloadUrl(null, "video.mp4")
@@ -54,14 +54,14 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenRequestIdIsBlank() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 VideoException.class,
                 () -> useCase.getVideoImagesDownloadUrl(" ", "video.mp4")
@@ -70,14 +70,14 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenVideoNameIsNull() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 VideoException.class,
                 () -> useCase.getVideoImagesDownloadUrl("request", null)
@@ -86,14 +86,14 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenVideoNameIsBlank() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 VideoException.class,
                 () -> useCase.getVideoImagesDownloadUrl("request", " ")
@@ -102,7 +102,7 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenUserIsNotAuthenticated() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
@@ -111,7 +111,7 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 NotAuthorizedException.class,
                 () -> useCase.getVideoImagesDownloadUrl("request", "video.mp4")
@@ -120,7 +120,7 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenDownloadUrlIsNull() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
@@ -131,7 +131,7 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 VideoImageDownloadUrlNotFoundException.class,
                 () -> useCase.getVideoImagesDownloadUrl("request", "video.mp4")
@@ -140,7 +140,7 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenDownloadUrlIsBlank() {
-        // arrange
+        // Arrange
         VideoGateway videoGateway = mock(VideoGateway.class);
         AuthenticatedUserGateway authenticatedUserGateway = mock(AuthenticatedUserGateway.class);
 
@@ -151,7 +151,7 @@ class GetAuthUserVideoImagesDownloadUrlUseCaseTest {
         GetAuthUserVideoImagesDownloadUrlUseCase useCase =
                 new GetAuthUserVideoImagesDownloadUrlUseCase(videoGateway, authenticatedUserGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 VideoImageDownloadUrlNotFoundException.class,
                 () -> useCase.getVideoImagesDownloadUrl("request", "video.mp4")

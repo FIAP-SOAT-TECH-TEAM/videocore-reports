@@ -13,22 +13,22 @@ class VideoNameTest {
 
     @Test
     void shouldCreateVideoNameWithValidValue() {
-        // arrange
+        // Arrange
         String value = "video.mp4";
 
-        // act
+        // Act
         VideoName name = new VideoName(value);
 
-        // assert
+        // Assert
         assertEquals("video.mp4", name.value());
     }
 
     @Test
     void shouldThrowExceptionWhenVideoNameIsBlank() {
-        // arrange
+        // Arrange
         String value = " ";
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> new VideoName(value));
     }
 }

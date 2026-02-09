@@ -17,7 +17,7 @@ class UpdateReportUseCaseTest {
 
     @Test
     void shouldUpdateReportSuccessfully() {
-        // arrange
+        // Arrange
         UpdateReportUseCase useCase = new UpdateReportUseCase();
         Report report = mock(Report.class);
         Report newReport = mock(Report.class);
@@ -30,19 +30,19 @@ class UpdateReportUseCaseTest {
         when(newReport.getReportTime()).thenReturn(java.time.Instant.now());
         when(newReport.getStatus()).thenReturn(ProcessStatus.PROCESSING);
 
-        // act
+        // Act
         Report result = useCase.updateReport(report, newReport);
 
-        // assert
+        // Assert
         assertEquals(report, result);
     }
 
     @Test
     void shouldThrowExceptionWhenAnyReportIsNull() {
-        // arrange
+        // Arrange
         UpdateReportUseCase useCase = new UpdateReportUseCase();
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> useCase.updateReport(null, mock(Report.class)));
         assertThrows(ReportException.class, () -> useCase.updateReport(mock(Report.class), null));
     }

@@ -17,16 +17,16 @@ class ReportTest {
 
     @Test
     void shouldCreateReportWithAllValidValues() {
-        // arrange
+        // Arrange
         Report report = ReportFixture.validReport();
 
-        // act
+        // Act
         String videoName = report.getVideoName();
         long imageMinute = report.getImageMinute();
         long minuteFrameCut = report.getMinuteFrameCut();
         Double percent = report.getPercentStatusProcess();
 
-        // assert
+        // Assert
         assertEquals("video.mp4", videoName);
         assertEquals(1L, imageMinute);
         assertEquals(1L, minuteFrameCut);
@@ -35,10 +35,10 @@ class ReportTest {
 
     @Test
     void shouldThrowExceptionWhenAnyConstructorArgumentIsNull() {
-        // arrange
+        // Arrange
         Instant now = Instant.now();
 
-        // act + assert
+        // Act & Assert
         assertThrows(NullPointerException.class, () ->
                 new Report(null, ReportFixture.imageMinute(), ReportFixture.minuteFrameCut(),
                         ReportFixture.metadata(), ReportFixture.percentStatusProcess(), now, ProcessStatus.PROCESSING)
@@ -77,46 +77,46 @@ class ReportTest {
 
     @Test
     void shouldSetIdSuccessfully() {
-        // arrange
+        // Arrange
         Report report = ReportFixture.validReport();
 
-        // act
+        // Act
         report.setId("id-123");
 
-        // assert
+        // Assert
         assertEquals("id-123", report.getId());
     }
 
     @Test
     void shouldThrowExceptionWhenIdIsNull() {
-        // arrange
+        // Arrange
         Report report = ReportFixture.validReport();
 
-        // act + assert
+        // Act & Assert
         assertThrows(NullPointerException.class, () -> report.setId(null));
     }
 
     @Test
     void shouldThrowExceptionWhenIdIsBlank() {
-        // arrange
+        // Arrange
         Report report = ReportFixture.validReport();
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> report.setId(" "));
     }
 
     @Test
     void shouldUpdateAllSettersSuccessfully() {
-        // arrange
+        // Arrange
         Report report = ReportFixture.validReport();
         VideoName newVideoName = new VideoName("new-video.mp4");
         ImageMinute newImageMinute = new ImageMinute(5);
         MinuteFrameCut newMinuteFrameCut = new MinuteFrameCut(2);
-        Metadata newMetadata = new Metadata("user-2", "request-2");
+        Metadata newMetadata = new Metadata("user-2", "request-2", "trace-2");
         PercentStatusProcess newPercent = new PercentStatusProcess(50.0);
         Instant newTime = Instant.now();
 
-        // act
+        // Act
         report.setVideoName(newVideoName);
         report.setImageMinute(newImageMinute);
         report.setMinuteFrameCut(newMinuteFrameCut);
@@ -125,7 +125,7 @@ class ReportTest {
         report.setReportTime(newTime);
         report.setStatus(ProcessStatus.COMPLETED);
 
-        // assert
+        // Assert
         assertEquals("new-video.mp4", report.getVideoName());
         assertEquals(5L, report.getImageMinute());
         assertEquals(2L, report.getMinuteFrameCut());
@@ -138,10 +138,10 @@ class ReportTest {
 
     @Test
     void shouldThrowExceptionWhenSetterReceivesNull() {
-        // arrange
+        // Arrange
         Report report = ReportFixture.validReport();
 
-        // act + assert
+        // Act & Assert
         assertThrows(NullPointerException.class, () -> report.setVideoName(null));
         assertThrows(NullPointerException.class, () -> report.setImageMinute(null));
         assertThrows(NullPointerException.class, () -> report.setMinuteFrameCut(null));

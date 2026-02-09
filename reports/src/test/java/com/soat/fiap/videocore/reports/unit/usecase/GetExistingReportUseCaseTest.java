@@ -18,7 +18,7 @@ class GetExistingReportUseCaseTest {
 
     @Test
     void shouldReturnExistingReportWhenAllParametersAreValid() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
@@ -26,39 +26,39 @@ class GetExistingReportUseCaseTest {
         when(gateway.getExistingReport("user", "request", "video.mp4", 50.0))
                 .thenReturn(Optional.of(report));
 
-        // act
+        // Act
         Optional<Report> result =
                 useCase.getExistingReport("user", "request", "video.mp4", 50.0);
 
-        // assert
+        // Assert
         assertTrue(result.isPresent());
         assertEquals(report, result.get());
     }
 
     @Test
     void shouldReturnEmptyOptionalWhenReportDoesNotExist() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
         when(gateway.getExistingReport("user", "request", "video.mp4", 10.0))
                 .thenReturn(Optional.empty());
 
-        // act
+        // Act
         Optional<Report> result =
                 useCase.getExistingReport("user", "request", "video.mp4", 10.0);
 
-        // assert
+        // Assert
         assertTrue(result.isEmpty());
     }
 
     @Test
     void shouldThrowExceptionWhenUserIdIsNull() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 ReportException.class,
                 () -> useCase.getExistingReport(null, "request", "video.mp4", 10.0)
@@ -67,11 +67,11 @@ class GetExistingReportUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenUserIdIsBlank() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 ReportException.class,
                 () -> useCase.getExistingReport(" ", "request", "video.mp4", 10.0)
@@ -80,11 +80,11 @@ class GetExistingReportUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenRequestIdIsNull() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 ReportException.class,
                 () -> useCase.getExistingReport("user", null, "video.mp4", 10.0)
@@ -93,11 +93,11 @@ class GetExistingReportUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenRequestIdIsBlank() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 ReportException.class,
                 () -> useCase.getExistingReport("user", " ", "video.mp4", 10.0)
@@ -106,11 +106,11 @@ class GetExistingReportUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenVideoNameIsNull() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 ReportException.class,
                 () -> useCase.getExistingReport("user", "request", null, 10.0)
@@ -119,11 +119,11 @@ class GetExistingReportUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenVideoNameIsBlank() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         GetExistingReportUseCase useCase = new GetExistingReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(
                 ReportException.class,
                 () -> useCase.getExistingReport("user", "request", " ", 10.0)

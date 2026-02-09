@@ -16,40 +16,40 @@ class SaveReportUseCaseTest {
 
     @Test
     void shouldSaveReportSuccessfully() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         Report report = mock(Report.class);
         when(gateway.save(report)).thenReturn(report);
 
         SaveReportUseCase useCase = new SaveReportUseCase(gateway);
 
-        // act
+        // Act
         Report saved = useCase.saveReport(report);
 
-        // assert
+        // Assert
         assertEquals(report, saved);
     }
 
     @Test
     void shouldThrowExceptionWhenReportIsNull() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         SaveReportUseCase useCase = new SaveReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(ProcessReportException.class, () -> useCase.saveReport(null));
     }
 
     @Test
     void shouldWrapExceptionWhenGatewayThrowsError() {
-        // arrange
+        // Arrange
         ReportGateway gateway = mock(ReportGateway.class);
         Report report = mock(Report.class);
         when(gateway.save(report)).thenThrow(new RuntimeException("db error"));
 
         SaveReportUseCase useCase = new SaveReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(ProcessReportException.class, () -> useCase.saveReport(report));
     }
 }

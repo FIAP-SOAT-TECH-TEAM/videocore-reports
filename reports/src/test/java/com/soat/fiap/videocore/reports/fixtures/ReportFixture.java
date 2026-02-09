@@ -56,7 +56,7 @@ public final class ReportFixture {
      * @return {@link Metadata} válido
      */
     public static Metadata metadata() {
-        return new Metadata("user-1", "request-1");
+        return new Metadata("user-1", "request-1", "trace-1");
     }
 
     /**

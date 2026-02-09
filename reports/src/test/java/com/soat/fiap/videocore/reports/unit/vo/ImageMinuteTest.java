@@ -13,22 +13,22 @@ class ImageMinuteTest {
 
     @Test
     void shouldCreateImageMinuteWithZero() {
-        // arrange
+        // Arrange
         long value = 0;
 
-        // act
+        // Act
         ImageMinute imageMinute = new ImageMinute(value);
 
-        // assert
+        // Assert
         assertEquals(0, imageMinute.value());
     }
 
     @Test
     void shouldThrowExceptionWhenImageMinuteIsNegative() {
-        // arrange
+        // Arrange
         long value = -1;
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> new ImageMinute(value));
     }
 }

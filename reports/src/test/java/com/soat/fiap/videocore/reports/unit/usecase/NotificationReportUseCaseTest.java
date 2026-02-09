@@ -16,25 +16,25 @@ class NotificationReportUseCaseTest {
 
     @Test
     void shouldNotifyWhenReportIsValid() {
-        // arrange
+        // Arrange
         var gateway = mock(NotificationGateway.class);
         NotificationReportUseCase useCase = new NotificationReportUseCase(gateway);
         Report report = mock(Report.class);
 
-        // act
+        // Act
         useCase.notificationReport(report);
 
-        // assert
+        // Assert
         verify(gateway).notificateReportClients(report);
     }
 
     @Test
     void shouldThrowExceptionWhenReportIsNull() {
-        // arrange
+        // Arrange
         var gateway = mock(NotificationGateway.class);
         NotificationReportUseCase useCase = new NotificationReportUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> useCase.notificationReport(null));
     }
 }

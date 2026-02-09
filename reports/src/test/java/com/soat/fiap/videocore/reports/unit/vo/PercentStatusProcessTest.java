@@ -13,22 +13,22 @@ class PercentStatusProcessTest {
 
     @Test
     void shouldCreatePercentStatusProcessWithValidValue() {
-        // arrange
+        // Arrange
         Double value = 50.0;
 
-        // act
+        // Act
         PercentStatusProcess percent = new PercentStatusProcess(value);
 
-        // assert
+        // Assert
         assertEquals(50.0, percent.value());
     }
 
     @Test
     void shouldThrowExceptionWhenPercentIsGreaterThan100() {
-        // arrange
+        // Arrange
         Double value = 101.0;
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> new PercentStatusProcess(value));
     }
 }

@@ -21,7 +21,7 @@ class CreateReportUseCaseTest {
 
     @Test
     void shouldCreateReportWithStartedStatusWhenPercentIsZero() {
-        // arrange
+        // Arrange
         ReportInput input = mock(ReportInput.class);
         when(input.videoName()).thenReturn("video.mp4");
         when(input.imageMinute()).thenReturn(0L);
@@ -32,16 +32,16 @@ class CreateReportUseCaseTest {
         when(input.reportTime()).thenReturn(Instant.now());
         when(input.isError()).thenReturn(false);
 
-        // act
+        // Act
         Report report = useCase.createReport(input);
 
-        // assert
+        // Assert
         assertEquals(ProcessStatus.STARTED, report.getStatus());
     }
 
     @Test
     void shouldCreateReportWithProcessingStatusWhenPercentBetweenZeroAndHundred() {
-        // arrange
+        // Arrange
         ReportInput input = mock(ReportInput.class);
         when(input.videoName()).thenReturn("video.mp4");
         when(input.imageMinute()).thenReturn(1L);
@@ -52,16 +52,16 @@ class CreateReportUseCaseTest {
         when(input.reportTime()).thenReturn(Instant.now());
         when(input.isError()).thenReturn(false);
 
-        // act
+        // Act
         Report report = useCase.createReport(input);
 
-        // assert
+        // Assert
         assertEquals(ProcessStatus.PROCESSING, report.getStatus());
     }
 
     @Test
     void shouldCreateReportWithCompletedStatusWhenPercentIsHundred() {
-        // arrange
+        // Arrange
         ReportInput input = mock(ReportInput.class);
         when(input.videoName()).thenReturn("video.mp4");
         when(input.imageMinute()).thenReturn(1L);
@@ -72,16 +72,16 @@ class CreateReportUseCaseTest {
         when(input.reportTime()).thenReturn(Instant.now());
         when(input.isError()).thenReturn(false);
 
-        // act
+        // Act
         Report report = useCase.createReport(input);
 
-        // assert
+        // Assert
         assertEquals(ProcessStatus.COMPLETED, report.getStatus());
     }
 
     @Test
     void shouldCreateReportWithFailedStatusWhenInputHasError() {
-        // arrange
+        // Arrange
         ReportInput input = mock(ReportInput.class);
         when(input.videoName()).thenReturn("video.mp4");
         when(input.imageMinute()).thenReturn(1L);
@@ -92,19 +92,19 @@ class CreateReportUseCaseTest {
         when(input.reportTime()).thenReturn(Instant.now());
         when(input.isError()).thenReturn(true);
 
-        // act
+        // Act
         Report report = useCase.createReport(input);
 
-        // assert
+        // Assert
         assertEquals(ProcessStatus.FAILED, report.getStatus());
     }
 
     @Test
     void shouldThrowExceptionWhenInputIsNull() {
-        // arrange
+        // Arrange
         ReportInput input = null;
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> useCase.createReport(input));
     }
 }

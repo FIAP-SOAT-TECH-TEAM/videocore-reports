@@ -16,7 +16,7 @@ class PublishProcessVideoErrorEventUseCaseTest {
 
     @Test
     void shouldPublishEventWhenReportIsValid() {
-        // arrange
+        // Arrange
         EventPublisherGateway gateway = mock(EventPublisherGateway.class);
         PublishProcessVideoErrorEventUseCase useCase =
                 new PublishProcessVideoErrorEventUseCase(gateway);
@@ -28,21 +28,21 @@ class PublishProcessVideoErrorEventUseCaseTest {
         when(report.getPercentStatusProcess()).thenReturn(10.0);
         when(report.getReportTime()).thenReturn(java.time.Instant.now());
 
-        // act
+        // Act
         useCase.publishProcessVideoErrorEvent(report);
 
-        // assert
+        // Assert
         verify(gateway).publishProcessVideoErrorEvent(any());
     }
 
     @Test
     void shouldThrowExceptionWhenReportIsNull() {
-        // arrange
+        // Arrange
         EventPublisherGateway gateway = mock(EventPublisherGateway.class);
         PublishProcessVideoErrorEventUseCase useCase =
                 new PublishProcessVideoErrorEventUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> useCase.publishProcessVideoErrorEvent(null));
     }
 }

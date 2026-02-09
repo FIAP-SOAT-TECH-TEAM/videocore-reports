@@ -14,22 +14,22 @@ class MinuteFrameCutTest {
 
     @Test
     void shouldCreateMinuteFrameCutWithValidValue() {
-        // arrange
+        // Arrange
         long value = 1;
 
-        // act
+        // Act
         MinuteFrameCut cut = new MinuteFrameCut(value);
 
-        // assert
+        // Assert
         assertEquals(1, cut.value());
     }
 
     @Test
     void shouldThrowExceptionWhenValueIsZeroOrLess() {
-        // arrange
+        // Arrange
         long value = 0;
 
-        // act + assert
+        // Act & Assert
         assertThrows(ReportException.class, () -> new MinuteFrameCut(value));
     }
 }

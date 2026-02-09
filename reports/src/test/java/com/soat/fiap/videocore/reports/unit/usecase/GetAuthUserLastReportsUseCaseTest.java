@@ -19,7 +19,7 @@ class GetAuthUserLastReportsUseCaseTest {
 
     @Test
     void shouldReturnReportsWhenUserIsAuthenticated() {
-        // arrange
+        // Arrange
         ReportGateway reportGateway = mock(ReportGateway.class);
         AuthenticatedUserGateway userGateway = mock(AuthenticatedUserGateway.class);
         when(userGateway.getSubject()).thenReturn("user");
@@ -28,16 +28,16 @@ class GetAuthUserLastReportsUseCaseTest {
         GetAuthUserLastReportsUseCase useCase =
                 new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
-        // act
+        // Act
         List<Report> reports = useCase.getAuthenticatedUserLastReports();
 
-        // assert
+        // Assert
         assertEquals(1, reports.size());
     }
 
     @Test
     void shouldThrowExceptionWhenUserIsNotAuthenticated() {
-        // arrange
+        // Arrange
         ReportGateway reportGateway = mock(ReportGateway.class);
         AuthenticatedUserGateway userGateway = mock(AuthenticatedUserGateway.class);
         when(userGateway.getSubject()).thenReturn(" ");
@@ -45,7 +45,7 @@ class GetAuthUserLastReportsUseCaseTest {
         GetAuthUserLastReportsUseCase useCase =
                 new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(NotAuthorizedException.class, useCase::getAuthenticatedUserLastReports);
     }
 }

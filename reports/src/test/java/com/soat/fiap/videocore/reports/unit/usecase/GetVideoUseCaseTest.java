@@ -16,38 +16,38 @@ class GetVideoUseCaseTest {
 
     @Test
     void shouldReturnVideoWhenFound() {
-        // arrange
+        // Arrange
         VideoGateway gateway = mock(VideoGateway.class);
         VideoDto dto = mock(VideoDto.class);
         when(gateway.getVideo("url")).thenReturn(dto);
 
         GetVideoUseCase useCase = new GetVideoUseCase(gateway);
 
-        // act
+        // Act
         VideoDto result = useCase.getVideo("url");
 
-        // assert
+        // Assert
         assertEquals(dto, result);
     }
 
     @Test
     void shouldThrowExceptionWhenUrlIsBlank() {
-        // arrange
+        // Arrange
         VideoGateway gateway = mock(VideoGateway.class);
         GetVideoUseCase useCase = new GetVideoUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(ProcessReportException.class, () -> useCase.getVideo(" "));
     }
 
     @Test
     void shouldThrowExceptionWhenVideoIsNotFound() {
-        // arrange
+        // Arrange
         VideoGateway gateway = mock(VideoGateway.class);
         when(gateway.getVideo("url")).thenReturn(null);
         GetVideoUseCase useCase = new GetVideoUseCase(gateway);
 
-        // act + assert
+        // Act & Assert
         assertThrows(ProcessReportException.class, () -> useCase.getVideo("url"));
     }
 }

@@ -12,24 +12,25 @@ class MetadataTest {
 
     @Test
     void shouldCreateMetadataWithValidValues() {
-        // arrange
+        // Arrange
         String userId = "user";
         String requestId = "request";
+        String traceId = "trace";
 
-        // act
-        Metadata metadata = new Metadata(userId, requestId);
+        // Act
+        Metadata metadata = new Metadata(userId, requestId, traceId);
 
-        // assert
+        // Assert
         assertEquals(userId, metadata.userId());
         assertEquals(requestId, metadata.requestId());
     }
 
     @Test
     void shouldThrowExceptionWhenUserIdIsNull() {
-        // arrange
+        // Arrange
         String userId = null;
 
-        // act + assert
-        assertThrows(NullPointerException.class, () -> new Metadata(userId, "request"));
+        // Act & Assert
+        assertThrows(NullPointerException.class, () -> new Metadata(userId, "request", "trace"));
     }
 }
