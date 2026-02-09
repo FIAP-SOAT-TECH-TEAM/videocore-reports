@@ -29,7 +29,7 @@ public class CreateReportUseCase {
         var videoName = new VideoName(reportInput.videoName());
         var imageMinute = new ImageMinute(reportInput.imageMinute());
         var minuteFrameCut = new MinuteFrameCut(reportInput.frameCutMinutes());
-        var metadata = new Metadata(reportInput.userId(), reportInput.requestId());
+        var metadata = new Metadata(reportInput.userId(), reportInput.requestId(), reportInput.traceId());
         var percentStatusProcess = new PercentStatusProcess(reportInput.percentStatusProcess());
 
         var processStatus = ProcessStatus.STARTED;

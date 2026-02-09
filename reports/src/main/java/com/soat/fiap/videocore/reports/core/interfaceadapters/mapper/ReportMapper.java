@@ -24,6 +24,7 @@ public interface ReportMapper {
     @Mapping(target = "videoName", expression = "java(report.getVideoName())")
     @Mapping(target = "userId", expression = "java(report.getUserId())")
     @Mapping(target = "requestId", expression = "java(report.getRequestId())")
+    @Mapping(target = "traceId", expression = "java(report.getTraceId())")
     @Mapping(target = "imageMinute", expression = "java(report.getImageMinute())")
     @Mapping(target = "frameCutMinutes", expression = "java(report.getMinuteFrameCut())")
     @Mapping(target = "percentStatusProcess", expression = "java(report.getPercentStatusProcess())")
@@ -38,7 +39,7 @@ public interface ReportMapper {
     @Mapping(target = "videoName", expression = "java(new VideoName(dto.videoName()))")
     @Mapping(target = "imageMinute", expression = "java(new ImageMinute(dto.imageMinute()))")
     @Mapping(target = "minuteFrameCut", expression = "java(new MinuteFrameCut(dto.frameCutMinutes()))")
-    @Mapping(target = "metadata", expression = "java(new Metadata(dto.userId(), dto.requestId()))")
+    @Mapping(target = "metadata", expression = "java(new Metadata(dto.userId(), dto.requestId(), dto.traceId()))")
     @Mapping(target = "percentStatusProcess", expression = "java(new PercentStatusProcess(dto.percentStatusProcess()))")
     Report toModel(ReportDto dto);
 }

@@ -32,6 +32,7 @@ public class PublishProcessVideoErrorEventUseCase {
                 report.getVideoName(),
                 report.getUserId(),
                 report.getRequestId(),
+                report.getTraceId(),
                 report.getMinuteFrameCut(),
                 report.getPercentStatusProcess(),
                 report.getReportTime()

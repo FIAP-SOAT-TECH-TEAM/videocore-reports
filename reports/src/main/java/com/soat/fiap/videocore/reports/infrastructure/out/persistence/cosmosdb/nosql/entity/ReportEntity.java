@@ -27,6 +27,8 @@ public class ReportEntity {
 
     private String requestId;
 
+    private String traceId;
+
     private long imageMinute;
 
     private long frameCutMinutes;

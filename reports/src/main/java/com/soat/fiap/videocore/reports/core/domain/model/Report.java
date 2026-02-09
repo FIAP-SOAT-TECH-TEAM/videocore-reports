@@ -208,6 +208,15 @@ public class Report {
     }
 
     /**
+     * Retorna o identificador de rastreio (observabilidade).
+     *
+     * @return traceId
+     */
+    public String getTraceId() {
+        return metadata.traceId();
+    }
+
+    /**
      * Retorna o percentual de progresso do processamento do vídeo.
      *
      * @return o percentual de progresso do processamento do vídeo

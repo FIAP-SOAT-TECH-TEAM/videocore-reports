@@ -23,6 +23,7 @@ public interface ReportPresenter {
     @Mapping(target = "videoName", expression = "java(report.getVideoName())")
     @Mapping(target = "userId", expression = "java(report.getUserId())")
     @Mapping(target = "requestId", expression = "java(report.getRequestId())")
+    @Mapping(target = "traceId", expression = "java(report.getTraceId())")
     @Mapping(target = "frameCutMinutes", expression = "java(report.getMinuteFrameCut())")
     @Mapping(target = "percentStatusProcess", expression = "java(report.getPercentStatusProcess())")
     ReportResponse toResponse(Report report);

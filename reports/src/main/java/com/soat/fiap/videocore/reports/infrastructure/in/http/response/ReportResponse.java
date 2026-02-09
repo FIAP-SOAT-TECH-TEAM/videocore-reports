@@ -22,6 +22,9 @@ public record ReportResponse(
         @Schema(description = "Identificador da requisição de processamento", example = "9a8b7c6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d")
         String requestId,
 
+        @Schema(description = "Identificador de rastreio (observabilidade)", example = "c3b9e6f2-7a44-4e8b-9c6a-1d0f5b2a8e91")
+        String traceId,
+
         @Schema(description = "Intervalo de corte de frames em minutos", example = "5")
         long frameCutMinutes,
 
