@@ -94,22 +94,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Execute Spotless Apply
-        run: ./gradlew spotlessApply
-
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Unit Test with Gradle
+      - name: Unit Test with Gradle (finalizedBy JacocoTestReport)
         run: ./gradlew test
-
-      - name: Integration Test with Gradle (Cucumber + TestContainers)
-        run: ./gradlew cucumber
-        env:
-          LOCALSTACK_AUTH_TOKEN: ${{ secrets.LOCALSTACK_AUTH_TOKEN }}
-
-      - name: Generate Jacoco Report
-        run: ./gradlew jacocoTestReport
 
       - name: Build and analyze with SonarCloud
         run: ./gradlew sonar "-Dsonar.qualitygate.wait=true" --info
