@@ -1,6 +1,6 @@
 apiVersion: v2
 name: videocore-reports
-description: API de gerenciamento dos reportes de atualização no status de processamento de um vídeo, desenvolvido com Clean Architecture, DDD e microsserviços.
+description: Microsserviço de gerenciamento dos reportes de atualização no status de processamento de um vídeo, desenvolvido com Clean Architecture, DDD e microsserviços.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
