@@ -100,10 +100,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
 
       - name: Unit Test with Gradle (finalizedBy JacocoTestReport)
-        run: ./gradlew test
+        run: ./gradlew test --info
 
       - name: Build and analyze with SonarCloud
         run: ./gradlew sonar "-Dsonar.qualitygate.wait=true" --info

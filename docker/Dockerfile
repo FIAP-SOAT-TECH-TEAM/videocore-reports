@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/native-image-community:25-jdk-alpine AS build
+FROM eclipse-temurin:25-jdk-alpine AS build
 WORKDIR /app
 
 # Copiar arquivos de dependências e build
