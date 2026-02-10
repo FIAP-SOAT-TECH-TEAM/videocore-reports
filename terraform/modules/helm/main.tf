@@ -15,11 +15,6 @@ resource "helm_release" "videocore_reports" {
   }
 
   set {
-    name  = "namespace.monitor.name"
-    value = data.terraform_remote_state.infra.outputs.aks_monitor_namespace_name
-  }
-
-  set {
     name  = "ingress.hosts[0].host"
     value = data.terraform_remote_state.infra.outputs.api_reports_private_dns_fqdn
   }
