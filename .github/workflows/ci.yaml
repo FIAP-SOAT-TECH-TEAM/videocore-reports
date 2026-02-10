@@ -103,15 +103,15 @@ jobs:
         run: ./gradlew build --no-daemon
 
       - name: Unit Test with Gradle (finalizedBy JacocoTestReport)
-        run: ./gradlew test
+        run: ./gradlew test --no-daemon
 
       - name: Build and analyze with SonarCloud
-        run: ./gradlew sonar "-Dsonar.qualitygate.wait=true" --info
+        run: ./gradlew sonar "-Dsonar.qualitygate.wait=true" --no-daemon --info
         env:
           SONAR_CLOUD_TOKEN: ${{ secrets.SONAR_CLOUD_TOKEN }}
 
       - name: Generate OpenApi File
-        run: ./gradlew generateOpenAPI
+        run: ./gradlew generateOpenAPI --no-daemon
 
       - name: Upload OpenApi File
         uses: actions/upload-artifact@v4
