@@ -2,15 +2,15 @@ FROM eclipse-temurin:25-jdk-alpine AS build
 WORKDIR /app
 
 # Copiar arquivos de dependências e build
-COPY gradle/ ./gradle/
-COPY gradlew build.gradle settings.gradle ./ 
+COPY reports/gradle/ ./gradle/
+COPY reports/gradlew reports/build.gradle reports/settings.gradle ./ 
 RUN chmod +x ./gradlew
 
 # Download de dependências
 RUN ./gradlew dependencies --no-daemon
 
 # Copiar código fonte
-COPY src/ ./src/
+COPY reports/src/ ./src/
 
 # Construir o aplicativo AOT (native image)
 RUN ./gradlew nativeCompile --no-daemon

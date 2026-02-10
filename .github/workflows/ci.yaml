@@ -103,7 +103,7 @@ jobs:
         run: ./gradlew build --no-daemon
 
       - name: Unit Test with Gradle (finalizedBy JacocoTestReport)
-        run: ./gradlew test --info
+        run: ./gradlew test
 
       - name: Build and analyze with SonarCloud
         run: ./gradlew sonar "-Dsonar.qualitygate.wait=true" --info
@@ -117,12 +117,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: openapi
-          path: build/openapi/swagger.json
+          path: reports/build/openapi/swagger.json
 
   push:
     needs: [build, infra-info]
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
