@@ -1,0 +1,23 @@
+# SERVER
+SERVER_ADDRESS=0.0.0.0
+SERVER_PORT=8081
+WEBSOCKET_BASE_ENDPOINT=/ws
+
+# SONAR
+SONAR_CLOUD_TOKEN=sonar_token
+
+# Banco de Dados Azure CosmosDB
+SPRING_AZURE_COSMOS_URI=https://localhost:8079
+SPRING_AZURE_COSMOS_DATABASE=reports
+SPRING_AZURE_COSMOS_KEY=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==
+
+# OTEL
+OTEL_GRPC_ENDPOINT=http://localhost:4320
+
+# Azure Service Bus
+AZ_SVC_BUS_CONNECTION_STRING=Endpoint=sb://localhost;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
+
+# Azure Blob Storage
+AZURE_BLOB_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;
+AZURE_BLOB_STORAGE_VIDEO_CONTAINER_NAME=videos
+AZURE_BLOB_STORAGE_IMAGE_CONTAINER_NAME=images

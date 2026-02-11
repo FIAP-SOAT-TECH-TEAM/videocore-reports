@@ -1,0 +1,7 @@
+📽️ Video Core Reports - Helm Chart Deployment
+
+🎯 Implementado com Clean Architecture e DDD
+
+🌐 Consulte FQDN público do APIM
+
+📖 Documentação completa: https://github.com/FIAP-SOAT-TECH-TEAM/videocore-reports
