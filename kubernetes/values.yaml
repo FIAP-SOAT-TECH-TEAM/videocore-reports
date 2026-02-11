@@ -54,7 +54,7 @@ api:
     baseEndpoint: "replaced"
 
   otel:
-    grpcEndpoint: "nr-k8s-otel-collector-gateway:4317"
+    grpcEndpoint: "http://nr-k8s-otel-collector-gateway:4317"
 
 secrets:
   azureKeyVault:
