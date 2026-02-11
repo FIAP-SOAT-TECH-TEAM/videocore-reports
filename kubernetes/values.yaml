@@ -1,6 +1,8 @@
 namespace:
   api:
     name: replaced
+  monitor:
+    name: replaced
 
 ingress:
   hosts:
@@ -52,9 +54,6 @@ api:
 
   websocket:
     baseEndpoint: "replaced"
-
-  otel:
-    grpcEndpoint: "http://nr-k8s-otel-collector-gateway:4317"
 
 secrets:
   azureKeyVault:
