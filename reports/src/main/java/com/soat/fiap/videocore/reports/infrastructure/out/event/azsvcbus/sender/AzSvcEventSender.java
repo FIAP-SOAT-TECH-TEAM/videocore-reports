@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ProcessVideoErrorEventDto;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.EventPublisherSource;
-import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.exceptions.ServiceBusSerializationException;
+import com.soat.fiap.videocore.reports.infrastructure.common.exceptions.azure.svcbus.ServiceBusSerializationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.ProcessVideoStatusUpdateController;
-import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.exceptions.ServiceBusSerializationException;
+import com.soat.fiap.videocore.reports.infrastructure.common.exceptions.azure.svcbus.ServiceBusSerializationException;
 import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.payload.ProcessVideoStatusUpdatePayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

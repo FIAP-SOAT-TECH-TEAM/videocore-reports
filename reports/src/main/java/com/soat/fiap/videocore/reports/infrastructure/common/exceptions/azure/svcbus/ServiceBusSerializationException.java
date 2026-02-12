@@ -1,4 +1,4 @@
-package com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.exceptions;
+package com.soat.fiap.videocore.reports.infrastructure.common.exceptions.azure.svcbus;
 
 /**
  * Exceção lançada quando ocorre algum erro de serialização/desserialização no Service Bus
