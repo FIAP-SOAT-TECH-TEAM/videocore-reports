@@ -88,6 +88,11 @@ public class VideoController {
 
             return ResponseEntity.ok(downloadUrl);
         }
+        catch (Exception e) {
+            log.error("request_error");
+
+            throw e;
+        }
         finally {
             CanonicalContext.clear();
         }
@@ -137,7 +142,13 @@ public class VideoController {
             log.info("request_completed");
 
             return ResponseEntity.ok(uploadUrl);
-        } finally {
+        }
+        catch (Exception e) {
+            log.error("request_error");
+
+            throw e;
+        }
+        finally {
             CanonicalContext.clear();
         }
     }

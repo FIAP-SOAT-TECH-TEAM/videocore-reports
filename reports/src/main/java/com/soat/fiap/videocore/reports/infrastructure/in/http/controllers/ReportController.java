@@ -60,6 +60,11 @@ public class ReportController {
 
             return ResponseEntity.ok(reports);
         }
+        catch (Exception e) {
+            log.error("request_error");
+
+            throw e;
+        }
         finally {
             CanonicalContext.clear();
         }
