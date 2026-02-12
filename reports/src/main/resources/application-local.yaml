@@ -2,14 +2,6 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
-  cloud:
-    azure:
-      cosmos:
-        # https://github.com/Azure/azure-cosmos-db-emulator-docker/issues/163
-        connection-mode: gateway
-        populate-query-metrics: true
-
-# Logging
 logging:
   level:
     root: INFO

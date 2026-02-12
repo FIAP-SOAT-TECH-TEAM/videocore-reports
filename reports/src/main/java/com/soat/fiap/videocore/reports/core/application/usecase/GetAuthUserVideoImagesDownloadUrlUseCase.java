@@ -60,7 +60,6 @@ public class GetAuthUserVideoImagesDownloadUrlUseCase {
         if (downloadUrl == null || downloadUrl.isBlank())
             throw new VideoImageDownloadUrlNotFoundException("URL de download do arquivo de imagens do vídeo informado não encontrada. RequestID: %s e VideoName: %s", requestId, videoName);
 
-
         return downloadUrl;
     }
 }

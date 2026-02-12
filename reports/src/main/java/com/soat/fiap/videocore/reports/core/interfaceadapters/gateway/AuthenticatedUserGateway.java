@@ -35,7 +35,6 @@ public class AuthenticatedUserGateway {
 	 */
     @WithSpan(name = "gateway.get.auth.subject")
 	public String getSubject() {
-		log.debug("Obtendo sub do usuário autenticado");
 		return authenticatedUserSource.getSubject();
 	}
 
@@ -46,7 +45,6 @@ public class AuthenticatedUserGateway {
 	 */
     @WithSpan(name = "gateway.get.auth.name")
 	public String getName() {
-		log.debug("Obtendo nome do usuário autenticado");
 		return authenticatedUserSource.getName();
 	}
 
@@ -57,7 +55,6 @@ public class AuthenticatedUserGateway {
 	 */
     @WithSpan(name = "gateway.get.auth.email")
 	public String getEmail() {
-		log.debug("Obtendo email do usuário autenticado");
 		return authenticatedUserSource.getEmail();
 	}
 }

@@ -1,12 +1,13 @@
 package com.soat.fiap.videocore.reports.infrastructure.out.event.azsvcbus.sender;
 
-import com.azure.spring.cloud.service.servicebus.properties.ServiceBusEntityType;
-import com.azure.spring.messaging.servicebus.core.ServiceBusTemplate;
+import com.azure.messaging.servicebus.ServiceBusMessage;
+import com.azure.messaging.servicebus.ServiceBusSenderClient;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ProcessVideoErrorEventDto;
-import com.soat.fiap.videocore.reports.infrastructure.common.event.EventMessagingChannel;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.EventPublisherSource;
+import com.soat.fiap.videocore.reports.infrastructure.in.event.azsvcbus.exceptions.ServiceBusSerializationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AzSvcEventSender implements EventPublisherSource {
 
-    private final ServiceBusTemplate serviceBusTemplate;
+    private final ServiceBusSenderClient processErrorSender;
+    private final ObjectMapper objectMapper;
 
     /**
      * Publica um evento de erro de processamento de vídeo na fila configurada.
@@ -24,10 +26,15 @@ public class AzSvcEventSender implements EventPublisherSource {
      * @param event Evento a ser publicado.
      */
     @Override
-    public void publishProcessVideoErrorEvent(ProcessVideoErrorEventDto event) {
-        var payload = MessageBuilder.withPayload(event).build();
+    public void publishProcessVideoErrorEvent(ProcessVideoErrorEventDto event)  {
+        try {
+            var rawEvent = objectMapper.writeValueAsString(event);
+            var message = new ServiceBusMessage(rawEvent);
 
-        serviceBusTemplate.setDefaultEntityType(ServiceBusEntityType.QUEUE);
-        serviceBusTemplate.send(EventMessagingChannel.PROCESS_ERROR_QUEUE, payload);
+            processErrorSender.sendMessage(message);
+        }
+        catch (JsonProcessingException e) {
+            throw new ServiceBusSerializationException("Erro ao serializar evento", e);
+        }
     }
 }
