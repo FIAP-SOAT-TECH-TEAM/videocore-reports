@@ -2,7 +2,6 @@ package com.soat.fiap.videocore.reports.infrastructure.in.http.auth;
 
 import com.soat.fiap.videocore.reports.infrastructure.common.source.AuthenticatedUserSource;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -16,7 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * propagados para o backend.
  * </p>
  */
-@Component @Slf4j
+@Component
 public class HttpAuthenticatedUserSource implements AuthenticatedUserSource {
 
 	private HttpServletRequest getCurrentRequest() {

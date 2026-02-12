@@ -2,7 +2,6 @@ package com.soat.fiap.videocore.reports.core.interfaceadapters.gateway;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.AuthenticatedUserSource;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
  * {@link AuthenticatedUserSource}.
  * </p>
  */
-@Slf4j
 @Component
 public class AuthenticatedUserGateway {
 
