@@ -31,10 +31,10 @@ module "apim" {
   apim_display_name                   = var.apim_display_name
   swagger_path                        = var.swagger_path
   api_ingress_path                    = local.api_ingress_path_without_slash
-  ws_operation_id                     = var.ws_operation_id
-  ws_display_name                     = var.ws_display_name
-  ws_method                           = var.ws_method
-  ws_url_template                     = var.ws_url_template
+  apim_ws_api_name                    = var.apim_ws_api_name
+  apim_ws_api_version                 = var.apim_ws_api_version
+  apim_ws_display_name                = var.apim_ws_display_name
+  api_reports_private_dns_fqdn        = var.api_reports_private_dns_fqdn
 
   depends_on = [module.helm]
 }

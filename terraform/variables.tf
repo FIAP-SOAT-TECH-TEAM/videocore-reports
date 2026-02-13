@@ -4,6 +4,11 @@
     description = "Azure Subscription ID"
   }
 
+  variable "api_reports_private_dns_fqdn" {
+    type = string
+    description = "FQDN do registro A do microsserviço de reports na zona DNS privada"
+  }
+
 # remote states
   variable "videocore-backend-resource-group" {
     type        = string
@@ -110,7 +115,25 @@
   variable "apim_display_name" {
     description = "Nome exibido da API no API Management"
     type        = string
-    default     = "VideoCore Reports Microsservice"
+    default     = "VideoCore Reports Microsservice API"
+  }
+
+  variable "apim_ws_api_name" {
+    description = "Nome da API WebSocket no API Management"
+    type        = string
+    default     = "videocore-reports-ws"
+  }
+
+  variable "apim_ws_api_version" {
+    description = "Versão da API WebSocket no API Management"
+    type        = string
+    default     = "1"
+  }
+
+  variable "apim_ws_display_name" {
+    description = "Nome exibido da API WebSocket no API Management"
+    type        = string
+    default     = "VideoCore Reports Microsservice WebSocket API"
   }
 
   variable "swagger_path" {
