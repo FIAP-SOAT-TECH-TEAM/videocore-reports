@@ -19,9 +19,9 @@ COPY reports/src/ ./src/
 # Construir o aplicativo AOT (native image)
 # Considerações sobre o Build Time: https://www.graalvm.org/latest/reference-manual/native-image/overview/BuildOutput/#graal-compiler (-O2 Default - Performance Produção)
 RUN ./gradlew nativeCompile \
-  # https://github.com/spring-projects/spring-framework/issues/29019
+  # https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/spring/README.md#spring-boot-3-support
   --build-args="-J-Djava.security.properties=/app/custom_security/custom.security" \
-  #https://github.com/Azure/azure-sdk-for-java/issues/34775
+  # https://github.com/Azure/azure-sdk-for-java/issues/34775
   --build-args="--initialize-at-build-time=org.slf4j.helpers,org.slf4j.LoggerFactory,ch.qos.logback,com.fasterxml.jackson,net.logstash.logback,org.yaml.snakeyaml,tools.jackson.core.util" \
   --no-daemon
 
@@ -29,7 +29,7 @@ RUN ./gradlew nativeCompile \
 FROM alpine:3.20 AS runtime
 WORKDIR /app
 
-# Atualizar ferramentas básicas para health checks
+# Adicionar ferramentas básicas para health checks
 RUN apk add --no-cache curl wget tzdata libc6-compat
 
 # Definir timezone para GMT-3 (America/Sao_Paulo)

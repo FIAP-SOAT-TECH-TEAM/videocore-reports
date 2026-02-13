@@ -4,16 +4,10 @@ server:
   servlet:
     context-path: /
 
-spring:
-  cloud:
-    azure:
-      # Mensageria
-      # https://github.com/Azure/azure-sdk-for-java/issues/43106
-      servicebus:
-        connection-string: ${AZ_SVC_BUS_CONNECTION_STRING:Endpoint=sb://localhost;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;}
-      cosmos:
-        enabled: false
-# Observabilidade
+azure:
+  service-bus:
+    connection-string: ${AZ_SVC_BUS_CONNECTION_STRING:Endpoint=sb://localhost;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;}
+
 otel:
   instrumentation:
     micrometer:
@@ -21,6 +15,5 @@ otel:
   sdk:
     disabled: true
 
-# WebSocket
 websocket:
   base-endpoint: ${WEBSOCKET_BASE_ENDPOINT:/ws}

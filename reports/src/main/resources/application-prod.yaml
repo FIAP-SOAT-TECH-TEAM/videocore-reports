@@ -1,5 +1,4 @@
 spring:
-  # SpringDoc
   springdoc:
     swagger-ui:
       enabled: false

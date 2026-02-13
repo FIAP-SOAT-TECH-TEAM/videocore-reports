@@ -27,12 +27,12 @@ ext {
     set('lombokVersion', "1.18.42")
     set('mapStructVersion', "1.6.3")
     set('logstashEncoderVersion', "9.0")
-    set('azureBlobSdkVersion', "12.31.1")
 
     set('openTelBomVersion', "1.58.0")
     set('openTelInstBomVersion', "2.23.0-alpha")
     set('micrometerBomVersion', "1.16.2")
-    set('springAzureCloudBomVersion', "7.0.0-beta.1")
+    set('springAzureCloudBomVersion', "7.0.0")
+    set('azureSdkBomVersion', "1.3.4")
     set('springDocBomVersion', "3.0.1")
 }
 
@@ -42,6 +42,7 @@ dependencyManagement {
         mavenBom "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:${openTelInstBomVersion}"
         mavenBom "io.micrometer:micrometer-bom:${micrometerBomVersion}"
         mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springAzureCloudBomVersion}"
+        mavenBom "com.azure:azure-sdk-bom:${azureSdkBomVersion}"
         mavenBom "org.springdoc:springdoc-openapi-bom:${springDocBomVersion}"
     }
 }
@@ -54,10 +55,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     // Azure
-    implementation 'com.azure.spring:spring-cloud-azure-starter'
-    implementation 'com.azure.spring:spring-messaging-azure-servicebus'
-    implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
-    implementation "com.azure:azure-storage-blob:${azureBlobSdkVersion}"
+    implementation('com.azure.spring:spring-cloud-azure-starter-servicebus'){
+        exclude group: 'com.azure.spring', module: 'spring-cloud-azure-autoconfigure'
+    }
+    implementation('com.azure.spring:spring-cloud-azure-starter-data-cosmos') {
+        exclude group: 'com.azure.spring', module: 'spring-cloud-azure-autoconfigure'
+    }
+    implementation 'com.azure:azure-storage-blob'
 
     // SpringDoc (Swagger/OpenAPI)
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui"
