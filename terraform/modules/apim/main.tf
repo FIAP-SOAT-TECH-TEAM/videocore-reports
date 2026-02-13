@@ -3,7 +3,7 @@ resource "azurerm_api_management_api" "videocoreapi_apim" {
   resource_group_name = data.terraform_remote_state.infra.outputs.apim_resource_group
   api_management_name = data.terraform_remote_state.infra.outputs.apim_name
   revision            = var.apim_api_version
-  display_name        = local.reports_ws_service_url
+  display_name        = var.apim_display_name
   path                = var.api_ingress_path
   protocols           = ["https"]
 
@@ -22,7 +22,8 @@ resource "azurerm_api_management_api" "videocoreapi_ws_apim" {
   path                = var.api_ingress_path
   protocols           = ["wss"]
   api_type            = "websocket"
-  service_url         = local.reports_ws_service_url
+  service_url         = "ws://teste.com"
+  #service_url         = "ws://${data.terraform_remote_state.infra.outputs.api_reports_private_dns_fqdn}/${var.api_ingress_path}"
 }
 
 resource "azurerm_api_management_api_policy" "set_backend_api" {
