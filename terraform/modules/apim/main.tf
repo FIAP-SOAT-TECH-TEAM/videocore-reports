@@ -41,6 +41,26 @@ resource "azurerm_api_management_api_policy" "set_backend_api" {
       <!-- Extrai token -->
       <set-variable name="bearerToken" value="@(context.Request.Headers.GetValueOrDefault("Authorization", "").Split(' ').Last())" />
 
+      <!-- Validação imediata: se vazio, retorna 401 -->
+      <choose>
+        <when condition="@(string.IsNullOrEmpty((string)context.Variables["bearerToken"]))">
+            <return-response>
+                <set-status code="401" reason="Unauthorized" />
+                <set-header name="Content-Type" exists-action="override">
+                    <value>application/json</value>
+                </set-header>
+                <set-body>@{
+                    return new JObject(
+                        new JProperty("timestamp", DateTime.UtcNow.ToString("o")),
+                        new JProperty("status", 401),
+                        new JProperty("message", "Bearer token está ausente ou vazio"),
+                        new JProperty("path", context.Request.OriginalUrl.Path)
+                    ).ToString();
+                }</set-body>
+            </return-response>
+        </when>
+      </choose>
+
       <!-- Normaliza Path -->
       <set-variable name="normalizedPath" value="@{
           var path = context.Request.OriginalUrl?.Path ?? "";
