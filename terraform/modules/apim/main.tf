@@ -22,8 +22,7 @@ resource "azurerm_api_management_api" "videocoreapi_ws_apim" {
   path                = "${var.api_ingress_path}/ws"
   protocols           = ["wss"]
   api_type            = "websocket"
-  # https://github.com/hashicorp/terraform-provider-azurerm/issues/29610
-  service_url         = null
+  service_url         = "ws://${data.terraform_remote_state.infra.outputs.api_reports_private_dns_fqdn}/${var.api_ingress_path}"
 }
 
 resource "azurerm_api_management_api_policy" "set_backend_api" {
@@ -221,9 +220,6 @@ resource "azurerm_api_management_api_policy" "set_ws_backend_api" {
       <set-header name="Auth-Email" exists-action="override">
         <value>@(context.Variables.GetValueOrDefault<JObject>("authBody")?["email"]?.ToString())</value>
       </set-header>
-
-      <!-- Define o backend real -->
-      <set-backend-service base-url="ws://${data.terraform_remote_state.infra.outputs.api_reports_private_dns_fqdn}/${var.api_ingress_path}" />
     </inbound>
 
     <backend>
