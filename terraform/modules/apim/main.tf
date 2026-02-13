@@ -151,6 +151,7 @@ resource "azurerm_api_management_api_policy" "set_backend_api" {
   XML
 }
 
+# https://github.com/hashicorp/terraform-provider-azurerm/issues/24544
 resource "azurerm_api_management_api_operation_policy" "set_ws_backend_api" {
   api_name            = azurerm_api_management_api.videocoreapi_ws_apim.name
   api_management_name = data.terraform_remote_state.infra.outputs.apim_name
