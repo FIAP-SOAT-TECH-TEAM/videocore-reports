@@ -3,7 +3,7 @@ resource "azurerm_api_management_api" "videocoreapi_apim" {
   resource_group_name = data.terraform_remote_state.infra.outputs.apim_resource_group
   api_management_name = data.terraform_remote_state.infra.outputs.apim_name
   revision            = var.apim_api_version
-  display_name        = var.apim_display_name
+  display_name        = local.reports_ws_service_url
   path                = var.api_ingress_path
   protocols           = ["https"]
 
