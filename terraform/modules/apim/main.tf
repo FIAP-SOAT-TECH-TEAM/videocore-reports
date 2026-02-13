@@ -5,7 +5,7 @@ resource "azurerm_api_management_api" "videocoreapi_apim" {
   revision            = var.apim_api_version
   display_name        = var.apim_display_name
   path                = var.api_ingress_path
-  protocols           = ["https", "wss"]
+  protocols           = ["https"]
 
   import {
     content_format = "openapi+json"
