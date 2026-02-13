@@ -53,22 +53,17 @@ variable "api_ingress_path" {
   description = "Caminho de ingress da API."
 }
 
-variable "ws_operation_id" {
-  description = "Identificador único da operação WebSocket, utilizado para referência interna na definição do recurso"
+variable "apim_ws_api_name" {
+  description = "Nome da API WebSocket no API Management"
   type        = string
 }
 
-variable "ws_display_name" {
-  description = "Nome legível da operação WebSocket, exibido em portais, dashboards ou documentação"
+variable "apim_ws_api_version" {
+  description = "Versão da API WebSocket no API Management"
   type        = string
 }
 
-variable "ws_method" {
-  description = "Método HTTP associado à operação WebSocket"
-  type        = string
-}
-
-variable "ws_url_template" {
-  description = "Template do caminho da URL exposta pela operação WebSocket"
+variable "apim_ws_display_name" {
+  description = "Nome exibido da API WebSocket no API Management"
   type        = string
 }
