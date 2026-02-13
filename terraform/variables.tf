@@ -4,6 +4,11 @@
     description = "Azure Subscription ID"
   }
 
+  variable "api_reports_private_dns_fqdn" {
+    type = string
+    description = "FQDN do registro A do microsserviço de reports na zona DNS privada"
+  }
+
 # remote states
   variable "videocore-backend-resource-group" {
     type        = string
