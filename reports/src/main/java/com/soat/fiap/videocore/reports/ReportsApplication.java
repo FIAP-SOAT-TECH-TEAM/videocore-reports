@@ -1,7 +1,7 @@
 package com.soat.fiap.videocore.reports;
 
-import com.soat.fiap.videocore.reports.infrastructure.common.hints.azure.cosmos.BlobHints;
-import com.soat.fiap.videocore.reports.infrastructure.common.hints.azure.cosmos.CosmosHints;
+import com.soat.fiap.videocore.reports.common.hints.azure.BlobHints;
+import com.soat.fiap.videocore.reports.common.hints.azure.CosmosHints;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
