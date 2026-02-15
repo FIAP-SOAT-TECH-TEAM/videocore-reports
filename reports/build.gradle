@@ -27,6 +27,7 @@ ext {
     set('lombokVersion', "1.18.42")
     set('mapStructVersion', "1.6.3")
     set('logstashEncoderVersion', "9.0")
+    set('azureBlobSdkVersion', "12.31.2")
 
     set('openTelBomVersion', "1.58.0")
     set('openTelInstBomVersion', "2.23.0-alpha")
@@ -61,7 +62,8 @@ dependencies {
     implementation('com.azure.spring:spring-cloud-azure-starter-data-cosmos') {
         exclude group: 'com.azure.spring', module: 'spring-cloud-azure-autoconfigure'
     }
-    implementation 'com.azure:azure-storage-blob'
+    // https://stackoverflow.com/questions/75252848/azure-storage-blobs-support-for-localdevelopment-throws-the-value-for-one-of-the
+    implementation "com.azure:azure-storage-blob:${azureBlobSdkVersion}"
 
     // SpringDoc (Swagger/OpenAPI)
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui"
