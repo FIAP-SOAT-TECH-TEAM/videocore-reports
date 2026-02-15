@@ -1,4 +1,4 @@
-package com.soat.fiap.videocore.reports.infrastructure.common.hints.azure.cosmos;
+package com.soat.fiap.videocore.reports.common.hints.azure;
 
 import com.azure.spring.data.cosmos.core.CosmosTemplate;
 import com.azure.spring.data.cosmos.repository.support.CosmosEntityInformation;

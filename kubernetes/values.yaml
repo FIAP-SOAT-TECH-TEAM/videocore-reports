@@ -24,10 +24,10 @@ api:
 
   resources:
     requests:
-      cpu: 500m
+      cpu: 300m
       memory: 512Mi
     limits:
-      cpu: 900m
+      cpu: 500m
       memory: 1024Mi
 
   ingress:
@@ -47,7 +47,7 @@ api:
 
   hpa:
     minReplicas: 1
-    maxReplicas: 3
+    maxReplicas: 2
     cpu:
       utilization:
         averageUtilization: 70
