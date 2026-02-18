@@ -1,15 +1,16 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.gateway;
 
+import org.springframework.stereotype.Component;
+
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.AuthenticatedUserSource;
-import org.springframework.stereotype.Component;
 
 /**
  * Gateway para acessar informações do usuário autenticado no sistema.
+ *
  * <p>
  * Cada método expõe um atributo específico do usuário obtido via
  * {@link AuthenticatedUserSource}.
- * </p>
  */
 @Component
 public class AuthenticatedUserGateway {
@@ -31,7 +32,7 @@ public class AuthenticatedUserGateway {
 	 *
 	 * @return sub do usuário
 	 */
-    @WithSpan(name = "gateway.get.auth.subject")
+	@WithSpan(name = "gateway.get.auth.subject")
 	public String getSubject() {
 		return authenticatedUserSource.getSubject();
 	}
@@ -41,7 +42,7 @@ public class AuthenticatedUserGateway {
 	 *
 	 * @return nome do usuário
 	 */
-    @WithSpan(name = "gateway.get.auth.name")
+	@WithSpan(name = "gateway.get.auth.name")
 	public String getName() {
 		return authenticatedUserSource.getName();
 	}
@@ -51,7 +52,7 @@ public class AuthenticatedUserGateway {
 	 *
 	 * @return email do usuário
 	 */
-    @WithSpan(name = "gateway.get.auth.email")
+	@WithSpan(name = "gateway.get.auth.email")
 	public String getEmail() {
 		return authenticatedUserSource.getEmail();
 	}

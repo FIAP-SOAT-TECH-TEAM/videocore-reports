@@ -1,14 +1,12 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.http.exceptions;
 
+import java.time.LocalDateTime;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
-/**
- * Resposta de erro padrão
- */
+/** Resposta de erro padrão */
 @Getter @AllArgsConstructor @Schema(description = "Modelo de resposta padrão para erros da API")
 public class ErrorResponse {
 

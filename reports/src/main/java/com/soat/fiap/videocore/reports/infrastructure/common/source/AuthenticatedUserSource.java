@@ -2,11 +2,11 @@ package com.soat.fiap.videocore.reports.infrastructure.common.source;
 
 /**
  * Fornece informações do usuário autenticado no sistema.
+ *
  * <p>
  * Esta interface expõe os dados principais que identificam e caracterizam o
  * usuário logado, de acordo com os atributos obtidos via Amazon Cognito ou
  * outro provedor de identidade configurado.
- * </p>
  */
 public interface AuthenticatedUserSource {
 	/**
