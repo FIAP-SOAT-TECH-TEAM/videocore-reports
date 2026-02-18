@@ -3,7 +3,6 @@ package com.soat.fiap.videocore.reports.infrastructure.common.config.azure.cosmo
 import com.azure.cosmos.CosmosClientBuilder;
 import com.azure.spring.data.cosmos.config.AbstractCosmosConfiguration;
 import com.azure.spring.data.cosmos.repository.config.EnableCosmosRepositories;
-import com.soat.fiap.videocore.reports.infrastructure.common.config.environment.EnvironmentProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,8 +29,6 @@ public class CosmosDbConfig extends AbstractCosmosConfiguration {
     @Value("${azure.cosmos.key}")
     private String key;
 
-    private final EnvironmentProperties environmentProperties;
-
     /**
      * Retorna o nome do banco de dados Cosmos configurado.
      * Este método é usado pelo Spring Data Cosmos para definição do contexto.
@@ -46,17 +43,10 @@ public class CosmosDbConfig extends AbstractCosmosConfiguration {
     /**
      * Gera o bean {@link CosmosClientBuilder} usado para criar
      * instâncias de cliente Cosmos DB com os valores de endpoint e chave.
-     * <a href="https://github.com/Azure/azure-cosmos-db-emulator-docker/issues/163">Cosmso DB Emulator Docker Issue</a>
      * @return builder configurado de cliente Cosmos
      */
     @Bean
     public CosmosClientBuilder cosmosClientBuilder() {
-        if (!environmentProperties.isProd())
-            return new CosmosClientBuilder()
-                    .endpoint(endpoint)
-                    .key(key)
-                    .gatewayMode();
-
         return new CosmosClientBuilder()
                 .endpoint(endpoint)
                 .key(key)

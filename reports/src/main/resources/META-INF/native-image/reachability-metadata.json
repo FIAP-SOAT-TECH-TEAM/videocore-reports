@@ -497,6 +497,39 @@
       "type": "com.azure.cosmos.implementation.apachecommons.lang.time.StopWatch"
     },
     {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdClientChannelHealthChecker$Timestamps"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdClientChannelPool$1"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdContextNegotiator"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestEncoder"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestManager"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestRecord"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdResponse"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdResponseDecoder"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdToken$PropertyFilter",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.faultinjection.IFaultInjectorProvider"
     },
     {
@@ -2113,6 +2146,10 @@
       "methods": [
         {
           "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "<init>",
           "parameterTypes": [
             "com.soat.fiap.videocore.reports.infrastructure.common.config.environment.EnvironmentProperties"
           ]
@@ -2585,7 +2622,45 @@
       ]
     },
     {
-      "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse"
+      "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse",
+      "methods": [
+        {
+          "name": "frameCutMinutes",
+          "parameterTypes": []
+        },
+        {
+          "name": "id",
+          "parameterTypes": []
+        },
+        {
+          "name": "percentStatusProcess",
+          "parameterTypes": []
+        },
+        {
+          "name": "reportTime",
+          "parameterTypes": []
+        },
+        {
+          "name": "requestId",
+          "parameterTypes": []
+        },
+        {
+          "name": "status",
+          "parameterTypes": []
+        },
+        {
+          "name": "traceId",
+          "parameterTypes": []
+        },
+        {
+          "name": "userId",
+          "parameterTypes": []
+        },
+        {
+          "name": "videoName",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImagesDownloadUrlResponse",
@@ -2933,7 +3008,18 @@
       ]
     },
     {
-      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection"
+      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.time.Instant"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection__Accessor_4suyph"
     },
     {
       "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.repository.CosmosDbReportDataSource",
@@ -3001,6 +3087,12 @@
     {
       "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.repository.CosmosDbReportRepository",
       "methods": [
+        {
+          "name": "findByReportTimeIn",
+          "parameterTypes": [
+            "java.util.List"
+          ]
+        },
         {
           "name": "findByUserIdAndRequestIdAndVideoNameAndPercentStatusProcess",
           "parameterTypes": [
@@ -3687,6 +3779,15 @@
       "type": "io.netty.channel.epoll.Epoll"
     },
     {
+      "type": "io.netty.channel.epoll.EpollSocketChannel",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "io.netty.channel.epoll.LinuxSocket",
       "jniAccessible": true
     },
@@ -4016,6 +4117,9 @@
       "type": "io.netty.handler.ssl.SslHandler"
     },
     {
+      "type": "io.netty.handler.timeout.IdleStateHandler"
+    },
+    {
       "type": "io.netty.handler.timeout.ReadTimeoutHandler"
     },
     {
@@ -4044,6 +4148,12 @@
     },
     {
       "type": "io.netty.util.DefaultAttributeMap$DefaultAttribute"
+    },
+    {
+      "type": "io.netty.util.HashedWheelTimer"
+    },
+    {
+      "type": "io.netty.util.HashedWheelTimer$HashedWheelTimeout"
     },
     {
       "type": "io.netty.util.Recycler$DefaultHandle"
@@ -4102,6 +4212,15 @@
     },
     {
       "type": "io.netty.util.internal.shaded.org.jctools.queues.atomic.MpmcAtomicArrayQueueProducerIndexField"
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.atomic.unpadded.MpscAtomicUnpaddedArrayQueueConsumerIndexField"
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.atomic.unpadded.MpscAtomicUnpaddedArrayQueueProducerIndexField"
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.atomic.unpadded.MpscAtomicUnpaddedArrayQueueProducerLimitField"
     },
     {
       "type": "io.opentelemetry.api.OpenTelemetry"
@@ -5938,6 +6057,7 @@
     },
     {
       "type": "java.lang.String",
+      "serializable": true,
       "jniAccessible": true
     },
     {
@@ -6307,6 +6427,9 @@
       "type": "java.net.URL"
     },
     {
+      "type": "java.net.URLClassLoader"
+    },
+    {
       "type": "java.nio.Buffer",
       "jniAccessible": true,
       "fields": [
@@ -6376,6 +6499,9 @@
     },
     {
       "type": "java.security.Principal"
+    },
+    {
+      "type": "java.security.SecureClassLoader"
     },
     {
       "type": "java.security.interfaces.ECPrivateKey"
@@ -10498,6 +10624,9 @@
       "type": "org.springframework.boot.loader.launch.LaunchedClassLoader"
     },
     {
+      "type": "org.springframework.boot.loader.net.protocol.jar.JarUrlClassLoader"
+    },
+    {
       "type": "org.springframework.boot.logging.LogLevelEditor"
     },
     {
@@ -12937,6 +13066,9 @@
       "type": "org.springframework.data.mapping.PersistentProperty"
     },
     {
+      "type": "org.springframework.data.mapping.PersistentPropertyAccessor"
+    },
+    {
       "type": "org.springframework.data.mapping.PersistentPropertyPath"
     },
     {
@@ -13144,7 +13276,13 @@
       ]
     },
     {
-      "type": "org.springframework.data.util.Streamable"
+      "type": "org.springframework.data.util.Streamable",
+      "methods": [
+        {
+          "name": "toList",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.data.web.PageableDefault"
@@ -13601,6 +13739,9 @@
     },
     {
       "type": "org.springframework.util.AntPathMatcher$AntPathStringMatcher"
+    },
+    {
+      "type": "org.springframework.util.Assert"
     },
     {
       "type": "org.springframework.util.ConcurrentReferenceHashMap$Segment[]"
@@ -14397,6 +14538,9 @@
       "type": "reactor.core.publisher.Flux"
     },
     {
+      "type": "reactor.core.publisher.FluxArray$ArraySubscription"
+    },
+    {
       "type": "reactor.core.publisher.FluxAutoConnectFuseable"
     },
     {
@@ -14434,6 +14578,9 @@
     },
     {
       "type": "reactor.core.publisher.FluxIterable$IterableSubscription"
+    },
+    {
+      "type": "reactor.core.publisher.FluxLimitRequest$FluxLimitRequestSubscriber"
     },
     {
       "type": "reactor.core.publisher.FluxMapSignal$FluxMapSignalSubscriber"
@@ -14575,6 +14722,9 @@
     },
     {
       "type": "reactor.core.publisher.Operators$ScalarSubscription"
+    },
+    {
+      "type": "reactor.core.publisher.ParallelSource$ParallelSourceMain"
     },
     {
       "type": "reactor.core.publisher.SignalType"
@@ -15952,6 +16102,9 @@
     },
     {
       "glob": "azure-storage-blob.properties"
+    },
+    {
+      "glob": "azure.cosmos.directTcp.defaultOptions.json"
     },
     {
       "glob": "banner.txt"
