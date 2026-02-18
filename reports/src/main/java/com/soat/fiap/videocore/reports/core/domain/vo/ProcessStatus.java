@@ -3,28 +3,21 @@ package com.soat.fiap.videocore.reports.core.domain.vo;
 /**
  * Objeto de valor que representa o status do processamento de um vídeo.
  *
- * <p>Este enum descreve o ciclo de vida do processamento, desde a criação da solicitação
- * até a finalização.</p>
+ * <p>
+ * Este enum descreve o ciclo de vida do processamento, desde a criação da
+ * solicitação até a finalização.
  */
 public enum ProcessStatus {
 
-    /**
-     * Processamento iniciado.
-     */
-    STARTED,
+	/** Processamento iniciado. */
+	STARTED,
 
-    /**
-     * Processamento em execução.
-     */
-    PROCESSING,
+	/** Processamento em execução. */
+	PROCESSING,
 
-    /**
-     * Processamento finalizado com sucesso.
-     */
-    COMPLETED,
+	/** Processamento finalizado com sucesso. */
+	COMPLETED,
 
-    /**
-     * Processamento com erro.
-     */
-    FAILED
+	/** Processamento com erro. */
+	FAILED
 }

@@ -1,14 +1,12 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.http.exceptions;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
 import java.util.Map;
 
-/**
- * Resposta de erro de validação
- */
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+
+/** Resposta de erro de validação */
 @Getter @Schema(description = "Modelo de resposta para erros de validação de campos")
 public class ValidationErrorResponse extends ErrorResponse {
 

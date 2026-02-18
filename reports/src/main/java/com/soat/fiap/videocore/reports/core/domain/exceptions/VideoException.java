@@ -1,8 +1,6 @@
 package com.soat.fiap.videocore.reports.core.domain.exceptions;
 
-/**
- * Exceção lançada quando um erro ocorre referente a um video
- */
+/** Exceção lançada quando um erro ocorre referente a um video */
 public class VideoException extends RuntimeException {
 
 	public VideoException(String message) {

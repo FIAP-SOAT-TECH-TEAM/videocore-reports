@@ -1,11 +1,12 @@
 package com.soat.fiap.videocore.reports.core.application.usecase;
 
+import org.springframework.stereotype.Component;
+
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.application.input.ReportInput;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.domain.vo.*;
-import org.springframework.stereotype.Component;
 
 /**
  * Caso de uso responsável por criar um reporte a partir dos dados de entrada.
@@ -13,45 +14,40 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateReportUseCase {
 
-    /**
-     * Cria um reporte com base nas informações fornecidas
-     *
-     * <p>Identificador único é nulo neste momento.</p>
-     * @param reportInput dados de entrada do reporte
-     * @return reporte criado
-     */
-    @WithSpan(name = "usecase.create.report")
-    public Report createReport(ReportInput reportInput) {
+	/**
+	 * Cria um reporte com base nas informações fornecidas
+	 *
+	 * <p>
+	 * Identificador único é nulo neste momento.
+	 *
+	 * @param reportInput
+	 *            dados de entrada do reporte
+	 * @return reporte criado
+	 */
+	@WithSpan(name = "usecase.create.report")
+	public Report createReport(ReportInput reportInput) {
 
-        if (reportInput == null)
-            throw new ReportException("Os dados do reporte não podem ser nulos para criação do objeto de domínio");
+		if (reportInput == null)
+			throw new ReportException("Os dados do reporte não podem ser nulos para criação do objeto de domínio");
 
-        var videoName = new VideoName(reportInput.videoName());
-        var imageMinute = new ImageMinute(reportInput.imageMinute());
-        var minuteFrameCut = new MinuteFrameCut(reportInput.frameCutMinutes());
-        var metadata = new Metadata(reportInput.userId(), reportInput.requestId(), reportInput.traceId());
-        var percentStatusProcess = new PercentStatusProcess(reportInput.percentStatusProcess());
+		var videoName = new VideoName(reportInput.videoName());
+		var imageMinute = new ImageMinute(reportInput.imageMinute());
+		var minuteFrameCut = new MinuteFrameCut(reportInput.frameCutMinutes());
+		var metadata = new Metadata(reportInput.userId(), reportInput.requestId(), reportInput.traceId());
+		var percentStatusProcess = new PercentStatusProcess(reportInput.percentStatusProcess());
 
-        var processStatus = ProcessStatus.STARTED;
+		var processStatus = ProcessStatus.STARTED;
 
-        if (percentStatusProcess.value() > 0.0 && percentStatusProcess.value() < 100.0) {
-            processStatus = ProcessStatus.PROCESSING;
-        }
-        else if (percentStatusProcess.value() == 100.00) {
-            processStatus = ProcessStatus.COMPLETED;
-        }
+		if (percentStatusProcess.value() > 0.0 && percentStatusProcess.value() < 100.0) {
+			processStatus = ProcessStatus.PROCESSING;
+		} else if (percentStatusProcess.value() == 100.00) {
+			processStatus = ProcessStatus.COMPLETED;
+		}
 
-        if (reportInput.isError())
-            processStatus = ProcessStatus.FAILED;
+		if (reportInput.isError())
+			processStatus = ProcessStatus.FAILED;
 
-        return new Report(
-                videoName,
-                imageMinute,
-                minuteFrameCut,
-                metadata,
-                percentStatusProcess,
-                reportInput.reportTime(),
-                processStatus
-        );
-    }
+		return new Report(videoName, imageMinute, minuteFrameCut, metadata, percentStatusProcess,
+				reportInput.reportTime(), processStatus);
+	}
 }
