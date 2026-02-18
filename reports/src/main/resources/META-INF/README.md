@@ -154,11 +154,11 @@ cd build/libs
 Execute:
 
 ```
-java -agentlib:native-image-agent=config-output-dir=../../src/main/resources/META-INF/native-image/ -jar reports-0.0.1.jar
+java -agentlib:native-image-agent=config-merge-dir=../../src/main/resources/META-INF/native-image/ -jar reports-0.0.1.jar
 ```
 > ⚠️ O arquivo de variáveis de ambiente utilizado em tempo de desenvolvimento com o profile `local`, presente na raiz do projeto, deve ser copiado para cá antes da execução do comando acima. Logo, o ambiente de desenvolvimento (fornecido pelos scripts bash) precisa estar funcionando.
 
-> ⚠️ Qualquer profile diferente de `prod` se conecta ao `Azure Cosmso DB` no modo `GATEWAY`, uma vez que o `Cosmos DB Emulator` não suporta o modo `DIRECT`. Neste sentido, para que seja possível se conectar a ele via `HTTPS` é necessário, antes da execução do comando acima, armazenar na `truststore` utilizada pela `jvm` o seu certificado auto-assinado de autoridade certificadora utilizando os comandos abaixo:
+> ⚠️ `Cosmos DB Emulator` utiliza um certificado auto-assinado de autoridade certificadora `(CA)`. Neste sentido, para que seja possível se conectar a ele via `HTTPS` é necessário, antes da execução do comando acima, armazenar na `truststore` utilizada pela `JVM` este certificado utilizando os comandos abaixo:
 >```
 >// Remover registros antigos
 >
@@ -168,13 +168,14 @@ java -agentlib:native-image-agent=config-output-dir=../../src/main/resources/MET
 >
 >curl --insecure https://localhost:8079/_explorer/emulator.pem > >videocore_reports_az_cosmos_emulator.crt && keytool -importcert >-file videocore_reports_az_cosmos_emulator.crt -alias >videocorereportsCosmosEmulator -cacerts -storepass changeit >--noprompt && rm videocore_reports_az_cosmos_emulator.crt
 >```
-
+>
+> Caso contrário, uma exception de segurança será lançada pela `JVM`, uma vez que este certificado não é reconhecido publicamente.
 
 
 Parâmetro utilizado:
 
 ```
--agentlib:native-image-agent=config-output-dir=<diretório>
+-agentlib:native-image-agent=config-merge-dir=<diretório>
 ```
 
 Esse parâmetro:
