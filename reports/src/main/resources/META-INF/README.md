@@ -162,11 +162,11 @@ java -agentlib:native-image-agent=config-merge-dir=../../src/main/resources/META
 >```
 >// Remover registros antigos
 >
->keytool -delete -alias videocorereportsCosmosEmulator -cacerts >-storepass changeit
+>keytool -delete -alias videocorereportsCosmosEmulator -cacerts -storepass changeit
 >
 >// Inserir o certificado na truststore
 >
->curl --insecure https://localhost:8079/_explorer/emulator.pem > >videocore_reports_az_cosmos_emulator.crt && keytool -importcert >-file videocore_reports_az_cosmos_emulator.crt -alias >videocorereportsCosmosEmulator -cacerts -storepass changeit >--noprompt && rm videocore_reports_az_cosmos_emulator.crt
+>curl --insecure https://localhost:8079/_explorer/emulator.pem > videocore_reports_az_cosmos_emulator.crt && keytool -importcert -file videocore_reports_az_cosmos_emulator.crt -alias videocorereportsCosmosEmulator -cacerts -storepass changeit --noprompt && rm videocore_reports_az_cosmos_emulator.crt
 >```
 >
 > Caso contrário, uma exception de segurança será lançada pela `JVM`, uma vez que este certificado não é reconhecido publicamente.
