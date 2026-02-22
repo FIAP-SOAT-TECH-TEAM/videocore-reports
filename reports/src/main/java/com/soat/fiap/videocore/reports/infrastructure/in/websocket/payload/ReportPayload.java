@@ -29,6 +29,6 @@ import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
  * @param status
  *            Status de processamento.
  */
-public record ReportPayload(String id, String videoName, String userId, String requestId, String traceId, long imageMinute,
-		long frameCutMinutes, Double percentStatusProcess, Instant reportTime, ProcessStatus status) {
+public record ReportPayload(String id, String videoName, String userId, String requestId, String traceId,
+		long imageMinute, long frameCutMinutes, Double percentStatusProcess, Instant reportTime, ProcessStatus status) {
 }
