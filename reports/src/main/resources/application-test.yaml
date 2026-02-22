@@ -17,3 +17,7 @@ otel:
 
 websocket:
   base-endpoint: ${WEBSOCKET_BASE_ENDPOINT:/ws}
+
+http:
+  cors:
+    allowed-origins: ${HTTP_CORS_ALLOWED_ORIGINS:*}
