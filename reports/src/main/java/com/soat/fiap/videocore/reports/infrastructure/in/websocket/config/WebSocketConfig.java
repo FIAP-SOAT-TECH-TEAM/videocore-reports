@@ -32,6 +32,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Value("${websocket.base-endpoint}")
 	private String webSocketBaseEndpoint;
 
+	@Value("${websocket.allowed-origins:}")
+	private String allowedOrigins;
+
 	/**
 	 * Registra o endpoint STOMP utilizado pelos clientes para estabelecer a conexão
 	 * WebSocket.
@@ -41,7 +44,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	 */
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint(webSocketBaseEndpoint).addInterceptors(authSubjectHandshakeInterceptor);
+		var patterns = (allowedOrigins == null || allowedOrigins.isBlank()) ? new String[]{"*"}
+				: allowedOrigins.split(",");
+				
+		registry.addEndpoint(webSocketBaseEndpoint)
+				.setAllowedOriginPatterns(patterns)
+				.addInterceptors(authSubjectHandshakeInterceptor);
 
 		registry.setErrorHandler(webSocketErrorHandler);
 	}
