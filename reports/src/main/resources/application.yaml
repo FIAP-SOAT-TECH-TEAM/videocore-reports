@@ -78,3 +78,7 @@ azure:
 
 websocket:
   base-endpoint: ${WEBSOCKET_BASE_ENDPOINT:}
+
+http:
+  cors:
+    allowed-origins: ${HTTP_CORS_ALLOWED_ORIGINS:}
