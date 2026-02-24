@@ -43,9 +43,16 @@ public class AuthSubjectHandshakeInterceptor implements HandshakeInterceptor {
 		try {
 			var values = request.getHeaders().get(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME);
 			var customValues = request.getHeaders().get(WebSocketConstants.CUSTOM_HEADER_NAME);
+			var subject = "";
 
-			var subject = (values != null && !values.getFirst().isBlank()) ? values.getFirst()
-					: (customValues != null ? customValues.getFirst() : "");
+			if (values != null && !values.getFirst().isBlank()) {
+				subject = values.getFirst();
+			}
+
+			if (subject.isEmpty() && customValues != null) {
+				var parts = customValues.getFirst().split(",");
+				subject = parts[parts.length - 1].trim();
+			}
 
 			CanonicalContext.add("auth_subject", subject);
 			CanonicalContext.add("remote_address", request.getRemoteAddress().toString());
