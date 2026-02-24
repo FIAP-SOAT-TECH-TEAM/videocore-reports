@@ -42,15 +42,19 @@ public class AuthSubjectHandshakeInterceptor implements HandshakeInterceptor {
 			Map<String, Object> attributes) {
 		try {
 			var values = request.getHeaders().get(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME);
+			var customValues = request.getHeaders().get(WebSocketConstants.CUSTOM_HEADER_NAME);
 
+			var subject = (values != null && !values.getFirst().isBlank()) ? values.getFirst()
+					: (customValues != null ? customValues.getFirst() : "");
+
+			CanonicalContext.add("auth_subject", subject);
 			CanonicalContext.add("remote_address", request.getRemoteAddress().toString());
 
-			if (values == null || values.isEmpty() || values.getFirst().isBlank()) {
+			if (subject.isEmpty()) {
 				var statusCode = HttpStatusCode.valueOf(401);
 				response.setStatusCode(statusCode);
 
 				CanonicalContext.add("event", "WEBSOCKET_HANDSHAKE_REJECTED");
-				CanonicalContext.add("auth_subject", "");
 				CanonicalContext.add("response_status_code", statusCode);
 
 				log.warn("request_completed");
@@ -58,11 +62,9 @@ public class AuthSubjectHandshakeInterceptor implements HandshakeInterceptor {
 				return false;
 			}
 
-			var subject = values.getFirst();
 			attributes.put(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME, subject);
 
 			CanonicalContext.add("event", "WEBSOCKET_HANDSHAKE_ACCEPTED");
-			CanonicalContext.add("auth_subject", subject);
 
 			log.info("request_completed");
 
