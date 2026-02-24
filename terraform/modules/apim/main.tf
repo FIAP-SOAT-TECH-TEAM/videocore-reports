@@ -163,8 +163,8 @@ resource "azurerm_api_management_api_operation_policy" "set_ws_backend_api" {
     <inbound>
       <base /> <!-- Herda as policies globais configuradas no API Management -->
 
-      <!-- Extrai token -->
-      <set-variable name="bearerToken" value="@(context.Request.Headers.GetValueOrDefault("Authorization", "").Split(' ').Last())" />
+      <!-- Extrai token (https://stackoverflow.com/questions/4361173/http-headers-in-websockets-client-api) -->
+      <set-variable name="bearerToken" value="@(context.Request.Headers.GetValueOrDefault("Sec-WebSocket-Protocol", "").Split(' ').Last())" />
 
       <!-- Validação imediata: se vazio, retorna 401 -->
       <choose>
