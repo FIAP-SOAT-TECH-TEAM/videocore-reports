@@ -60,4 +60,14 @@ public interface ReportDataSource {
 	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
 	List<ReportDto> getLastReportsByUserId(String userId);
+
+	/**
+	 * Recupera um reporte pelo seu identificador único.
+	 *
+	 * @param reportId
+	 *            identificador do reporte
+	 * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não
+	 *         existir
+	 */
+	Optional<ReportDto> getById(String reportId);
 }

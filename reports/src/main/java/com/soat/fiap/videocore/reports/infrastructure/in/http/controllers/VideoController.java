@@ -53,7 +53,7 @@ public class VideoController {
 
 			return ResponseEntity.ok(downloadUrl);
 		} catch (Exception e) {
-			log.error("request_error");
+			log.error("request_error", e);
 
 			throw e;
 		} finally {
@@ -83,7 +83,7 @@ public class VideoController {
 
 			return ResponseEntity.ok(uploadUrl);
 		} catch (Exception e) {
-			log.error("request_error");
+			log.error("request_error", e);
 
 			throw e;
 		} finally {

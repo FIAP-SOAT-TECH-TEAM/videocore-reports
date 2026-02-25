@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.soat.fiap.videocore.reports.core.domain.exceptions.NotAuthorizedException;
-import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
-import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoException;
-import com.soat.fiap.videocore.reports.core.domain.exceptions.VideoImageDownloadUrlNotFoundException;
+import com.soat.fiap.videocore.reports.core.domain.exceptions.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -93,6 +90,18 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 	}
 
+	/**
+	 * Trata erros de reporte não encontrado
+	 */
+	@ExceptionHandler(ReportNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleReportNotFoundException(ReportNotFoundException ex,
+			HttpServletRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(),
+				ex.getMessage(), request.getServletPath());
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+	}
+
 	/** Trata erros de falha na autenticação */
 	@ExceptionHandler(NotAuthorizedException.class)
 	public ResponseEntity<ErrorResponse> handleNotAuthorizedException(NotAuthorizedException ex,
@@ -101,6 +110,15 @@ public class GlobalExceptionHandler {
 				ex.getMessage(), request.getServletPath());
 
 		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+	}
+
+	/** Trata erros de falha de permissão */
+	@ExceptionHandler(ForbiddenException.class)
+	public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException ex, HttpServletRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.FORBIDDEN.value(),
+				ex.getMessage(), request.getServletPath());
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
 	}
 
 	/** Trata erros de integridade de dados (ex: violação de chave estrangeira) */

@@ -117,4 +117,17 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 				.map(reportEntityMapper::toDto)
 				.toList();
 	}
+
+	/**
+	 * Recupera um {@link ReportDto} pelo seu identificador único.
+	 *
+	 * @param reportId
+	 *            identificador do reporte
+	 * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não
+	 *         existir
+	 */
+	@Override @Transactional(readOnly = true)
+	public Optional<ReportDto> getById(String reportId) {
+		return cosmosDbReportRepository.findById(reportId).map(reportEntityMapper::toDto);
+	}
 }
