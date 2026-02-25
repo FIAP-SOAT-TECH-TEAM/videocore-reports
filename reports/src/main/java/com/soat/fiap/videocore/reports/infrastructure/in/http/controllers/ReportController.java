@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthenticatedUserLastReportsController;
-import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetReportByIdController;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthReportByIdController;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReportController {
 
 	private final GetAuthenticatedUserLastReportsController getAuthenticatedUserLastReportsController;
-	private final GetReportByIdController getReportByIdController;
+	private final GetAuthReportByIdController getAuthReportByIdController;
 
 	@GetMapping("/latest")
 	@Operation(summary = "Obter reports mais recentes do usuário autenticado", description = "Retorna a lista de reportes mais recentes dos videos enviados pelo usuário autenticado")
@@ -59,7 +59,7 @@ public class ReportController {
 	public ResponseEntity<ReportResponse> getReportById(@PathVariable(required = true)
 	@Schema(description = "Identificador único do reporte", example = "3c29043a-f5b0-482b-ad20-ff6c7310d9ee", requiredMode = Schema.RequiredMode.REQUIRED) String reportId) {
 		try {
-			var report = getReportByIdController.getReportById(reportId);
+			var report = getAuthReportByIdController.getReportById(reportId);
 
 			log.info("request_completed");
 

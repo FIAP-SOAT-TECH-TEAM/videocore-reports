@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import com.soat.fiap.videocore.reports.core.application.usecase.GetReportByIdUseCase;
+import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthReportByIdUseCase;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ForbiddenException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.NotAuthorizedException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException;
@@ -16,8 +16,8 @@ import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.AuthenticatedUserGateway;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGateway;
 
-/** Testes unitários do {@link GetReportByIdUseCase}. */
-class GetReportByIdUseCaseTest {
+/** Testes unitários do {@link GetAuthReportByIdUseCase}. */
+class GetAuthReportByIdUseCaseTest {
 
 	@Test
 	void shouldReturnReportWhenUserIsAuthorized() {
@@ -30,7 +30,7 @@ class GetReportByIdUseCaseTest {
 		when(report.getUserId()).thenReturn("user");
 		when(reportGateway.getById("report-id")).thenReturn(Optional.of(report));
 
-		var useCase = new GetReportByIdUseCase(reportGateway, userGateway);
+		var useCase = new GetAuthReportByIdUseCase(reportGateway, userGateway);
 
 		// Act
 		Report result = useCase.getReportById("report-id");
@@ -46,7 +46,7 @@ class GetReportByIdUseCaseTest {
 		AuthenticatedUserGateway userGateway = mock(AuthenticatedUserGateway.class);
 		when(userGateway.getSubject()).thenReturn(" ");
 
-		var useCase = new GetReportByIdUseCase(reportGateway, userGateway);
+		var useCase = new GetAuthReportByIdUseCase(reportGateway, userGateway);
 
 		// Act & Assert
 		assertThrows(NotAuthorizedException.class, () -> useCase.getReportById("report-id"));
@@ -59,7 +59,7 @@ class GetReportByIdUseCaseTest {
 		AuthenticatedUserGateway userGateway = mock(AuthenticatedUserGateway.class);
 		when(userGateway.getSubject()).thenReturn("user");
 
-		var useCase = new GetReportByIdUseCase(reportGateway, userGateway);
+		var useCase = new GetAuthReportByIdUseCase(reportGateway, userGateway);
 
 		// Act & Assert
 		assertThrows(ReportException.class, () -> useCase.getReportById(" "));
@@ -73,7 +73,7 @@ class GetReportByIdUseCaseTest {
 		when(userGateway.getSubject()).thenReturn("user");
 		when(reportGateway.getById("report-id")).thenReturn(Optional.empty());
 
-		var useCase = new GetReportByIdUseCase(reportGateway, userGateway);
+		var useCase = new GetAuthReportByIdUseCase(reportGateway, userGateway);
 
 		// Act & Assert
 		assertThrows(ReportNotFoundException.class, () -> useCase.getReportById("report-id"));
@@ -89,7 +89,7 @@ class GetReportByIdUseCaseTest {
 		when(report.getUserId()).thenReturn("other-user");
 		when(reportGateway.getById("report-id")).thenReturn(Optional.of(report));
 
-		var useCase = new GetReportByIdUseCase(reportGateway, userGateway);
+		var useCase = new GetAuthReportByIdUseCase(reportGateway, userGateway);
 
 		// Act & Assert
 		assertThrows(ForbiddenException.class, () -> useCase.getReportById("report-id"));

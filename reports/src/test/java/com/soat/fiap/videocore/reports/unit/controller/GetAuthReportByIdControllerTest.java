@@ -5,19 +5,19 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.soat.fiap.videocore.reports.core.application.usecase.GetReportByIdUseCase;
+import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthReportByIdUseCase;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
-import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetReportByIdController;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthReportByIdController;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ReportPresenter;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
 
-/** Testes unitários do {@link GetReportByIdController}. */
-class GetReportByIdControllerTest {
+/** Testes unitários do {@link GetAuthReportByIdController}. */
+class GetAuthReportByIdControllerTest {
 
 	@Test
 	void shouldReturnReportById() {
 		// Arrange
-		GetReportByIdUseCase useCase = mock(GetReportByIdUseCase.class);
+		GetAuthReportByIdUseCase useCase = mock(GetAuthReportByIdUseCase.class);
 		ReportPresenter presenter = mock(ReportPresenter.class);
 
 		var report = mock(Report.class);
@@ -26,7 +26,7 @@ class GetReportByIdControllerTest {
 		when(useCase.getReportById("report-id")).thenReturn(report);
 		when(presenter.toResponse(report)).thenReturn(response);
 
-		var controller = new GetReportByIdController(useCase, presenter);
+		var controller = new GetAuthReportByIdController(useCase, presenter);
 
 		// Act
 		var result = controller.getReportById("report-id");
