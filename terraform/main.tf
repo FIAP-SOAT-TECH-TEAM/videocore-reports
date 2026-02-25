@@ -35,6 +35,7 @@ module "apim" {
   apim_ws_api_version                 = var.apim_ws_api_version
   apim_ws_display_name                = var.apim_ws_display_name
   api_reports_private_dns_fqdn        = var.api_reports_private_dns_fqdn
+  api_websocket_base_endpoint         = var.ws_url_template
 
   depends_on = [module.helm]
 }

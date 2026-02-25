@@ -19,14 +19,14 @@ resource "azurerm_api_management_api" "videocoreapi_ws_apim" {
   api_management_name = data.terraform_remote_state.infra.outputs.apim_name
   revision            = var.apim_ws_api_version
   display_name        = var.apim_ws_display_name
-  path                = "${var.api_ingress_path}/ws"
+  path                = "${var.api_ingress_path}${var.api_websocket_base_endpoint}"
   protocols           = ["wss"]
   api_type            = "websocket"
   /* 
     Ao tentar obter api_reports_private_dns_fqdn do remote statate, o seguinte erro era retornado:
     https://github.com/hashicorp/terraform-provider-azurerm/blob/main/internal/services/apimanagement/api_management_api_resource.go#L356C6-L356C83
   */
-  service_url         = "ws://${var.api_reports_private_dns_fqdn}/${var.api_ingress_path}/ws"
+  service_url         = "ws://${var.api_reports_private_dns_fqdn}/${var.api_ingress_path}${var.api_websocket_base_endpoint}"
 }
 
 resource "azurerm_api_management_api_policy" "set_backend_api" {

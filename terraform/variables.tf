@@ -96,7 +96,7 @@
   variable "ws_url_template" {
     description = "Template do caminho da URL exposta pela operação WebSocket"
     type        = string
-    default     = "/ws"
+    default     = "/ws/connect"
   }
 
 # APIM
