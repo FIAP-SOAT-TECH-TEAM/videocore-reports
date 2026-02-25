@@ -17,8 +17,8 @@ import com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGate
 import lombok.RequiredArgsConstructor;
 
 /**
- * Caso de uso responsável por buscar um {@link Report} do usuário autenticado pelo seu identificador
- * único.
+ * Caso de uso responsável por buscar um {@link Report} do usuário autenticado
+ * pelo seu identificador único.
  */
 @Component @RequiredArgsConstructor
 public class GetAuthReportByIdUseCase {
@@ -27,7 +27,8 @@ public class GetAuthReportByIdUseCase {
 	private final AuthenticatedUserGateway authenticatedUserGateway;
 
 	/**
-	 * Busca um {@link Report} existente do usuário autenticado pelo seu {@code reportId}.
+	 * Busca um {@link Report} existente do usuário autenticado pelo seu
+	 * {@code reportId}.
 	 *
 	 * @param reportId
 	 *            identificador do reporte

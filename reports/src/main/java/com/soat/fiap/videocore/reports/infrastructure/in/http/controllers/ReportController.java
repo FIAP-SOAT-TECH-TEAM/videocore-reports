@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
-import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthenticatedUserLastReportsController;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthReportByIdController;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthenticatedUserLastReportsController;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
 
 import io.swagger.v3.oas.annotations.Operation;

@@ -11,8 +11,8 @@ import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportRes
 import lombok.RequiredArgsConstructor;
 
 /**
- * Controller responsável por orquestrar a busca de um {@link Report} do usuário autenticado pelo seu
- * identificador único.
+ * Controller responsável por orquestrar a busca de um {@link Report} do usuário
+ * autenticado pelo seu identificador único.
  */
 @Component @RequiredArgsConstructor
 public class GetAuthReportByIdController {
