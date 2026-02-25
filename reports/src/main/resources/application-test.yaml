@@ -16,7 +16,7 @@ otel:
     disabled: true
 
 websocket:
-  base-endpoint: ${WEBSOCKET_BASE_ENDPOINT:/ws}
+  base-endpoint: ${WEBSOCKET_BASE_ENDPOINT:/ws/connect}
 
 http:
   cors:
