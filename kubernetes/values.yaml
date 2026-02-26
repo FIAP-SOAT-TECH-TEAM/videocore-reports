@@ -21,6 +21,9 @@ api:
   ports:
     port: 9090
     name: http
+  
+  cors:
+    allowedOrigins: "replaced"
 
   resources:
     requests:
