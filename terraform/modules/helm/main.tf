@@ -46,7 +46,7 @@ resource "helm_release" "videocore_reports" {
 
   set {
     name  = "api.cors.allowedOrigins"
-    value = data.terraform_remote_state.infra.outputs.frontdoor_url
+    value = data.terraform_remote_state.infra.outputs.cloudfront_url
   }
 
   set {
