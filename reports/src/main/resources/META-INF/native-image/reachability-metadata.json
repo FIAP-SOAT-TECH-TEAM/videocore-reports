@@ -12804,7 +12804,30 @@
       ]
     },
     {
-      "type": "org.springframework.data.util.Streamable"
+      "type": "org.springframework.data.util.Streamable",
+      "methods": [
+        {
+          "name": "toList",
+          "parameterTypes": []
+        },
+        {
+          "name": "toArray",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.data.util.LazyStreamable",
+      "methods": [
+        {
+          "name": "toList",
+          "parameterTypes": []
+        },
+        {
+          "name": "toArray",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.data.web.PageableDefault"
