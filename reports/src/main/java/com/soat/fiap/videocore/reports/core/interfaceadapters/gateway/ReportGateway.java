@@ -104,4 +104,21 @@ public class ReportGateway {
 
 		return dtos.stream().map(reportMapper::toModel).toList();
 	}
+
+	/**
+	 * Recupera um {@link Report} pelo seu identificador único.
+	 *
+	 * @param reportId
+	 *            identificador do reporte
+	 * @return {@link Optional} com o {@link Report} encontrado, ou vazio se não
+	 *         existir
+	 */
+	@WithSpan(name = "gateway.get.report.by.id")
+	public Optional<Report> getById(String reportId) {
+		var dto = reportDataSource.getById(reportId);
+
+		TraceContext.addEvent("report.object", dto);
+
+		return dto.map(reportMapper::toModel);
+	}
 }

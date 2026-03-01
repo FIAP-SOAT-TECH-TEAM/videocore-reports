@@ -73,3 +73,8 @@ variable "apim_ws_display_name" {
   description = "Nome exibido da API WebSocket no API Management"
   type        = string
 }
+
+variable "api_websocket_base_endpoint" {
+  type        = string
+  description = "Endpoint base para conexões WebSocket da API."
+}

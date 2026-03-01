@@ -45,6 +45,11 @@ resource "helm_release" "videocore_reports" {
   }
 
   set {
+    name  = "api.cors.allowedOrigins"
+    value = data.terraform_remote_state.infra.outputs.cloudfront_url
+  }
+
+  set {
     name  = "secrets.azureKeyVault.keyVaultName"
     value = data.terraform_remote_state.infra.outputs.akv_name
   }

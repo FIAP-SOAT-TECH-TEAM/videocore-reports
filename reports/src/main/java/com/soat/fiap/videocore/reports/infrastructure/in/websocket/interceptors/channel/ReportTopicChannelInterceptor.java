@@ -56,10 +56,10 @@ public class ReportTopicChannelInterceptor implements ChannelInterceptor {
 					? accessor.getSessionAttributes().get(WebSocketConstants.AUTH_SUBJECT_ATTR_NAME)
 					: null;
 			var authSubject = authSubjectObj != null ? authSubjectObj.toString() : null;
+			CanonicalContext.add("auth_subject", authSubject);
 
 			if (authSubject == null || authSubject.isBlank()) {
 				CanonicalContext.add("event", "WEBSOCKET_SUBSCRIBE_REJECTED");
-				CanonicalContext.add("auth_subject", "");
 
 				log.warn("request_completed");
 				throw new UnauthorizedWebSocketException("AuthSubject ausente na sessão WebSocket");
@@ -70,7 +70,6 @@ public class ReportTopicChannelInterceptor implements ChannelInterceptor {
 			accessor.setDestination(normalizedDestination);
 
 			CanonicalContext.add("event", "WEBSOCKET_SUBSCRIBE_ACCEPTED");
-			CanonicalContext.add("auth_subject", authSubject);
 			CanonicalContext.add("normalized_destination", normalizedDestination);
 
 			log.info("request_completed");

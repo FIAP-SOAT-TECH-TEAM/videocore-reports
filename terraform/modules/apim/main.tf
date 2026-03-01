@@ -19,14 +19,14 @@ resource "azurerm_api_management_api" "videocoreapi_ws_apim" {
   api_management_name = data.terraform_remote_state.infra.outputs.apim_name
   revision            = var.apim_ws_api_version
   display_name        = var.apim_ws_display_name
-  path                = "${var.api_ingress_path}/ws"
+  path                = "${var.api_ingress_path}${var.api_websocket_base_endpoint}"
   protocols           = ["wss"]
   api_type            = "websocket"
   /* 
     Ao tentar obter api_reports_private_dns_fqdn do remote statate, o seguinte erro era retornado:
     https://github.com/hashicorp/terraform-provider-azurerm/blob/main/internal/services/apimanagement/api_management_api_resource.go#L356C6-L356C83
   */
-  service_url         = "ws://${var.api_reports_private_dns_fqdn}/${var.api_ingress_path}/ws"
+  service_url         = "ws://${var.api_reports_private_dns_fqdn}/${var.api_ingress_path}${var.api_websocket_base_endpoint}"
 }
 
 resource "azurerm_api_management_api_policy" "set_backend_api" {
@@ -163,8 +163,17 @@ resource "azurerm_api_management_api_operation_policy" "set_ws_backend_api" {
     <inbound>
       <base /> <!-- Herda as policies globais configuradas no API Management -->
 
-      <!-- Extrai token -->
-      <set-variable name="bearerToken" value="@(context.Request.Headers.GetValueOrDefault("Authorization", "").Split(' ').Last())" />
+      <!-- Extrai token (https://stackoverflow.com/questions/4361173/http-headers-in-websockets-client-api) -->
+      <set-variable name="bearerToken" value="@{
+          var header = context.Request.Headers.GetValueOrDefault("Sec-WebSocket-Protocol", "");
+          
+          if (!string.IsNullOrEmpty(header)) {
+              var parts = header.Split(',');
+              header = parts[parts.Length - 1].Trim();
+          }
+
+          return header;
+      }" />
 
       <!-- Validação imediata: se vazio, retorna 401 -->
       <choose>

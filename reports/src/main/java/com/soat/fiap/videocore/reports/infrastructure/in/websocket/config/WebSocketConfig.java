@@ -1,5 +1,7 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.websocket.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -8,6 +10,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+import com.soat.fiap.videocore.reports.infrastructure.common.exceptions.http.CorsAllowedOriginEmptyException;
 import com.soat.fiap.videocore.reports.infrastructure.common.websocket.WebSocketConstants;
 import com.soat.fiap.videocore.reports.infrastructure.in.websocket.handlers.WebSocketErrorHandler;
 import com.soat.fiap.videocore.reports.infrastructure.in.websocket.interceptors.channel.ReportTopicChannelInterceptor;
@@ -32,6 +35,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Value("${websocket.base-endpoint}")
 	private String webSocketBaseEndpoint;
 
+	@Value("${http.cors.allowed-origins}")
+	private String allowedOrigins;
+
 	/**
 	 * Registra o endpoint STOMP utilizado pelos clientes para estabelecer a conexão
 	 * WebSocket.
@@ -41,7 +47,23 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	 */
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint(webSocketBaseEndpoint).addInterceptors(authSubjectHandshakeInterceptor);
+
+		if (allowedOrigins == null || allowedOrigins.isBlank())
+			throw new CorsAllowedOriginEmptyException(
+					"Allowed Origins não pode estar em branco durante a configuração de CORS");
+
+		var origins = Arrays.stream(allowedOrigins.split(","))
+				.map(String::trim)
+				.filter(origin -> !origin.isEmpty())
+				.toArray(String[]::new);
+
+		if (origins.length == 0)
+			throw new CorsAllowedOriginEmptyException(
+					"Allowed Origins não pode estar em branco durante a configuração de CORS");
+
+		registry.addEndpoint(webSocketBaseEndpoint)
+				.setAllowedOriginPatterns(origins)
+				.addInterceptors(authSubjectHandshakeInterceptor);
 
 		registry.setErrorHandler(webSocketErrorHandler);
 	}

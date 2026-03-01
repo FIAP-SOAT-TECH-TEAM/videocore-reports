@@ -1,8 +1,8 @@
 package com.soat.fiap.videocore.reports.core.domain.exceptions;
 
 /**
- * Exceção lançada quando um usuário não é possível identificar a autenticação
- * de um usuário
+ * Exceção lançada quando não é possível identificar a autenticação de um
+ * usuário
  */
 public class NotAuthorizedException extends RuntimeException {
 

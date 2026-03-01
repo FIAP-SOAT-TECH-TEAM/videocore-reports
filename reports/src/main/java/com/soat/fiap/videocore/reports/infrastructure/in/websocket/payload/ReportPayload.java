@@ -16,6 +16,8 @@ import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
  *            Identificador do usuário dono do vídeo.
  * @param requestId
  *            Identificador da requisição de processamento.
+ * @param traceId
+ *            Identificador de rastreio.
  * @param imageMinute
  *            Minuto em que a imagem foi capturada
  * @param frameCutMinutes
@@ -27,6 +29,6 @@ import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
  * @param status
  *            Status de processamento.
  */
-public record ReportPayload(String id, String videoName, String userId, String requestId, long imageMinute,
-		long frameCutMinutes, Double percentStatusProcess, Instant reportTime, ProcessStatus status) {
+public record ReportPayload(String id, String videoName, String userId, String requestId, String traceId,
+		long imageMinute, long frameCutMinutes, Double percentStatusProcess, Instant reportTime, ProcessStatus status) {
 }

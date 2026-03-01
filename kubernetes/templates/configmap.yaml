@@ -11,3 +11,4 @@ data:
   SPRING_PROFILES_ACTIVE: {{ .Values.api.server.profilesActive | quote }}
   WEBSOCKET_BASE_ENDPOINT: {{ .Values.api.websocket.baseEndpoint | quote }}
   OTEL_GRPC_ENDPOINT: "http://videocore-nr-otel-opentelemetry-collector.{{ .Values.namespace.monitor.name }}.svc.cluster.local:4317"
+  HTTP_CORS_ALLOWED_ORIGINS: {{ .Values.api.cors.allowedOrigins | quote }}
