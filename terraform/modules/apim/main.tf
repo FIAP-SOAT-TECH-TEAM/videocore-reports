@@ -104,6 +104,22 @@ resource "azurerm_api_management_api_policy" "set_backend_api" {
 
       <!-- Define o backend real -->
       <set-backend-service base-url="http://${data.terraform_remote_state.infra.outputs.api_reports_private_dns_fqdn}/${var.api_ingress_path}" />
+
+      <!-- Configura CORS -->
+      <cors allow-credentials="false">
+        <allowed-origins>
+            <origin>${data.terraform_remote_state.infra.outputs.cloudfront_url}</origin>
+        </allowed-origins>
+        <allowed-methods>
+            <method>GET</method>
+            <method>OPTIONS</method>
+        </allowed-methods>
+        <allowed-headers>
+            <header>authorization</header>
+            <header>content-type</header>
+            <header>ocp-apim-subscription-key</header>
+        </allowed-headers>
+      </cors>
     </inbound>
 
     <backend>
