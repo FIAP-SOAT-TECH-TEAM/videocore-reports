@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.gateway;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
@@ -90,6 +91,7 @@ public class ReportGateway {
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 * Suporta paginação
 	 *
 	 * @param userId
 	 *            identificador do usuário
@@ -107,5 +109,22 @@ public class ReportGateway {
 		TraceContext.addEvent("report.object.list", dtos);
 
 		return reportMapper.toPaginationModel(dtos);
+	}
+
+	/**
+	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return lista de {@link Report} encontrados (pode ser vazia)
+	 */
+	@WithSpan(name = "gateway.get.last.reports.by.userId")
+	public List<Report> getLastReportsByUserId(String userId) {
+
+		var dtos = reportDataSource.getLastReportsByUserId(userId);
+
+		TraceContext.addEvent("report.object.list", dtos);
+
+		return dtos.stream().map(reportMapper::toModel).toList();
 	}
 }

@@ -88,6 +88,7 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 * Suporta paginação
 	 *
 	 * <p>
 	 * Cosmos DB não suporta non-correlated queries. Por isso, primeiro buscamos os
@@ -140,5 +141,39 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 
 		return reportEntityMapper.toPaginationDTO(reportsSlice, reports, totalElements, totalPages, hasPrevious,
 				hasNext);
+	}
+
+	/**
+	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 *
+	 * <p>
+	 * Cosmos DB não suporta non-correlated queries. Por isso, primeiro buscamos os
+	 * momentos de reporte mais recentes, e depois os reportes efetivamente.
+	 * <a href=
+	 * "https://learn.microsoft.com/en-us/cosmos-db/query/subquery#types-of-subqueries">How
+	 * to use subquery (SQL) in azure cosmos db</a> <a href=
+	 * "https://learn.microsoft.com/en-us/answers/questions/528514/how-to-use-subquery-(sql)-in-azure-cosmos-db">Types
+	 * of subqueries</a>
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return objeto contendo metadados de paginação e os reportes encontrados
+	 */
+	@Override @Transactional(readOnly = true)
+	public List<ReportDto> getLastReportsByUserId(String userId) {
+		var reportTimes = cosmosDbReportRepository.findLatestReportsTimesByUser(userId)
+				.stream()
+				.map(ReportTimeProjection::id)
+				.toList();
+
+		if (reportTimes.isEmpty())
+			return List.of();
+
+		var reportTimesAsText = reportTimes.stream().map(Instant::toString).toList();
+
+		return cosmosDbReportRepository.findByReportTimeIn(reportTimesAsText)
+				.stream()
+				.map(reportEntityMapper::toDto)
+				.toList();
 	}
 }

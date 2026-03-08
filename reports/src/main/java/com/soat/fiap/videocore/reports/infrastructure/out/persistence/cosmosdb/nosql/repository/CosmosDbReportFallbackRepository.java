@@ -149,6 +149,11 @@ public class CosmosDbReportFallbackRepository {
 			}
 
 			@Override
+			public List<ReportTimeProjection> findLatestReportsTimesByUser(String userId) {
+				return List.of();
+			}
+
+			@Override
 			public List<ReportEntity> findByReportTimeIn(List<String> reportTimes) {
 				return List.of();
 			}

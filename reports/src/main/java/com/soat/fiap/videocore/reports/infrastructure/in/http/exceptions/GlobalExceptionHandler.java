@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.*;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ErrorResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -110,24 +111,6 @@ public class GlobalExceptionHandler {
 				ex.getMessage(), request.getServletPath());
 
 		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
-	}
-
-	/** Trata erros de argumentos inválidos */
-	@ExceptionHandler(IllegalArgumentException.class)
-	public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex,
-			HttpServletRequest request) {
-		var message = ex.getMessage();
-		var statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-
-		if (message.contains("Page index") || message.contains("Page size")) {
-			message = "Paginação inválida. Revise os valors informados para número da página e quantidade de registros";
-			statusCode = HttpStatus.BAD_REQUEST;
-		}
-
-		var errorResponse = new ErrorResponse(LocalDateTime.now(), statusCode.value(), message,
-				request.getServletPath());
-
-		return new ResponseEntity<>(errorResponse, statusCode);
 	}
 
 	/** Trata erros de falha de permissão */

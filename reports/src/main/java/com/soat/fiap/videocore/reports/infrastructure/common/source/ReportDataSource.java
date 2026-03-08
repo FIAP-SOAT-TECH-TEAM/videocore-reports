@@ -1,5 +1,6 @@
 package com.soat.fiap.videocore.reports.infrastructure.common.source;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
@@ -54,6 +55,7 @@ public interface ReportDataSource {
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 * Suporta paginação
 	 *
 	 * @param userId
 	 *            identificador do usuário
@@ -64,4 +66,13 @@ public interface ReportDataSource {
 	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
 	PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size);
+
+	/**
+	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return lista com os últimos reportes encontrados (pode ser vazia)
+	 */
+	List<ReportDto> getLastReportsByUserId(String userId);
 }

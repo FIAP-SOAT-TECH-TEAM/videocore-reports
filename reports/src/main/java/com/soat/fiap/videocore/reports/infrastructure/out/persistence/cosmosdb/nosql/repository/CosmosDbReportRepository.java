@@ -54,7 +54,7 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 
 	/**
 	 * Retorna o momento de reporte dos últimos reportes de cada requestId e
-	 * videoName de um usuário.
+	 * videoName de um usuário. Suporta paginação
 	 *
 	 * @param userId
 	 *            identificador do usuário
@@ -64,6 +64,17 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 	 */
 	@Query("SELECT MAX(r.reportTime) AS id FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
 	Slice<ReportTimeProjection> findLatestReportsTimesByUser(String userId, PageRequest pageRequest);
+
+	/**
+	 * Retorna o momento de reporte dos últimos reportes de cada requestId e
+	 * videoName de um usuário.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return momentos de reporte mais recentes
+	 */
+	@Query("SELECT MAX(r.reportTime) AS id FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
+	List<ReportTimeProjection> findLatestReportsTimesByUser(String userId);
 
 	/**
 	 * Busca os reportes correspondentes aos momentos de reporte fornecidos.
