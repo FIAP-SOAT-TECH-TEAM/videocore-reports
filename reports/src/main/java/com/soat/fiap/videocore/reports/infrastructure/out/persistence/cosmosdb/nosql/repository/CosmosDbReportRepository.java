@@ -3,6 +3,8 @@ package com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import com.azure.spring.data.cosmos.repository.CosmosRepository;
@@ -51,15 +53,17 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 			String videoName);
 
 	/**
-	 * Retorna o momento de reporte dos últimos reports de cada requestId e
+	 * Retorna o momento de reporte dos últimos reportes de cada requestId e
 	 * videoName de um usuário.
 	 *
 	 * @param userId
 	 *            identificador do usuário
-	 * @return lista de momentos de reporte mais recentes
+	 * @param pageRequest
+	 *            configuração de paginação
+	 * @return página contendo momentos de reporte mais recentes
 	 */
 	@Query("SELECT MAX(r.reportTime) AS id FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
-	List<ReportTimeProjection> findLatestReportsTimesByUser(String userId);
+	Slice<ReportTimeProjection> findLatestReportsTimesByUser(String userId, PageRequest pageRequest);
 
 	/**
 	 * Busca os reportes correspondentes aos momentos de reporte fornecidos.
@@ -69,4 +73,17 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 	 * @return lista de entidades de report
 	 */
 	List<ReportEntity> findByReportTimeIn(List<String> reportTimes);
+
+	/**
+	 * Conta a quantidade de registros agregados por {@code requestId} e
+	 * {@code videoName} para um usuário. Utilizado para obter o total de itens após
+	 * a agregação, contornando limitações de paginação com {@code GROUP BY} no
+	 * Cosmos DB.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return total de registros agregados
+	 */
+	@Query("SELECT VALUE COUNT(1) FROM (SELECT r.videoName FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName)")
+	long countLatestReportsByUser(String userId);
 }

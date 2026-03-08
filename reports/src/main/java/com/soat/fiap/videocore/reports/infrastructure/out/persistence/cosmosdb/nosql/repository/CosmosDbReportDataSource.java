@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.azure.spring.data.cosmos.core.query.CosmosPageRequest;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.ReportDataSource;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.mapper.ReportEntityMapper;
@@ -88,33 +90,55 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
 	 *
 	 * <p>
-	 * <b>Aviso:</b> Cosmos DB não suporta non-correlated queries. Por isso,
-	 * primeiro buscamos s momentos de reporte mais recentes, e depois os reportes
-	 * efetivamente. <a href=
+	 * Cosmos DB não suporta non-correlated queries. Por isso, primeiro buscamos os
+	 * momentos de reporte mais recentes, e depois os reportes efetivamente.
+	 * <a href=
 	 * "https://learn.microsoft.com/en-us/cosmos-db/query/subquery#types-of-subqueries">How
 	 * to use subquery (SQL) in azure cosmos db</a> <a href=
 	 * "https://learn.microsoft.com/en-us/answers/questions/528514/how-to-use-subquery-(sql)-in-azure-cosmos-db">Types
 	 * of subqueries</a>
 	 *
+	 * <p>
+	 * Além disso, consultas que utilizam {@code GROUP BY} possuem limitações de
+	 * paginação no Cosmos DB, pois esse tipo de consulta não suporta continuation
+	 * tokens, mecanismo utilizado pelo banco para percorrer resultados paginados.
+	 * <a href="https://learn.microsoft.com/en-us/cosmos-db/query/pagination">
+	 * Pagination in Azure Cosmos DB</a>
+	 *
 	 * @param userId
 	 *            identificador do usuário
-	 * @return lista de reportes encontrados (pode ser vazia)
+	 * @param page
+	 *            número da página
+	 * @param size
+	 *            quantidade de elementos por página
+	 * @return objeto contendo metadados de paginação e os reportes encontrados
 	 */
 	@Override @Transactional(readOnly = true)
-	public List<ReportDto> getLastReportsByUserId(String userId) {
-		var reportTimes = cosmosDbReportRepository.findLatestReportsTimesByUser(userId)
+	public PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size) {
+		var cosmosPageRequest = new CosmosPageRequest(page, size, null);
+
+		var reportsSlice = cosmosDbReportRepository.findLatestReportsTimesByUser(userId, cosmosPageRequest);
+
+		if (reportsSlice.isEmpty())
+			return new PaginationDTO<>(page, size, 0, 0, false, false, List.of());
+
+		var totalElements = cosmosDbReportRepository.countLatestReportsByUser(userId);
+		var hasPrevious = page > 0;
+		var hasNext = ((long) (page + 1) * size) < totalElements;
+		var totalPages = (int) Math.ceil((double) totalElements / size);
+
+		var reportTimes = reportsSlice.getContent()
 				.stream()
 				.map(ReportTimeProjection::id)
+				.map(Instant::toString)
 				.toList();
 
-		if (reportTimes.isEmpty())
-			return List.of();
-
-		var reportTimesAsText = reportTimes.stream().map(Instant::toString).toList();
-
-		return cosmosDbReportRepository.findByReportTimeIn(reportTimesAsText)
+		var reports = cosmosDbReportRepository.findByReportTimeIn(reportTimes)
 				.stream()
 				.map(reportEntityMapper::toDto)
 				.toList();
+
+		return reportEntityMapper.toPaginationDTO(reportsSlice, reports, totalElements, totalPages, hasPrevious,
+				hasNext);
 	}
 }

@@ -38,7 +38,7 @@ public class GetAuthUserLastExistingReportUseCase {
 	 *         existir
 	 */
 	@WithSpan(name = "usecase.get.last.existing.report")
-	public Report getReportById(String requestId, String videoName) {
+	public Report getAuthUserLastExistingReport(String requestId, String videoName) {
 		var userId = authenticatedUserGateway.getSubject();
 
 		CanonicalContext.add("user_id", userId);

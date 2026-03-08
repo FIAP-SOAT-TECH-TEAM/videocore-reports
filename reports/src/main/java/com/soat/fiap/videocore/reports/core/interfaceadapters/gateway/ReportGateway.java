@@ -1,6 +1,5 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.gateway;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.soat.fiap.videocore.reports.common.observability.trace.TraceContext;
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.ReportMapper;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.ReportDataSource;
@@ -93,15 +93,19 @@ public class ReportGateway {
 	 *
 	 * @param userId
 	 *            identificador do usuário
+	 * @param page
+	 *            número da página
+	 * @param size
+	 *            quantidade de elementos por página
 	 * @return lista de {@link Report} encontrados (pode ser vazia)
 	 */
 	@WithSpan(name = "gateway.get.last.reports.by.userId")
-	public List<Report> getLastReportsByUserId(String userId) {
+	public PaginationDTO<Report> getLastReportsByUserId(String userId, int page, int size) {
 
-		var dtos = reportDataSource.getLastReportsByUserId(userId);
+		var dtos = reportDataSource.getLastReportsByUserId(userId, page, size);
 
 		TraceContext.addEvent("report.object.list", dtos);
 
-		return dtos.stream().map(reportMapper::toModel).toList();
+		return reportMapper.toPaginationModel(dtos);
 	}
 }

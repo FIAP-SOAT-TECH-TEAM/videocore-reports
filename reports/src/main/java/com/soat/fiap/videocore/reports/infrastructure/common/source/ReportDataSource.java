@@ -1,8 +1,8 @@
 package com.soat.fiap.videocore.reports.infrastructure.common.source;
 
-import java.util.List;
 import java.util.Optional;
 
+import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 
 /** Fonte de dados para operações de persistência de reportes. */
@@ -57,7 +57,11 @@ public interface ReportDataSource {
 	 *
 	 * @param userId
 	 *            identificador do usuário
+	 * @param page
+	 *            número da página
+	 * @param size
+	 *            quantidade de elementos por página
 	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
-	List<ReportDto> getLastReportsByUserId(String userId);
+	PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size);
 }

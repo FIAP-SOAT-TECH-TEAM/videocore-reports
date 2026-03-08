@@ -112,6 +112,24 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 	}
 
+	/** Trata erros de argumentos inválidos */
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex,
+			HttpServletRequest request) {
+		var message = ex.getMessage();
+		var statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+		if (message.contains("Page index") || message.contains("Page size")) {
+			message = "Paginação inválida. Revise os valors informados para número da página e quantidade de registros";
+			statusCode = HttpStatus.BAD_REQUEST;
+		}
+
+		var errorResponse = new ErrorResponse(LocalDateTime.now(), statusCode.value(), message,
+				request.getServletPath());
+
+		return new ResponseEntity<>(errorResponse, statusCode);
+	}
+
 	/** Trata erros de falha de permissão */
 	@ExceptionHandler(ForbiddenException.class)
 	public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException ex, HttpServletRequest request) {

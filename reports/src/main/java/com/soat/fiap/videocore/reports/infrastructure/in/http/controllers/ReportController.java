@@ -1,7 +1,5 @@
 package com.soat.fiap.videocore.reports.infrastructure.in.http.controllers;
 
-import java.util.List;
-
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastExistingReportController;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthenticatedUserLastReportsController;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.PaginationResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.swagger.ReportPaginationResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,13 +29,18 @@ public class ReportController {
 	private final GetAuthUserLastExistingReportController getAuthUserLastExistingReportController;
 
 	@GetMapping("/latest")
-	@Operation(summary = "Obter reports mais recentes do usuário autenticado", description = "Retorna a lista de reportes mais recentes dos videos enviados pelo usuário autenticado")
+	@Operation(summary = "Obter os reportes mais recentes do usuário autenticado", description = "Retorna a lista paginada de reportes mais recentes dos vídeos enviados pelo usuário autenticado")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Reports encontrados", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ReportResponse.class)))),
-			@ApiResponse(responseCode = "401", description = "Quando não for possível obter o ID do usuário autenticado (Header HTTTP Auth-Subject)", content = @Content)})
-	public ResponseEntity<List<ReportResponse>> getAuthUserLastReports() {
+			@ApiResponse(responseCode = "200", description = "Reportes encontrados", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ReportPaginationResponse.class))),
+			@ApiResponse(responseCode = "401", description = "Quando não for possível obter o ID do usuário autenticado (Header HTTP Auth-Subject)", content = @Content)})
+	public ResponseEntity<PaginationResponse<ReportResponse>> getAuthUserLastReports(
+			@Parameter(description = "Número da página (baseado em zero)", example = "0")
+			@RequestParam(defaultValue = "0") int page,
+
+			@Parameter(description = "Quantidade de elementos por página", example = "10")
+			@RequestParam(defaultValue = "10") int size) {
 		try {
-			var reports = getAuthenticatedUserLastReportsController.getAuthenticatedUserLastReports();
+			var reports = getAuthenticatedUserLastReportsController.getAuthenticatedUserLastReports(page, size);
 
 			log.info("request_completed");
 
@@ -49,7 +54,7 @@ public class ReportController {
 	}
 
 	@GetMapping
-	@Operation(summary = "Obter último report existente de um vídeo enviado pelo usuário autenticado", description = "Retorna o último reporte existente de um vídeo enviado pelo usuário autenticado")
+	@Operation(summary = "Obter último reporte existente de um vídeo enviado pelo usuário autenticado", description = "Retorna o último reporte existente de um vídeo enviado pelo usuário autenticado")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reporte encontrado", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ReportResponse.class))),
 			@ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),

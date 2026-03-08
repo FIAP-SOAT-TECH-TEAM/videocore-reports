@@ -38,7 +38,7 @@ class GetAuthUserLastExistingReportUseCaseTest {
 		var useCase = new GetAuthUserLastExistingReportUseCase(reportGateway, userGateway);
 
 		// Act
-		Report result = useCase.getReportById(requestId, videoName);
+		Report result = useCase.getAuthUserLastExistingReport(requestId, videoName);
 
 		// Assert
 		assertSame(report, result);
@@ -55,7 +55,8 @@ class GetAuthUserLastExistingReportUseCaseTest {
 		var useCase = new GetAuthUserLastExistingReportUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(NotAuthorizedException.class, () -> useCase.getReportById("request-id", "video.mp4"));
+		assertThrows(NotAuthorizedException.class,
+				() -> useCase.getAuthUserLastExistingReport("request-id", "video.mp4"));
 	}
 
 	@Test
@@ -69,7 +70,7 @@ class GetAuthUserLastExistingReportUseCaseTest {
 		var useCase = new GetAuthUserLastExistingReportUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(ReportException.class, () -> useCase.getReportById(" ", "video.mp4"));
+		assertThrows(ReportException.class, () -> useCase.getAuthUserLastExistingReport(" ", "video.mp4"));
 	}
 
 	@Test
@@ -83,7 +84,7 @@ class GetAuthUserLastExistingReportUseCaseTest {
 		var useCase = new GetAuthUserLastExistingReportUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(ReportException.class, () -> useCase.getReportById("request-id", " "));
+		assertThrows(ReportException.class, () -> useCase.getAuthUserLastExistingReport("request-id", " "));
 	}
 
 	@Test
@@ -102,7 +103,7 @@ class GetAuthUserLastExistingReportUseCaseTest {
 		var useCase = new GetAuthUserLastExistingReportUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(ReportNotFoundException.class, () -> useCase.getReportById(requestId, videoName));
+		assertThrows(ReportNotFoundException.class, () -> useCase.getAuthUserLastExistingReport(requestId, videoName));
 	}
 
 	@Test
@@ -124,6 +125,6 @@ class GetAuthUserLastExistingReportUseCaseTest {
 		var useCase = new GetAuthUserLastExistingReportUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(ForbiddenException.class, () -> useCase.getReportById(requestId, videoName));
+		assertThrows(ForbiddenException.class, () -> useCase.getAuthUserLastExistingReport(requestId, videoName));
 	}
 }

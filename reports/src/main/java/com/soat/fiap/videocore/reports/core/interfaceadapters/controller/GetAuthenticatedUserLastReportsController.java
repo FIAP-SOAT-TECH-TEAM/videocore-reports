@@ -1,12 +1,11 @@
 package com.soat.fiap.videocore.reports.core.interfaceadapters.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastReportsUseCase;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ReportPresenter;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.PaginationResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -25,12 +24,17 @@ public class GetAuthenticatedUserLastReportsController {
 	 * Retorna a lista de reportes mais recentes dos videos enviados pelo usuário
 	 * autenticado.
 	 *
+	 * @param page
+	 *            número da página
+	 * @param size
+	 *            quantidade de elementos por página
+	 *
 	 * @return lista de reportes convertidos para resposta HTTP
 	 */
 	@WithSpan(name = "controller.get.authenticated.user.all.reports")
-	public List<ReportResponse> getAuthenticatedUserLastReports() {
-		var reports = getAuthUserLastReportsUseCase.getAuthenticatedUserLastReports();
+	public PaginationResponse<ReportResponse> getAuthenticatedUserLastReports(int page, int size) {
+		var reports = getAuthUserLastReportsUseCase.getAuthenticatedUserLastReports(page, size);
 
-		return reportPresenter.toResponse(reports);
+		return reportPresenter.toPaginationResponse(reports);
 	}
 }

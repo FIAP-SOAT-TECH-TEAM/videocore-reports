@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.PaginationResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
 
 /**
@@ -32,4 +34,14 @@ public interface ReportPresenter {
 	ReportResponse toResponse(Report report);
 
 	List<ReportResponse> toResponse(List<Report> reports);
+
+	/**
+	 * Converte um {@link PaginationDTO} de {@link Report} para
+	 * {@link PaginationResponse} de {@link ReportResponse}.
+	 *
+	 * @param pagination
+	 *            página contendo modelos de domínio
+	 * @return resposta paginada contendo DTOs de saída HTTP
+	 */
+	PaginationResponse<ReportResponse> toPaginationResponse(PaginationDTO<Report> pagination);
 }

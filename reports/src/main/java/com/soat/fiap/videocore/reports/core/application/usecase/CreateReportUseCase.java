@@ -26,7 +26,6 @@ public class CreateReportUseCase {
 	 */
 	@WithSpan(name = "usecase.create.report")
 	public Report createReport(ReportInput reportInput) {
-
 		if (reportInput == null)
 			throw new ReportException("Os dados do reporte não podem ser nulos para criação do objeto de domínio");
 

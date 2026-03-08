@@ -32,7 +32,7 @@ public class GetAuthUserLastExistingReportController {
 	 */
 	@WithSpan(name = "controller.get.last.existing.report")
 	public ReportResponse getAuthUserLastExistingReport(String requestId, String videoName) {
-		Report report = getAuthUserLastExistingReportUseCase.getReportById(requestId, videoName);
+		Report report = getAuthUserLastExistingReportUseCase.getAuthUserLastExistingReport(requestId, videoName);
 
 		return reportPresenter.toResponse(report);
 	}

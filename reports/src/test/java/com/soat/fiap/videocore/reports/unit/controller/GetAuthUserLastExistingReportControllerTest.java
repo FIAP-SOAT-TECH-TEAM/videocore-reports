@@ -26,7 +26,7 @@ class GetAuthUserLastExistingReportControllerTest {
 		String requestId = "request-id";
 		String videoName = "video.mp4";
 
-		when(useCase.getReportById(requestId, videoName)).thenReturn(report);
+		when(useCase.getAuthUserLastExistingReport(requestId, videoName)).thenReturn(report);
 		when(presenter.toResponse(report)).thenReturn(response);
 
 		var controller = new GetAuthUserLastExistingReportController(useCase, presenter);
@@ -36,7 +36,7 @@ class GetAuthUserLastExistingReportControllerTest {
 
 		// Assert
 		assertSame(response, result);
-		verify(useCase).getReportById(requestId, videoName);
+		verify(useCase).getAuthUserLastExistingReport(requestId, videoName);
 		verify(presenter).toResponse(report);
 	}
 }
