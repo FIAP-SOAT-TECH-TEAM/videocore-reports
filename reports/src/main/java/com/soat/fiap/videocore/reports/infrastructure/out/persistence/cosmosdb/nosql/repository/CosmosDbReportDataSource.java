@@ -88,23 +88,32 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
-	 * Suporta paginação
+	 * Suporta paginação.
 	 *
 	 * <p>
-	 * Cosmos DB não suporta non-correlated queries. Por isso, primeiro buscamos os
-	 * momentos de reporte mais recentes, e depois os reportes efetivamente.
+	 * <b>Limitações Técnicas do Cosmos DB & Spring Data:</b>
+	 * <ul>
+	 * <li><b>Subqueries:</b> O Cosmos DB não suporta <i>non-correlated
+	 * subqueries</i> (ex: {@code WHERE IN (SELECT...)}). A operação deve ser
+	 * dividida em duas etapas: extração manual de chaves e busca posterior dos
+	 * documentos. <a href=
+	 * "https://learn.microsoft.com/en-us/answers/questions/528514/how-to-use-subquery-(sql)-in-azure-cosmos-db">Subqueries
+	 * in Azure Cosmos DB</a> e <a href=
+	 * "https://learn.microsoft.com/en-us/cosmos-db/query/subquery#types-of-subqueries">Types
+	 * of subqueries</a>.</li>
+	 * <li><b>Agregação e Paginação:</b> Consultas que utilizam {@code GROUP BY} ou
+	 * {@code DISTINCT} não suportam <i>continuation tokens</i>. Nesses casos, a
+	 * paginação é feita via {@code OFFSET LIMIT}, que possui custo de RU crescente.
 	 * <a href=
-	 * "https://learn.microsoft.com/en-us/cosmos-db/query/subquery#types-of-subqueries">How
-	 * to use subquery (SQL) in azure cosmos db</a> <a href=
-	 * "https://learn.microsoft.com/en-us/answers/questions/528514/how-to-use-subquery-(sql)-in-azure-cosmos-db">Types
-	 * of subqueries</a>
-	 *
-	 * <p>
-	 * Além disso, consultas que utilizam {@code GROUP BY} possuem limitações de
-	 * paginação no Cosmos DB, pois esse tipo de consulta não suporta continuation
-	 * tokens, mecanismo utilizado pelo banco para percorrer resultados paginados.
-	 * <a href="https://learn.microsoft.com/en-us/cosmos-db/query/pagination">
-	 * Pagination in Azure Cosmos DB</a>
+	 * "https://learn.microsoft.com/en-us/cosmos-db/query/pagination#continuation-tokens">Pagination
+	 * in Azure Cosmos DB</a>.</li>
+	 * <li><b>Spring Data Page:</b> O Spring Data Azure Cosmos DB não suporta o
+	 * retorno de {@code Page<T>} em métodos anotados com {@code @Query}, sendo
+	 * obrigatório o uso de {@code Slice<T>}. O total de elementos deve ser
+	 * consultado separadamente para compor metadados. <a href=
+	 * "https://github.com/microsoft/spring-data-cosmosdb/issues/559">Pagination and
+	 * Sorting in Spring Data</a>.</li>
+	 * </ul>
 	 *
 	 * @param userId
 	 *            identificador do usuário
