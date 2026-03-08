@@ -59,7 +59,7 @@ public class PaginationResponse<T> {
 	@Schema(description = "Indica se existe página anterior", example = "false")
 	private final boolean hasPrevious;
 
-	@Schema(description = "Indica se existe próxima página", example = "true")
+	@Schema(description = "Indica se existe próxima página", example = "false")
 	private final boolean hasNext;
 
 	@Schema(description = "Lista de elementos retornados na página atual")
