@@ -15,6 +15,7 @@ import com.azure.cosmos.models.CosmosPatchItemRequestOptions;
 import com.azure.cosmos.models.CosmosPatchOperations;
 import com.azure.cosmos.models.PartitionKey;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.entity.ReportEntity;
+import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ProcessStatusProjection;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection;
 
 /**
@@ -155,6 +156,11 @@ public class CosmosDbReportFallbackRepository {
 
 			@Override
 			public List<ReportEntity> findByReportTimeIn(List<String> reportTimes) {
+				return List.of();
+			}
+
+			@Override
+			public List<ProcessStatusProjection> findStatusByReportTimeIn(List<String> reportTimes) {
 				return List.of();
 			}
 

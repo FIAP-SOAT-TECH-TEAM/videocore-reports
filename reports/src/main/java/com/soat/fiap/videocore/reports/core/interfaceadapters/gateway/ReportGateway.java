@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.soat.fiap.videocore.reports.common.observability.trace.TraceContext;
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
+import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.ReportMapper;
@@ -126,5 +127,22 @@ public class ReportGateway {
 		TraceContext.addEvent("report.object.list", dtos);
 
 		return dtos.stream().map(reportMapper::toModel).toList();
+	}
+
+	/**
+	 * Recupera os status de reporte mais recentes dos videos enviados por um
+	 * usuário.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return lista de {@link ProcessStatus} encontrados (pode ser vazia)
+	 */
+	@WithSpan(name = "gateway.get.last.reports.status.by.userId")
+	public List<ProcessStatus> getLastReportsStatusByUserId(String userId) {
+		var status = reportDataSource.getLastReportsStatusByUserId(userId);
+
+		TraceContext.addEvent("report.status.object.list", status);
+
+		return status;
 	}
 }

@@ -3,6 +3,7 @@ package com.soat.fiap.videocore.reports.infrastructure.common.source;
 import java.util.List;
 import java.util.Optional;
 
+import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 
@@ -75,4 +76,14 @@ public interface ReportDataSource {
 	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
 	List<ReportDto> getLastReportsByUserId(String userId);
+
+	/**
+	 * Recupera os status de reporte mais recentes dos videos enviados por um
+	 * usuário.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return lista com os últimos status de reportes encontrados (pode ser vazia)
+	 */
+	List<ProcessStatus> getLastReportsStatusByUserId(String userId);
 }

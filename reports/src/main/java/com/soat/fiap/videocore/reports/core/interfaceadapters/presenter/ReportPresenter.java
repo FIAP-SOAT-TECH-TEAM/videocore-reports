@@ -5,10 +5,12 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.soat.fiap.videocore.reports.core.application.output.ReportsStatsOutput;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.PaginationResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportsStatsResponse;
 
 /**
  * Presenter responsável por converter objetos de domínio ({@link Report}) em
@@ -44,4 +46,14 @@ public interface ReportPresenter {
 	 * @return resposta paginada contendo DTOs de saída HTTP
 	 */
 	PaginationResponse<ReportResponse> toPaginationResponse(PaginationDTO<Report> pagination);
+
+	/**
+	 * Converte um {@link ReportsStatsOutput} (modelo de saída da aplicação) para
+	 * {@link ReportsStatsResponse} (DTO de resposta HTTP).
+	 *
+	 * @param stats
+	 *            objeto contendo estatísticas agregadas dos reportes
+	 * @return DTO de resposta HTTP contendo as estatísticas
+	 */
+	ReportsStatsResponse toStatsResponse(ReportsStatsOutput stats);
 }

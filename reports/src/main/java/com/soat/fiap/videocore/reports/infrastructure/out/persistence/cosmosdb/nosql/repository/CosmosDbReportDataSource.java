@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.azure.spring.data.cosmos.core.query.CosmosPageRequest;
+import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.ReportDataSource;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.mapper.ReportEntityMapper;
+import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ProcessStatusProjection;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection;
 
 import lombok.RequiredArgsConstructor;
@@ -139,7 +141,7 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 
 		var reportTimes = reportsSlice.getContent()
 				.stream()
-				.map(ReportTimeProjection::id)
+				.map(ReportTimeProjection::reportTime)
 				.map(Instant::toString)
 				.toList();
 
@@ -166,13 +168,13 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 	 *
 	 * @param userId
 	 *            identificador do usuário
-	 * @return objeto contendo metadados de paginação e os reportes encontrados
+	 * @return objeto contendo os reportes encontrados
 	 */
 	@Override @Transactional(readOnly = true)
 	public List<ReportDto> getLastReportsByUserId(String userId) {
 		var reportTimes = cosmosDbReportRepository.findLatestReportsTimesByUser(userId)
 				.stream()
-				.map(ReportTimeProjection::id)
+				.map(ReportTimeProjection::reportTime)
 				.toList();
 
 		if (reportTimes.isEmpty())
@@ -184,5 +186,41 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 				.stream()
 				.map(reportEntityMapper::toDto)
 				.toList();
+	}
+
+	/**
+	 * Recupera os status de reporte mais recentes dos videos enviados por um
+	 * usuário.
+	 *
+	 * <p>
+	 * Cosmos DB não suporta non-correlated queries. Por isso, primeiro buscamos os
+	 * momentos de reporte mais recentes, e depois os reportes efetivamente.
+	 * <a href=
+	 * "https://learn.microsoft.com/en-us/cosmos-db/query/subquery#types-of-subqueries">How
+	 * to use subquery (SQL) in azure cosmos db</a> <a href=
+	 * "https://learn.microsoft.com/en-us/answers/questions/528514/how-to-use-subquery-(sql)-in-azure-cosmos-db">Types
+	 * of subqueries</a>
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return objeto contendo os status de reporte encontrados
+	 */
+	@Override @Transactional(readOnly = true)
+	public List<ProcessStatus> getLastReportsStatusByUserId(String userId) {
+		var reportTimes = cosmosDbReportRepository.findLatestReportsTimesByUser(userId)
+				.stream()
+				.map(ReportTimeProjection::reportTime)
+				.toList();
+
+		if (reportTimes.isEmpty())
+			return List.of();
+
+		var reportTimesAsText = reportTimes.stream().map(Instant::toString).toList();
+		var processStatusAsText = cosmosDbReportRepository.findStatusByReportTimeIn(reportTimesAsText)
+				.stream()
+				.map(ProcessStatusProjection::processStatus)
+				.toList();
+
+		return processStatusAsText.stream().map(ProcessStatus::valueOf).toList();
 	}
 }

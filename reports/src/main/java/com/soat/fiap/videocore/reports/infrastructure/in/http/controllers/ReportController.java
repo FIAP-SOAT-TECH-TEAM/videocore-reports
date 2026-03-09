@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import com.soat.fiap.videocore.reports.common.observability.log.CanonicalContext;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastExistingReportController;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsController;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsStatsController;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.PaginationResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportsStatsResponse;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.swagger.ReportPaginationResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +29,7 @@ public class ReportController {
 
 	private final GetAuthUserLastReportsController getAuthUserLastReportsController;
 	private final GetAuthUserLastExistingReportController getAuthUserLastExistingReportController;
+	private final GetAuthUserLastReportsStatsController getAuthUserLastReportsStatsController;
 
 	@GetMapping("/latest")
 	@Operation(summary = "Obter os reportes mais recentes do usuário autenticado", description = "Retorna a lista paginada de reportes mais recentes dos vídeos enviados pelo usuário autenticado")
@@ -49,6 +52,28 @@ public class ReportController {
 		} catch (Exception e) {
 			log.error("request_error", e);
 			throw e;
+		} finally {
+			CanonicalContext.clear();
+		}
+	}
+
+	@GetMapping("/stats")
+	@Operation(summary = "Obter estatísticas dos reportes do usuário autenticado", description = "Retorna estatísticas agregadas dos últimos reportes de processamento de vídeos enviados pelo usuário autenticado")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Estatísticas encontradas", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ReportsStatsResponse.class))),
+			@ApiResponse(responseCode = "401", description = "Quando não for possível obter o ID do usuário autenticado (Header HTTP Auth-Subject)", content = @Content)})
+	public ResponseEntity<ReportsStatsResponse> getAuthUserReportsStats() {
+		try {
+			var stats = getAuthUserLastReportsStatsController.getAuthUserLastReportsStats();
+
+			log.info("request_completed");
+
+			return ResponseEntity.ok(stats);
+
+		} catch (Exception e) {
+			log.error("request_error", e);
+			throw e;
+
 		} finally {
 			CanonicalContext.clear();
 		}

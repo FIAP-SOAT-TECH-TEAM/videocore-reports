@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.azure.spring.data.cosmos.repository.CosmosRepository;
 import com.azure.spring.data.cosmos.repository.Query;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.entity.ReportEntity;
+import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ProcessStatusProjection;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection;
 
 /**
@@ -62,7 +63,7 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 	 *            configuração de paginação
 	 * @return página contendo momentos de reporte mais recentes
 	 */
-	@Query("SELECT MAX(r.reportTime) AS id FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
+	@Query("SELECT MAX(r.reportTime) AS reportTime FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
 	Slice<ReportTimeProjection> findLatestReportsTimesByUser(String userId, PageRequest pageRequest);
 
 	/**
@@ -73,7 +74,7 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 	 *            identificador do usuário
 	 * @return momentos de reporte mais recentes
 	 */
-	@Query("SELECT MAX(r.reportTime) AS id FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
+	@Query("SELECT MAX(r.reportTime) AS reportTime FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
 	List<ReportTimeProjection> findLatestReportsTimesByUser(String userId);
 
 	/**
@@ -84,6 +85,17 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 	 * @return lista de entidades de report
 	 */
 	List<ReportEntity> findByReportTimeIn(List<String> reportTimes);
+
+	/**
+	 * Busca os status de reportes correspondentes aos momentos de reporte
+	 * fornecidos.
+	 *
+	 * @param reportTimes
+	 *            lista de momentos de reporte
+	 * @return lista de status de reporte
+	 */
+	@Query("SELECT r.status AS processStatus FROM report r WHERE r.reportTime IN (@reportTimes)")
+	List<ProcessStatusProjection> findStatusByReportTimeIn(List<String> reportTimes);
 
 	/**
 	 * Conta a quantidade de registros agregados por {@code requestId} e
