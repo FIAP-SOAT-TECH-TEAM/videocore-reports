@@ -277,6 +277,24 @@
       "type": "com.azure.cosmos.implementation.AsyncDocumentClient"
     },
     {
+      "type": "com.azure.cosmos.implementation.ClientSideRequestStatistics$ClientSideRequestStatisticsSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.ClientSideRequestStatistics$GatewayStatistics$GatewayStatisticsSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.Configs"
     },
     {
@@ -284,6 +302,27 @@
     },
     {
       "type": "com.azure.cosmos.implementation.CosmosClientMetadataCachesSnapshot"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.CosmosDiagnosticsSystemUsageSnapshot",
+      "methods": [
+        {
+          "name": "getAvailableMemory",
+          "parameterTypes": []
+        },
+        {
+          "name": "getAvailableProcessors",
+          "parameterTypes": []
+        },
+        {
+          "name": "getSystemCpuLoad",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUsedMemory",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "com.azure.cosmos.implementation.CosmosMicrometerMetricsConfig",
@@ -348,6 +387,15 @@
       ]
     },
     {
+      "type": "com.azure.cosmos.implementation.DiagnosticsClientContext$DiagnosticsClientConfigSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.DiagnosticsProvider"
     },
     {
@@ -365,10 +413,70 @@
       "type": "com.azure.cosmos.implementation.ImplementationBridgeHelpers$CosmosClientTelemetryConfigHelper$CosmosClientTelemetryConfigAccessor"
     },
     {
+      "type": "com.azure.cosmos.implementation.MetadataDiagnosticsContext",
+      "fields": [
+        {
+          "name": "metadataDiagnosticList"
+        }
+      ],
+      "methods": [
+        {
+          "name": "isEmpty",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.OperationType"
     },
     {
+      "type": "com.azure.cosmos.implementation.RequestTimeline"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.RequestTimeline$Event",
+      "fields": [
+        {
+          "name": "durationInMilliSecs"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getName",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStartTime",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.ResourceType"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.RetryContext",
+      "methods": [
+        {
+          "name": "getRetryCount",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRetryLatency",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStatusAndSubStatusCodes",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.SerializationDiagnosticsContext",
+      "fields": [
+        {
+          "name": "serializationDiagnosticsList"
+        }
+      ]
     },
     {
       "type": "com.azure.cosmos.implementation.WriteRetryPolicy"
@@ -386,6 +494,35 @@
       "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdContextNegotiator"
     },
     {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestArgs",
+      "methods": [
+        {
+          "name": "activityId",
+          "parameterTypes": []
+        },
+        {
+          "name": "lifetime",
+          "parameterTypes": []
+        },
+        {
+          "name": "origin",
+          "parameterTypes": []
+        },
+        {
+          "name": "replicaPath",
+          "parameterTypes": []
+        },
+        {
+          "name": "timeCreated",
+          "parameterTypes": []
+        },
+        {
+          "name": "transportRequestId",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestEncoder"
     },
     {
@@ -393,6 +530,15 @@
     },
     {
       "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestRecord"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestRecord$JsonSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdResponse"
@@ -455,6 +601,28 @@
         {
           "name": "isPartitionLevelCircuitBreakerEnabled",
           "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.query.SortOrder",
+      "methods": [
+        {
+          "name": "valueOf",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.query.aggregation.AggregateOperator",
+      "methods": [
+        {
+          "name": "valueOf",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
         }
       ]
     },
@@ -1144,6 +1312,15 @@
       "type": "com.fasterxml.jackson.databind.ser.Serializers[]"
     },
     {
+      "type": "com.fasterxml.jackson.databind.ser.std.ToStringSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.fasterxml.jackson.databind.type.LogicalType"
     },
     {
@@ -1260,6 +1437,9 @@
       "type": "com.soat.fiap.videocore.reports.core.application.input.ReportInput"
     },
     {
+      "type": "com.soat.fiap.videocore.reports.core.application.output.ReportsStatsOutput"
+    },
+    {
       "type": "com.soat.fiap.videocore.reports.core.application.output.VideoUploadUrlOutput"
     },
     {
@@ -1312,6 +1492,56 @@
       ]
     },
     {
+      "type": "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastExistingReportUseCase",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGateway",
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.AuthenticatedUserGateway"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastExistingReportUseCase$$SpringCGLIB$$0",
+      "fields": [
+        {
+          "name": "CGLIB$CALLBACK_FILTER"
+        },
+        {
+          "name": "CGLIB$FACTORY_DATA"
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastReportsStatsUseCase",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGateway",
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.AuthenticatedUserGateway"
+          ]
+        },
+        {
+          "name": "getAuthUserLastReportsStats",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastReportsStatsUseCase$$SpringCGLIB$$0",
+      "fields": [
+        {
+          "name": "CGLIB$CALLBACK_FILTER"
+        },
+        {
+          "name": "CGLIB$FACTORY_DATA"
+        }
+      ]
+    },
+    {
       "type": "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastReportsUseCase",
       "methods": [
         {
@@ -1319,6 +1549,15 @@
           "parameterTypes": [
             "com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.ReportGateway",
             "com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.AuthenticatedUserGateway"
+          ]
+        },
+        {
+          "name": "getAuthenticatedUserLastReports",
+          "parameterTypes": [
+            "int",
+            "int",
+            "java.lang.String",
+            "java.lang.String"
           ]
         }
       ]
@@ -1582,6 +1821,88 @@
       ]
     },
     {
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastExistingReportController",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastExistingReportUseCase",
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ReportPresenter"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastExistingReportController$$SpringCGLIB$$0",
+      "fields": [
+        {
+          "name": "CGLIB$CALLBACK_FILTER"
+        },
+        {
+          "name": "CGLIB$FACTORY_DATA"
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsController",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastReportsUseCase",
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ReportPresenter"
+          ]
+        },
+        {
+          "name": "getAuthenticatedUserLastReports",
+          "parameterTypes": [
+            "int",
+            "int",
+            "java.lang.String",
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsController$$SpringCGLIB$$0",
+      "fields": [
+        {
+          "name": "CGLIB$CALLBACK_FILTER"
+        },
+        {
+          "name": "CGLIB$FACTORY_DATA"
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsStatsController",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.application.usecase.GetAuthUserLastReportsStatsUseCase",
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.presenter.ReportPresenter"
+          ]
+        },
+        {
+          "name": "getAuthUserLastReportsStats",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsStatsController$$SpringCGLIB$$0",
+      "fields": [
+        {
+          "name": "CGLIB$CALLBACK_FILTER"
+        },
+        {
+          "name": "CGLIB$FACTORY_DATA"
+        }
+      ]
+    },
+    {
       "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserVideoImagesDownloadUrlController",
       "methods": [
         {
@@ -1685,6 +2006,9 @@
       ]
     },
     {
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO"
+    },
+    {
       "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ProcessVideoErrorEventDto"
     },
     {
@@ -1701,6 +2025,10 @@
           "parameterTypes": [
             "com.soat.fiap.videocore.reports.infrastructure.common.source.AuthenticatedUserSource"
           ]
+        },
+        {
+          "name": "getSubject",
+          "parameterTypes": []
         }
       ]
     },
@@ -1784,6 +2112,22 @@
             "java.lang.String",
             "java.lang.String",
             "java.lang.Double"
+          ]
+        },
+        {
+          "name": "getLastReportsByUserId",
+          "parameterTypes": [
+            "java.lang.String",
+            "int",
+            "int",
+            "java.lang.String",
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "getLastReportsStatusByUserId",
+          "parameterTypes": [
+            "java.lang.String"
           ]
         },
         {
@@ -2107,6 +2451,9 @@
       ]
     },
     {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.common.exceptions.persistence.OrderParamException"
+    },
+    {
       "type": "com.soat.fiap.videocore.reports.infrastructure.common.source.AuthenticatedUserSource"
     },
     {
@@ -2384,9 +2731,30 @@
         {
           "name": "<init>",
           "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsController",
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastExistingReportController",
+            "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthUserLastReportsStatsController"
+          ]
+        },
+        {
+          "name": "<init>",
+          "parameterTypes": [
             "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthenticatedUserLastReportsController",
             "com.soat.fiap.videocore.reports.core.interfaceadapters.controller.GetAuthReportByIdController"
           ]
+        },
+        {
+          "name": "getAuthUserLastReports",
+          "parameterTypes": [
+            "int",
+            "int",
+            "java.lang.String",
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "getAuthUserReportsStats",
+          "parameterTypes": []
         }
       ]
     },
@@ -2408,11 +2776,145 @@
         {
           "name": "<init>",
           "parameterTypes": []
+        },
+        {
+          "name": "handleBusinessException",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.domain.exceptions.ReportException",
+            "jakarta.servlet.http.HttpServletRequest"
+          ]
+        },
+        {
+          "name": "handleNotAuthorizedException",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.domain.exceptions.NotAuthorizedException",
+            "jakarta.servlet.http.HttpServletRequest"
+          ]
+        },
+        {
+          "name": "handleOrderParamException",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.infrastructure.common.exceptions.persistence.OrderParamException",
+            "jakarta.servlet.http.HttpServletRequest"
+          ]
         }
       ]
     },
     {
-      "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse"
+      "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.ErrorResponse",
+      "methods": [
+        {
+          "name": "getMessage",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPath",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStatus",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTimestamp",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.PaginationResponse",
+      "methods": [
+        {
+          "name": "getContent",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPage",
+          "parameterTypes": []
+        },
+        {
+          "name": "getSize",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTotalElements",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTotalPages",
+          "parameterTypes": []
+        },
+        {
+          "name": "isHasNext",
+          "parameterTypes": []
+        },
+        {
+          "name": "isHasPrevious",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportResponse",
+      "methods": [
+        {
+          "name": "frameCutMinutes",
+          "parameterTypes": []
+        },
+        {
+          "name": "id",
+          "parameterTypes": []
+        },
+        {
+          "name": "percentStatusProcess",
+          "parameterTypes": []
+        },
+        {
+          "name": "reportTime",
+          "parameterTypes": []
+        },
+        {
+          "name": "requestId",
+          "parameterTypes": []
+        },
+        {
+          "name": "status",
+          "parameterTypes": []
+        },
+        {
+          "name": "traceId",
+          "parameterTypes": []
+        },
+        {
+          "name": "userId",
+          "parameterTypes": []
+        },
+        {
+          "name": "videoName",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.ReportsStatsResponse",
+      "methods": [
+        {
+          "name": "completed",
+          "parameterTypes": []
+        },
+        {
+          "name": "failed",
+          "parameterTypes": []
+        },
+        {
+          "name": "processing",
+          "parameterTypes": []
+        },
+        {
+          "name": "total",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "com.soat.fiap.videocore.reports.infrastructure.in.http.response.VideoImagesDownloadUrlResponse"
@@ -2747,7 +3249,32 @@
       ]
     },
     {
-      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection"
+      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ProcessStatusProjection",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ProcessStatusProjection__Accessor_h9bzit"
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.time.Instant"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection__Accessor_4suyph"
     },
     {
       "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.repository.CosmosDbReportDataSource",
@@ -2816,12 +3343,31 @@
       "type": "com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.repository.CosmosDbReportRepository",
       "methods": [
         {
+          "name": "findByReportTimeIn",
+          "parameterTypes": [
+            "java.util.List",
+            "org.springframework.data.domain.Pageable"
+          ]
+        },
+        {
           "name": "findByUserIdAndRequestIdAndVideoNameAndPercentStatusProcess",
           "parameterTypes": [
             "java.lang.String",
             "java.lang.String",
             "java.lang.String",
             "java.lang.Double"
+          ]
+        },
+        {
+          "name": "findLatestReportsTimesByUser",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "findStatusByReportTimeIn",
+          "parameterTypes": [
+            "java.util.List"
           ]
         }
       ]
@@ -2978,7 +3524,17 @@
       "type": "com.sun.management.ThreadMXBean"
     },
     {
-      "type": "com.sun.management.UnixOperatingSystemMXBean"
+      "type": "com.sun.management.UnixOperatingSystemMXBean",
+      "methods": [
+        {
+          "name": "getMaxFileDescriptorCount",
+          "parameterTypes": []
+        },
+        {
+          "name": "getOpenFileDescriptorCount",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "com.sun.management.VMOption"
@@ -3442,6 +3998,10 @@
       "type": "io.netty.channel.AbstractChannelHandlerContext"
     },
     {
+      "type": "io.netty.channel.ChannelException",
+      "jniAccessible": true
+    },
+    {
       "type": "io.netty.channel.ChannelOutboundBuffer"
     },
     {
@@ -3457,13 +4017,79 @@
       "type": "io.netty.channel.DefaultChannelPipeline$TailContext"
     },
     {
-      "type": "io.netty.channel.DefaultFileRegion"
+      "type": "io.netty.channel.DefaultFileRegion",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "file"
+        },
+        {
+          "name": "transferred"
+        }
+      ]
     },
     {
       "type": "io.netty.channel.epoll.Epoll"
     },
     {
-      "type": "io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket"
+      "type": "io.netty.channel.epoll.EpollSocketChannel",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.epoll.LinuxSocket",
+      "jniAccessible": true
+    },
+    {
+      "type": "io.netty.channel.epoll.Native",
+      "jniAccessible": true
+    },
+    {
+      "type": "io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "count"
+        },
+        {
+          "name": "memoryAddress"
+        },
+        {
+          "name": "recipientAddr"
+        },
+        {
+          "name": "recipientAddrLen"
+        },
+        {
+          "name": "recipientPort"
+        },
+        {
+          "name": "recipientScopeId"
+        },
+        {
+          "name": "segmentSize"
+        },
+        {
+          "name": "senderAddr"
+        },
+        {
+          "name": "senderAddrLen"
+        },
+        {
+          "name": "senderPort"
+        },
+        {
+          "name": "senderScopeId"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.epoll.NativeStaticallyReferencedJniMethods",
+      "jniAccessible": true
     },
     {
       "type": "io.netty.channel.kqueue.KQueue"
@@ -3478,7 +4104,68 @@
       ]
     },
     {
-      "type": "io.netty.channel.unix.PeerCredentials"
+      "type": "io.netty.channel.unix.Buffer",
+      "jniAccessible": true
+    },
+    {
+      "type": "io.netty.channel.unix.DatagramSocketAddress",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "byte[]",
+            "int",
+            "int",
+            "int",
+            "io.netty.channel.unix.DatagramSocketAddress"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.unix.DomainDatagramSocketAddress",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "byte[]",
+            "int",
+            "io.netty.channel.unix.DomainDatagramSocketAddress"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.unix.ErrorsStaticallyReferencedJniMethods",
+      "jniAccessible": true
+    },
+    {
+      "type": "io.netty.channel.unix.FileDescriptor",
+      "jniAccessible": true
+    },
+    {
+      "type": "io.netty.channel.unix.LimitsStaticallyReferencedJniMethods",
+      "jniAccessible": true
+    },
+    {
+      "type": "io.netty.channel.unix.PeerCredentials",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "int",
+            "int",
+            "int[]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.unix.Socket",
+      "jniAccessible": true
     },
     {
       "type": "io.netty.channel.uring.IoUring"
@@ -5343,10 +6030,17 @@
       "type": "java.io.File"
     },
     {
-      "type": "java.io.FileDescriptor"
+      "type": "java.io.FileDescriptor",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "fd"
+        }
+      ]
     },
     {
-      "type": "java.io.IOException"
+      "type": "java.io.IOException",
+      "jniAccessible": true
     },
     {
       "type": "java.io.InputStream"
@@ -5583,7 +6277,8 @@
       "type": "java.lang.Object[]"
     },
     {
-      "type": "java.lang.OutOfMemoryError"
+      "type": "java.lang.OutOfMemoryError",
+      "jniAccessible": true
     },
     {
       "type": "java.lang.Package"
@@ -5608,7 +6303,8 @@
       "type": "java.lang.Runnable"
     },
     {
-      "type": "java.lang.RuntimeException"
+      "type": "java.lang.RuntimeException",
+      "jniAccessible": true
     },
     {
       "type": "java.lang.SafeVarargs"
@@ -5626,6 +6322,7 @@
     },
     {
       "type": "java.lang.String",
+      "serializable": true,
       "jniAccessible": true
     },
     {
@@ -5971,6 +6668,13 @@
         {
           "name": "<init>",
           "parameterTypes": [
+            "java.lang.String",
+            "int"
+          ]
+        },
+        {
+          "name": "<init>",
+          "parameterTypes": [
             "java.net.InetAddress",
             "int"
           ]
@@ -5978,10 +6682,39 @@
       ]
     },
     {
+      "type": "java.net.PortUnreachableException",
+      "jniAccessible": true
+    },
+    {
       "type": "java.net.URI"
     },
     {
       "type": "java.net.URL"
+    },
+    {
+      "type": "java.net.URLClassLoader"
+    },
+    {
+      "type": "java.nio.Buffer",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "limit"
+        },
+        {
+          "name": "position"
+        }
+      ],
+      "methods": [
+        {
+          "name": "limit",
+          "parameterTypes": []
+        },
+        {
+          "name": "position",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "java.nio.ByteBuffer",
@@ -5998,6 +6731,19 @@
             "int",
             "int"
           ]
+        }
+      ]
+    },
+    {
+      "type": "java.nio.DirectByteBuffer"
+    },
+    {
+      "type": "java.nio.channels.ClosedChannelException",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
         }
       ]
     },
@@ -6021,6 +6767,9 @@
     },
     {
       "type": "java.security.Principal"
+    },
+    {
+      "type": "java.security.SecureClassLoader"
     },
     {
       "type": "java.security.interfaces.ECPrivateKey"
@@ -6084,6 +6833,12 @@
     },
     {
       "type": "java.util.Collection"
+    },
+    {
+      "type": "java.util.Collections$SynchronizedCollection"
+    },
+    {
+      "type": "java.util.Collections$SynchronizedSet"
     },
     {
       "type": "java.util.Comparator"
@@ -6153,6 +6908,9 @@
     },
     {
       "type": "java.util.TreeMap"
+    },
+    {
+      "type": "java.util.UUID"
     },
     {
       "type": "java.util.concurrent.BlockingQueue"
@@ -6858,6 +7616,9 @@
       ]
     },
     {
+      "type": "org.hibernate.validator.internal.util.logging.Log_$logger_en"
+    },
+    {
       "type": "org.hibernate.validator.internal.util.logging.Log_$logger_pt"
     },
     {
@@ -6870,6 +7631,9 @@
           "name": "INSTANCE"
         }
       ]
+    },
+    {
+      "type": "org.hibernate.validator.internal.util.logging.Messages_$bundle_en"
     },
     {
       "type": "org.hibernate.validator.internal.util.logging.Messages_$bundle_pt"
@@ -8813,6 +9577,17 @@
       ]
     },
     {
+      "type": "org.springframework.boot.autoconfigure.diagnostics.analyzer.NoSuchBeanDefinitionFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "org.springframework.beans.factory.BeanFactory"
+          ]
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration",
       "methods": [
         {
@@ -8882,6 +9657,15 @@
     },
     {
       "type": "org.springframework.boot.autoconfigure.preinitialize.ConversionServiceBackgroundPreinitializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.autoconfigure.ssl.BundleContentNotWatchableFailureAnalyzer",
       "methods": [
         {
           "name": "<init>",
@@ -9252,6 +10036,15 @@
       "type": "org.springframework.boot.context.config.ConfigDataNotFoundAction"
     },
     {
+      "type": "org.springframework.boot.context.config.ConfigDataNotFoundFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.context.config.ConfigDataProperties",
       "methods": [
         {
@@ -9399,7 +10192,25 @@
       ]
     },
     {
+      "type": "org.springframework.boot.context.properties.IncompatibleConfigurationFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.context.properties.NestedConfigurationProperty"
+    },
+    {
+      "type": "org.springframework.boot.context.properties.NotConstructorBoundInjectionFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.boot.context.properties.bind.BindResult"
@@ -9424,6 +10235,169 @@
     },
     {
       "type": "org.springframework.boot.data.autoconfigure.web.DataWebProperties"
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.FailureAnalyzers",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "org.springframework.context.ConfigurableApplicationContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.AotInitializerNotFoundFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.BeanCurrentlyInCreationFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "org.springframework.beans.factory.BeanFactory"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.BeanDefinitionOverrideFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.BeanNotOfRequiredTypeFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.BindFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.BindValidationFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.InvalidConfigurationPropertyNameFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.InvalidConfigurationPropertyValueFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "org.springframework.core.env.Environment"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.MissingParameterNamesFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.MutuallyExclusiveConfigurationPropertiesFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "org.springframework.core.env.Environment"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.NoSuchMethodFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.NoUniqueBeanDefinitionFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "org.springframework.beans.factory.BeanFactory"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.PatternParseFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.UnboundConfigurationPropertyFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.springframework.boot.diagnostics.analyzer.ValidationExceptionFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.boot.env.PropertiesPropertySourceLoader",
@@ -9655,6 +10629,15 @@
     },
     {
       "type": "org.springframework.boot.health.autoconfigure.actuate.endpoint.HealthProperties$Status"
+    },
+    {
+      "type": "org.springframework.boot.health.autoconfigure.actuate.endpoint.NoSuchHealthContributorFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.boot.health.autoconfigure.application.AvailabilityHealthContributorAutoConfiguration",
@@ -10158,6 +11141,9 @@
       "type": "org.springframework.boot.loader.launch.LaunchedClassLoader"
     },
     {
+      "type": "org.springframework.boot.loader.net.protocol.jar.JarUrlClassLoader"
+    },
+    {
       "type": "org.springframework.boot.logging.LogLevelEditor"
     },
     {
@@ -10195,6 +11181,15 @@
     },
     {
       "type": "org.springframework.boot.micrometer.metrics.MaximumAllowableTagsMeterFilter"
+    },
+    {
+      "type": "org.springframework.boot.micrometer.metrics.ValidationFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.boot.micrometer.metrics.actuate.endpoint.MetricsEndpoint"
@@ -11163,6 +12158,15 @@
       "type": "org.springframework.boot.tomcat.ConfigurableTomcatWebServerFactory"
     },
     {
+      "type": "org.springframework.boot.tomcat.ConnectorStartFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.tomcat.SslConnectorCustomizer"
     },
     {
@@ -11446,6 +12450,15 @@
       "type": "org.springframework.boot.web.server.MimeMappings"
     },
     {
+      "type": "org.springframework.boot.web.server.PortInUseFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.web.server.Shutdown"
     },
     {
@@ -11550,6 +12563,15 @@
     },
     {
       "type": "org.springframework.boot.web.server.autoconfigure.servlet.ServletWebServerFactoryCustomizer"
+    },
+    {
+      "type": "org.springframework.boot.web.server.context.MissingWebServerFactoryBeanFailureAnalyzer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "org.springframework.boot.web.server.context.ServerPortInfoApplicationContextInitializer",
@@ -12597,6 +13619,9 @@
       "type": "org.springframework.data.mapping.PersistentProperty"
     },
     {
+      "type": "org.springframework.data.mapping.PersistentPropertyAccessor"
+    },
+    {
       "type": "org.springframework.data.mapping.PersistentPropertyPath"
     },
     {
@@ -12804,27 +13829,27 @@
       ]
     },
     {
-      "type": "org.springframework.data.util.Streamable",
+      "type": "org.springframework.data.util.LazyStreamable",
       "methods": [
         {
-          "name": "toList",
+          "name": "toArray",
           "parameterTypes": []
         },
         {
-          "name": "toArray",
+          "name": "toList",
           "parameterTypes": []
         }
       ]
     },
     {
-      "type": "org.springframework.data.util.LazyStreamable",
+      "type": "org.springframework.data.util.Streamable",
       "methods": [
         {
-          "name": "toList",
+          "name": "toArray",
           "parameterTypes": []
         },
         {
-          "name": "toArray",
+          "name": "toList",
           "parameterTypes": []
         }
       ]
@@ -13284,6 +14309,9 @@
     },
     {
       "type": "org.springframework.util.AntPathMatcher$AntPathStringMatcher"
+    },
+    {
+      "type": "org.springframework.util.Assert"
     },
     {
       "type": "org.springframework.util.ConcurrentReferenceHashMap$Segment[]"
@@ -14107,6 +15135,9 @@
       "type": "reactor.core.publisher.FluxDoFinally$DoFinallySubscriber"
     },
     {
+      "type": "reactor.core.publisher.FluxExpand$ExpandBreathSubscriber"
+    },
+    {
       "type": "reactor.core.publisher.FluxFirstWithSignal$RaceCoordinator"
     },
     {
@@ -14183,6 +15214,9 @@
     },
     {
       "type": "reactor.core.publisher.FluxTimeout$TimeoutTimeoutSubscriber"
+    },
+    {
+      "type": "reactor.core.publisher.FluxWindow$WindowExactSubscriber"
     },
     {
       "type": "reactor.core.publisher.LambdaMonoSubscriber"
@@ -14461,6 +15495,15 @@
       ]
     },
     {
+      "type": "sun.nio.ch.FileChannelImpl",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "fd"
+        }
+      ]
+    },
+    {
       "type": "sun.nio.ch.SelectorImpl"
     },
     {
@@ -14554,6 +15597,17 @@
       ]
     },
     {
+      "type": "sun.security.provider.NativePRNG",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.security.SecureRandomParameters"
+          ]
+        }
+      ]
+    },
+    {
       "type": "sun.security.provider.SHA",
       "methods": [
         {
@@ -14608,6 +15662,15 @@
       ]
     },
     {
+      "type": "sun.security.provider.certpath.PKIXCertPathValidator",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "sun.security.rsa.PSSParameters",
       "methods": [
         {
@@ -14627,6 +15690,15 @@
     },
     {
       "type": "sun.security.rsa.RSAPSSSignature",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSASignature$SHA1withRSA",
       "methods": [
         {
           "name": "<init>",
@@ -15389,6 +16461,24 @@
       "glob": "META-INF/io/opentelemetry/instrumentation/io.opentelemetry.spring-webmvc-6.0.properties"
     },
     {
+      "glob": "META-INF/native/libnetty_quiche42_linux_x86_64.so"
+    },
+    {
+      "glob": "META-INF/native/libnetty_tcnative.so"
+    },
+    {
+      "glob": "META-INF/native/libnetty_tcnative_linux_x86_64.so"
+    },
+    {
+      "glob": "META-INF/native/libnetty_tcnative_linux_x86_64_fedora.so"
+    },
+    {
+      "glob": "META-INF/native/libnetty_tcnative_x86_64.so"
+    },
+    {
+      "glob": "META-INF/native/libnetty_transport_native_epoll_x86_64.so"
+    },
+    {
       "glob": "META-INF/native/netty_quiche42_windows_x86_64.dll"
     },
     {
@@ -15629,6 +16719,12 @@
       "glob": "com/soat/fiap/videocore/reports/core/application/usecase/GetAuthReportByIdUseCase.class"
     },
     {
+      "glob": "com/soat/fiap/videocore/reports/core/application/usecase/GetAuthUserLastExistingReportUseCase.class"
+    },
+    {
+      "glob": "com/soat/fiap/videocore/reports/core/application/usecase/GetAuthUserLastReportsStatsUseCase.class"
+    },
+    {
       "glob": "com/soat/fiap/videocore/reports/core/application/usecase/GetAuthUserLastReportsUseCase.class"
     },
     {
@@ -15657,6 +16753,15 @@
     },
     {
       "glob": "com/soat/fiap/videocore/reports/core/interfaceadapters/controller/GetAuthReportByIdController.class"
+    },
+    {
+      "glob": "com/soat/fiap/videocore/reports/core/interfaceadapters/controller/GetAuthUserLastExistingReportController.class"
+    },
+    {
+      "glob": "com/soat/fiap/videocore/reports/core/interfaceadapters/controller/GetAuthUserLastReportsController.class"
+    },
+    {
+      "glob": "com/soat/fiap/videocore/reports/core/interfaceadapters/controller/GetAuthUserLastReportsStatsController.class"
     },
     {
       "glob": "com/soat/fiap/videocore/reports/core/interfaceadapters/controller/GetAuthUserVideoImagesDownloadUrlController.class"
@@ -15941,6 +17046,9 @@
       "glob": "jakarta/servlet/LocalStrings.properties"
     },
     {
+      "glob": "jakarta/servlet/LocalStrings_en.properties"
+    },
+    {
       "glob": "jakarta/servlet/LocalStrings_pt.properties"
     },
     {
@@ -15948,6 +17056,9 @@
     },
     {
       "glob": "jakarta/servlet/http/LocalStrings.properties"
+    },
+    {
+      "glob": "jakarta/servlet/http/LocalStrings_en.properties"
     },
     {
       "glob": "jakarta/servlet/http/LocalStrings_pt.properties"
@@ -16179,6 +17290,9 @@
     },
     {
       "glob": "org/apache/naming/LocalStrings.properties"
+    },
+    {
+      "glob": "org/apache/naming/LocalStrings_en.properties"
     },
     {
       "glob": "org/apache/naming/LocalStrings_pt.properties"
