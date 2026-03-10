@@ -2,6 +2,13 @@
 
 <div align="center">
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FIAP-SOAT-TECH-TEAM_videocore-reports&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=FIAP-SOAT-TECH-TEAM_videocore-reports)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=FIAP-SOAT-TECH-TEAM_videocore-reports&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=FIAP-SOAT-TECH-TEAM_videocore-reports)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=FIAP-SOAT-TECH-TEAM_videocore-reports&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=FIAP-SOAT-TECH-TEAM_videocore-reports)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=FIAP-SOAT-TECH-TEAM_videocore-reports&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=FIAP-SOAT-TECH-TEAM_videocore-reports)
+
+</div>
+
 Microsserviço de relatórios do ecossistema VideoCore, responsável por gerenciar status de processamento de vídeos, fornecer API REST e atualizar clientes em tempo real via WebSocket. Desenvolvido como parte do curso de Arquitetura de Software da FIAP (Tech Challenge).
 
 </div>
@@ -16,6 +23,8 @@ Microsserviço de relatórios do ecossistema VideoCore, responsável por gerenci
   <a href="#deploy">Fluxo de Deploy</a> •
   <a href="#contribuicao">Contribuição</a>
 </div><br>
+
+> 📽️ Vídeo de demonstração da arquitetura: [https://youtu.be/k3XbPRxmjCw](https://youtu.be/k3XbPRxmjCw)<br>
 
 ---
 
@@ -319,6 +328,17 @@ Após iniciar a aplicação:
 3. Execute os testes: `./gradlew test`
 4. Abra um Pull Request
 5. Aguarde aprovação de um CODEOWNER
+
+### Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+---
+
+<div align="center">
+  <strong>FIAP - Pós-graduação em Arquitetura de Software</strong><br>
+  Tech Challenge 4
+</div>
 
 ### Licença
 
