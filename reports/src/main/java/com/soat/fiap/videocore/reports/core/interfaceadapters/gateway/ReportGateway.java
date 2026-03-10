@@ -100,12 +100,17 @@ public class ReportGateway {
 	 *            número da página
 	 * @param size
 	 *            quantidade de elementos por página
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return lista de {@link Report} encontrados (pode ser vazia)
 	 */
 	@WithSpan(name = "gateway.get.last.reports.by.userId")
-	public PaginationDTO<Report> getLastReportsByUserId(String userId, int page, int size) {
+	public PaginationDTO<Report> getLastReportsByUserId(String userId, int page, int size, String orderField,
+			String orderDirection) {
 
-		var dtos = reportDataSource.getLastReportsByUserId(userId, page, size);
+		var dtos = reportDataSource.getLastReportsByUserId(userId, page, size, orderField, orderDirection);
 
 		TraceContext.addEvent("report.object.list", dtos);
 
@@ -117,12 +122,16 @@ public class ReportGateway {
 	 *
 	 * @param userId
 	 *            identificador do usuário
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return lista de {@link Report} encontrados (pode ser vazia)
 	 */
 	@WithSpan(name = "gateway.get.last.reports.by.userId")
-	public List<Report> getLastReportsByUserId(String userId) {
+	public List<Report> getLastReportsByUserId(String userId, String orderField, String orderDirection) {
 
-		var dtos = reportDataSource.getLastReportsByUserId(userId);
+		var dtos = reportDataSource.getLastReportsByUserId(userId, orderField, orderDirection);
 
 		TraceContext.addEvent("report.object.list", dtos);
 

@@ -3,8 +3,7 @@ package com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
 import com.azure.spring.data.cosmos.repository.CosmosRepository;
@@ -55,19 +54,6 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 
 	/**
 	 * Retorna o momento de reporte dos últimos reportes de cada requestId e
-	 * videoName de um usuário. Suporta paginação
-	 *
-	 * @param userId
-	 *            identificador do usuário
-	 * @param pageRequest
-	 *            configuração de paginação
-	 * @return página contendo momentos de reporte mais recentes
-	 */
-	@Query("SELECT MAX(r.reportTime) AS reportTime FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
-	Slice<ReportTimeProjection> findLatestReportsTimesByUser(String userId, PageRequest pageRequest);
-
-	/**
-	 * Retorna o momento de reporte dos últimos reportes de cada requestId e
 	 * videoName de um usuário.
 	 *
 	 * @param userId
@@ -76,6 +62,30 @@ public interface CosmosDbReportRepository extends CosmosRepository<ReportEntity,
 	 */
 	@Query("SELECT MAX(r.reportTime) AS reportTime FROM report r WHERE r.userId = @userId GROUP BY r.requestId, r.videoName")
 	List<ReportTimeProjection> findLatestReportsTimesByUser(String userId);
+
+	/**
+	 * Busca os reportes correspondentes aos momentos de reporte fornecidos. Suporta
+	 * paginação
+	 *
+	 * @param reportTimes
+	 *            lista de momentos de reporte
+	 * @param pageable
+	 *            configuração de paginação
+	 * @return lista de entidades de report
+	 */
+	@Query("SELECT * FROM r WHERE r.reportTime IN (@reportTimes)")
+	Page<ReportEntity> findByReportTimeIn(List<String> reportTimes, Pageable pageable);
+
+	/**
+	 * Busca os reportes correspondentes aos momentos de reporte fornecidos.
+	 *
+	 * @param reportTimes
+	 *            lista de momentos de reporte
+	 * @param sort
+	 *            objeto de ordenação
+	 * @return lista de entidades de report
+	 */
+	List<ReportEntity> findByReportTimeIn(List<String> reportTimes, Sort sort);
 
 	/**
 	 * Busca os reportes correspondentes aos momentos de reporte fornecidos.

@@ -64,18 +64,27 @@ public interface ReportDataSource {
 	 *            número da página
 	 * @param size
 	 *            quantidade de elementos por página
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
-	PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size);
+	PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size, String orderField,
+			String orderDirection);
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
 	 *
 	 * @param userId
 	 *            identificador do usuário
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
-	List<ReportDto> getLastReportsByUserId(String userId);
+	List<ReportDto> getLastReportsByUserId(String userId, String orderField, String orderDirection);
 
 	/**
 	 * Recupera os status de reporte mais recentes dos videos enviados por um

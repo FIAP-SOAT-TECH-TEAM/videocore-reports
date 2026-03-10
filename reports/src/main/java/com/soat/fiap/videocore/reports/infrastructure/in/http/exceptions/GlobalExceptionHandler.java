@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.soat.fiap.videocore.reports.core.domain.exceptions.*;
+import com.soat.fiap.videocore.reports.infrastructure.common.exceptions.persistence.OrderParamException;
 import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ErrorResponse;
+import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ValidationErrorResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -56,6 +58,15 @@ public class GlobalExceptionHandler {
 
 		ValidationErrorResponse errorResponse = new ValidationErrorResponse(LocalDateTime.now(),
 				HttpStatus.BAD_REQUEST.value(), "Erro de validação", request.getServletPath(), errors);
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	/** Trata erros de parâmetro de ordenação de registros inválido */
+	@ExceptionHandler(OrderParamException.class)
+	public ResponseEntity<ErrorResponse> handleOrderParamException(OrderParamException ex, HttpServletRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+				ex.getMessage(), request.getServletPath());
 
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}

@@ -1,9 +1,7 @@
-package com.soat.fiap.videocore.reports.infrastructure.in.http.exceptions;
+package com.soat.fiap.videocore.reports.infrastructure.in.http.response;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-
-import com.soat.fiap.videocore.reports.infrastructure.in.http.response.ErrorResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

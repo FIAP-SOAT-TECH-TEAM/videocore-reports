@@ -30,12 +30,18 @@ public class GetAuthUserLastReportsController {
 	 *            número da página
 	 * @param size
 	 *            quantidade de elementos por página
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 *
 	 * @return lista de reportes convertidos para resposta HTTP
 	 */
 	@WithSpan(name = "controller.get.authenticated.user.all.reports")
-	public PaginationResponse<ReportResponse> getAuthenticatedUserLastReports(int page, int size) {
-		var reports = getAuthUserLastReportsUseCase.getAuthenticatedUserLastReports(page, size);
+	public PaginationResponse<ReportResponse> getAuthenticatedUserLastReports(int page, int size, String orderField,
+			String orderDirection) {
+		var reports = getAuthUserLastReportsUseCase.getAuthenticatedUserLastReports(page, size, orderField,
+				orderDirection);
 
 		return reportPresenter.toPaginationResponse(reports);
 	}
@@ -44,12 +50,16 @@ public class GetAuthUserLastReportsController {
 	 * Retorna a lista de reportes mais recentes dos videos enviados pelo usuário
 	 * autenticado.
 	 *
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 *
 	 * @return lista de reportes convertidos para resposta HTTP
 	 */
 	@WithSpan(name = "controller.get.authenticated.user.all.reports")
-	public List<ReportResponse> getAuthenticatedUserLastReports() {
-		var reports = getAuthUserLastReportsUseCase.getAuthenticatedUserLastReports();
+	public List<ReportResponse> getAuthenticatedUserLastReports(String orderField, String orderDirection) {
+		var reports = getAuthUserLastReportsUseCase.getAuthenticatedUserLastReports(orderField, orderDirection);
 
 		return reportPresenter.toResponse(reports);
 	}

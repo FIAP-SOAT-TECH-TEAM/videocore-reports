@@ -4,13 +4,15 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.azure.spring.data.cosmos.core.query.CosmosPageRequest;
 import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
+import com.soat.fiap.videocore.reports.infrastructure.common.exceptions.persistence.OrderParamException;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.ReportDataSource;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.mapper.ReportEntityMapper;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ProcessStatusProjection;
@@ -123,35 +125,37 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 	 *            número da página
 	 * @param size
 	 *            quantidade de elementos por página
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return objeto contendo metadados de paginação e os reportes encontrados
 	 */
 	@Override @Transactional(readOnly = true)
-	public PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size) {
-		var cosmosPageRequest = new CosmosPageRequest(page, size, null);
+	public PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size, String orderField,
+			String orderDirection) {
+		Sort sort = null;
+		try {
+			if (orderField != null && !orderField.isEmpty() && orderDirection != null && !orderDirection.isEmpty())
+				sort = Sort.by(Sort.Direction.fromString(orderDirection), orderField);
+		} catch (IllegalArgumentException ex) {
+			throw new OrderParamException(
+					"Parâmetros de ordenação inválidos. Revise o atributo escolhido e a direção (asc ou desc)");
+		}
 
-		var reportsSlice = cosmosDbReportRepository.findLatestReportsTimesByUser(userId, cosmosPageRequest);
+		var pageRequest = sort != null ? PageRequest.of(page, size, sort) : PageRequest.of(page, size);
 
-		if (reportsSlice.isEmpty())
+		var reportsTime = cosmosDbReportRepository.findLatestReportsTimesByUser(userId);
+
+		if (reportsTime.isEmpty())
 			return new PaginationDTO<>(page, size, 0, 0, false, false, List.of());
 
-		var totalElements = cosmosDbReportRepository.countLatestReportsByUser(userId);
-		var hasPrevious = page > 0;
-		var hasNext = ((long) (page + 1) * size) < totalElements;
-		var totalPages = (int) Math.ceil((double) totalElements / size);
+		var reportTimes = reportsTime.stream().map(ReportTimeProjection::reportTime).map(Instant::toString).toList();
 
-		var reportTimes = reportsSlice.getContent()
-				.stream()
-				.map(ReportTimeProjection::reportTime)
-				.map(Instant::toString)
-				.toList();
+		var reportsPage = cosmosDbReportRepository.findByReportTimeIn(reportTimes, pageRequest);
+		var reports = reportsPage.stream().map(reportEntityMapper::toDto).toList();
 
-		var reports = cosmosDbReportRepository.findByReportTimeIn(reportTimes)
-				.stream()
-				.map(reportEntityMapper::toDto)
-				.toList();
-
-		return reportEntityMapper.toPaginationDTO(reportsSlice, reports, totalElements, totalPages, hasPrevious,
-				hasNext);
+		return reportEntityMapper.toPaginationDTO(reportsPage, reports);
 	}
 
 	/**
@@ -168,10 +172,24 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 	 *
 	 * @param userId
 	 *            identificador do usuário
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return objeto contendo os reportes encontrados
 	 */
 	@Override @Transactional(readOnly = true)
-	public List<ReportDto> getLastReportsByUserId(String userId) {
+	public List<ReportDto> getLastReportsByUserId(String userId, String orderField, String orderDirection) {
+
+		Sort sort = null;
+		try {
+			if (orderField != null && !orderField.isEmpty() && orderDirection != null && !orderDirection.isEmpty())
+				sort = Sort.by(Sort.Direction.fromString(orderDirection), orderField);
+		} catch (IllegalArgumentException ex) {
+			throw new OrderParamException(
+					"Parâmetros de ordenação inválidos. Revise o atributo escolhido e a direção (asc ou desc)");
+		}
+
 		var reportTimes = cosmosDbReportRepository.findLatestReportsTimesByUser(userId)
 				.stream()
 				.map(ReportTimeProjection::reportTime)
@@ -182,10 +200,15 @@ public class CosmosDbReportDataSource implements ReportDataSource {
 
 		var reportTimesAsText = reportTimes.stream().map(Instant::toString).toList();
 
-		return cosmosDbReportRepository.findByReportTimeIn(reportTimesAsText)
-				.stream()
-				.map(reportEntityMapper::toDto)
-				.toList();
+		return sort != null
+				? cosmosDbReportRepository.findByReportTimeIn(reportTimesAsText, sort)
+						.stream()
+						.map(reportEntityMapper::toDto)
+						.toList()
+				: cosmosDbReportRepository.findByReportTimeIn(reportTimesAsText)
+						.stream()
+						.map(reportEntityMapper::toDto)
+						.toList();
 	}
 
 	/**

@@ -26,21 +26,23 @@ class GetAuthUserLastReportsControllerTest {
 
 		int page = 0;
 		int size = 10;
+		String orderField = "reportTime";
+		String orderDirection = "DESC";
 
 		PaginationDTO<Report> paginationDTO = mock(PaginationDTO.class);
 		PaginationResponse<ReportResponse> response = mock(PaginationResponse.class);
 
-		when(useCase.getAuthenticatedUserLastReports(page, size)).thenReturn(paginationDTO);
+		when(useCase.getAuthenticatedUserLastReports(page, size, orderField, orderDirection)).thenReturn(paginationDTO);
 		when(presenter.toPaginationResponse(paginationDTO)).thenReturn(response);
 
 		var controller = new GetAuthUserLastReportsController(useCase, presenter);
 
 		// Act
-		var result = controller.getAuthenticatedUserLastReports(page, size);
+		var result = controller.getAuthenticatedUserLastReports(page, size, orderField, orderDirection);
 
 		// Assert
 		assertSame(response, result);
-		verify(useCase).getAuthenticatedUserLastReports(page, size);
+		verify(useCase).getAuthenticatedUserLastReports(page, size, orderField, orderDirection);
 		verify(presenter).toPaginationResponse(paginationDTO);
 	}
 
@@ -50,20 +52,23 @@ class GetAuthUserLastReportsControllerTest {
 		GetAuthUserLastReportsUseCase useCase = mock(GetAuthUserLastReportsUseCase.class);
 		ReportPresenter presenter = mock(ReportPresenter.class);
 
+		String orderField = "reportTime";
+		String orderDirection = "DESC";
+
 		List<Report> reports = List.of(mock(Report.class));
 		List<ReportResponse> responses = List.of(mock(ReportResponse.class));
 
-		when(useCase.getAuthenticatedUserLastReports()).thenReturn(reports);
+		when(useCase.getAuthenticatedUserLastReports(orderField, orderDirection)).thenReturn(reports);
 		when(presenter.toResponse(reports)).thenReturn(responses);
 
 		var controller = new GetAuthUserLastReportsController(useCase, presenter);
 
 		// Act
-		var result = controller.getAuthenticatedUserLastReports();
+		var result = controller.getAuthenticatedUserLastReports(orderField, orderDirection);
 
 		// Assert
 		assertSame(responses, result);
-		verify(useCase).getAuthenticatedUserLastReports();
+		verify(useCase).getAuthenticatedUserLastReports(orderField, orderDirection);
 		verify(presenter).toResponse(reports);
 	}
 }

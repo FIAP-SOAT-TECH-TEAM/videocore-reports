@@ -42,9 +42,16 @@ public class ReportController {
 			@RequestParam(defaultValue = "0") int page,
 
 			@Parameter(description = "Quantidade de elementos por página", example = "10")
-			@RequestParam(defaultValue = "10") int size) {
+			@RequestParam(defaultValue = "10") int size,
+
+			@Parameter(description = "Atributo utilizado para ordenação dos registros", example = "reportTime")
+			@RequestParam(defaultValue = "") String orderField,
+
+			@Parameter(description = "Direção de ordenação dos registros", example = "desc")
+			@RequestParam(defaultValue = "") String orderDirection) {
 		try {
-			var reports = getAuthUserLastReportsController.getAuthenticatedUserLastReports(page, size);
+			var reports = getAuthUserLastReportsController.getAuthenticatedUserLastReports(page, size, orderField,
+					orderDirection);
 
 			log.info("request_completed");
 

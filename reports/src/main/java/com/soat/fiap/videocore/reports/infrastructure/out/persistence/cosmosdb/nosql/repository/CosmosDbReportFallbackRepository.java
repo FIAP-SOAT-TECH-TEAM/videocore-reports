@@ -6,10 +6,7 @@ import java.util.Optional;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import com.azure.cosmos.models.CosmosPatchItemRequestOptions;
 import com.azure.cosmos.models.CosmosPatchOperations;
@@ -145,12 +142,17 @@ public class CosmosDbReportFallbackRepository {
 			}
 
 			@Override
-			public Page<ReportTimeProjection> findLatestReportsTimesByUser(String userId, PageRequest pageRequest) {
+			public List<ReportTimeProjection> findLatestReportsTimesByUser(String userId) {
+				return List.of();
+			}
+
+			@Override
+			public Page<ReportEntity> findByReportTimeIn(List<String> reportTimes, Pageable pageable) {
 				return null;
 			}
 
 			@Override
-			public List<ReportTimeProjection> findLatestReportsTimesByUser(String userId) {
+			public List<ReportEntity> findByReportTimeIn(List<String> reportTimes, Sort sort) {
 				return List.of();
 			}
 

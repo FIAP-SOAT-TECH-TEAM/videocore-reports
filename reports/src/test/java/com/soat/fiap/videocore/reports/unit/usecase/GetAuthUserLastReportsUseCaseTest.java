@@ -26,20 +26,23 @@ class GetAuthUserLastReportsUseCaseTest {
 
 		int page = 0;
 		int size = 10;
+		String orderField = "reportTime";
+		String orderDirection = "DESC";
 
 		when(userGateway.getSubject()).thenReturn("user");
 
 		PaginationDTO<Report> pagination = mock(PaginationDTO.class);
-		when(reportGateway.getLastReportsByUserId("user", page, size)).thenReturn(pagination);
+		when(reportGateway.getLastReportsByUserId("user", page, size, orderField, orderDirection))
+				.thenReturn(pagination);
 
 		var useCase = new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
 		// Act
-		PaginationDTO<Report> result = useCase.getAuthenticatedUserLastReports(page, size);
+		PaginationDTO<Report> result = useCase.getAuthenticatedUserLastReports(page, size, orderField, orderDirection);
 
 		// Assert
 		assertSame(pagination, result);
-		verify(reportGateway).getLastReportsByUserId("user", page, size);
+		verify(reportGateway).getLastReportsByUserId("user", page, size, orderField, orderDirection);
 	}
 
 	@Test
@@ -48,19 +51,22 @@ class GetAuthUserLastReportsUseCaseTest {
 		ReportGateway reportGateway = mock(ReportGateway.class);
 		AuthenticatedUserGateway userGateway = mock(AuthenticatedUserGateway.class);
 
+		String orderField = "reportTime";
+		String orderDirection = "DESC";
+
 		when(userGateway.getSubject()).thenReturn("user");
 
 		List<Report> reports = List.of(mock(Report.class));
-		when(reportGateway.getLastReportsByUserId("user")).thenReturn(reports);
+		when(reportGateway.getLastReportsByUserId("user", orderField, orderDirection)).thenReturn(reports);
 
 		var useCase = new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
 		// Act
-		List<Report> result = useCase.getAuthenticatedUserLastReports();
+		List<Report> result = useCase.getAuthenticatedUserLastReports(orderField, orderDirection);
 
 		// Assert
 		assertSame(reports, result);
-		verify(reportGateway).getLastReportsByUserId("user");
+		verify(reportGateway).getLastReportsByUserId("user", orderField, orderDirection);
 	}
 
 	@Test
@@ -74,7 +80,8 @@ class GetAuthUserLastReportsUseCaseTest {
 		var useCase = new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(NotAuthorizedException.class, () -> useCase.getAuthenticatedUserLastReports(0, 10));
+		assertThrows(NotAuthorizedException.class,
+				() -> useCase.getAuthenticatedUserLastReports(0, 10, "reportTime", "DESC"));
 	}
 
 	@Test
@@ -88,7 +95,7 @@ class GetAuthUserLastReportsUseCaseTest {
 		var useCase = new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(NotAuthorizedException.class, useCase::getAuthenticatedUserLastReports);
+		assertThrows(NotAuthorizedException.class, () -> useCase.getAuthenticatedUserLastReports("reportTime", "DESC"));
 	}
 
 	@Test
@@ -100,7 +107,8 @@ class GetAuthUserLastReportsUseCaseTest {
 		var useCase = new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(ReportException.class, () -> useCase.getAuthenticatedUserLastReports(-1, 10));
+		assertThrows(ReportException.class,
+				() -> useCase.getAuthenticatedUserLastReports(-1, 10, "reportTime", "DESC"));
 
 		verifyNoInteractions(reportGateway);
 		verifyNoInteractions(userGateway);
@@ -115,7 +123,7 @@ class GetAuthUserLastReportsUseCaseTest {
 		var useCase = new GetAuthUserLastReportsUseCase(reportGateway, userGateway);
 
 		// Act & Assert
-		assertThrows(ReportException.class, () -> useCase.getAuthenticatedUserLastReports(0, 0));
+		assertThrows(ReportException.class, () -> useCase.getAuthenticatedUserLastReports(0, 0, "reportTime", "DESC"));
 
 		verifyNoInteractions(reportGateway);
 		verifyNoInteractions(userGateway);

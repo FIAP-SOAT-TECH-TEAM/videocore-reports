@@ -33,11 +33,16 @@ public class GetAuthUserLastReportsUseCase {
 	 *            número da página
 	 * @param size
 	 *            quantidade de elementos por página
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 *
 	 * @return lista de {@link Report} (pode ser vazia)
 	 */
 	@WithSpan(name = "usecase.get.authenticated.user.all.reports")
-	public PaginationDTO<Report> getAuthenticatedUserLastReports(int page, int size) {
+	public PaginationDTO<Report> getAuthenticatedUserLastReports(int page, int size, String orderField,
+			String orderDirection) {
 		CanonicalContext.add("page", page);
 		CanonicalContext.add("size", size);
 
@@ -55,17 +60,22 @@ public class GetAuthUserLastReportsUseCase {
 			throw new NotAuthorizedException(
 					"O ID do usuário não pode estar em branco para pesquisa de reportes. Verifique a autenticação.");
 
-		return reportGateway.getLastReportsByUserId(userId, page, size);
+		return reportGateway.getLastReportsByUserId(userId, page, size, orderField, orderDirection);
 	}
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados pelo usuário
 	 * autenticado.
 	 *
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
+	 *
 	 * @return lista de {@link Report} (pode ser vazia)
 	 */
 	@WithSpan(name = "usecase.get.authenticated.user.all.reports")
-	public List<Report> getAuthenticatedUserLastReports() {
+	public List<Report> getAuthenticatedUserLastReports(String orderField, String orderDirection) {
 		var userId = authenticatedUserGateway.getSubject();
 
 		CanonicalContext.add("user_id", userId);
@@ -74,6 +84,6 @@ public class GetAuthUserLastReportsUseCase {
 			throw new NotAuthorizedException(
 					"O ID do usuário não pode estar em branco para pesquisa de reportes. Verifique a autenticação.");
 
-		return reportGateway.getLastReportsByUserId(userId);
+		return reportGateway.getLastReportsByUserId(userId, orderField, orderDirection);
 	}
 }
