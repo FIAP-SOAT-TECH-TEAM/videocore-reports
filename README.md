@@ -11,8 +11,6 @@
 
 Microsserviço de relatórios do ecossistema VideoCore, responsável por gerenciar status de processamento de vídeos, fornecer API REST e atualizar clientes em tempo real via WebSocket. Desenvolvido como parte do curso de Arquitetura de Software da FIAP (Tech Challenge).
 
-</div>
-
 <div align="center">
   <a href="#visao-geral">Visão Geral</a> •
   <a href="#arquitetura">Arquitetura</a> •
