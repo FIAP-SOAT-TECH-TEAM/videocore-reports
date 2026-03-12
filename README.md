@@ -251,6 +251,7 @@ O código `HCL` desenvolvido segue uma estrutura modular:
 - **Injeção de Dependência**: Classes recebem via construtor os objetos que necessitam utilizar
 - **SAGA Coreografada**: Comunicação assíncrona via eventos
 - **Comunicação Síncrona Resiliente**: Embora ainda não possua comunicações síncronas, apenas assíncronas, caso o projeto evolua, serão implementadas usando padrões de resiliência como Circuit Beaker e Service Discovery
+- **Observabilidade**: O microsserviço está inteiramente instrumentado, com logs, tracing e métricas, via API do `Open Telemetry` (baixo acoplamento). Para logs, adota-se o conceito de **Log Canônico**.
 
 ### 🎯 Clean Architecture
 
@@ -330,7 +331,7 @@ infrastructure/
 |--------|-----------|---------|
 | **Separar Geração de URLs** | Extrair responsabilidade de gerar `Pre-Signed URLs` para outro microsserviço | Reduz acoplamento e melhora escalabilidade |
 | **Transactional Outbox Pattern** | Implementar padrão para evitar escrita duplicada na SAGA coreografada | Garate síncronia entre atualização do DB e publicação de eventos |
-| **Migrar Linguagem Compilada** | Para máximizar a performance deste microsserviço, utilizou-se a GraalVM para criação de uma imagem nativa. Embora os ganhos sejam notórios, observou-se o uso intensivo de `JNI`, `Reflections`, entre outras coisas, e o compilador precisa conhecer tudo que for dinãmico em tempo de build `(reachability metadata)`. Neste sentido, utilizar uma linguagem nativamente compilada (Go, Rust...) pode trazer ganhos de manutenção no futuro | Melhora da manutenabilidade |
+| **Migrar Linguagem Compilada** | Para máximizar a performance deste microsserviço, utilizou-se a GraalVM para criação de uma imagem nativa. Embora os ganhos sejam notórios, observou-se o uso intensivo de `JNI`, `Reflections`, entre outras coisas, e o compilador precisa conhecer tudo que for dinãmico em tempo de build [(Reachability Metadata)](reports/src/main/resources/META-INF/README.md). Neste sentido, utilizar uma linguagem nativamente compilada (Go, Rust...) pode trazer ganhos de manutenção no futuro | Melhora da manutenabilidade |
 | **Workload Identity** | Usar Workload Identity para Pods acessarem recursos Azure (atual: Azure Key Vault Provider) | Melhora de segurança e gestão de credenciais |
 | **Implementar DLQ** | Implementar lógica de reprocessamento do evento de atualização do status de processamento de um vídeo, em caso de falha | Resiliência |
 | **Impacto Cache** | Analisar durante testes E2E o impacto do caching nos endpoints de consulta, especificamente durante o processamento de um vídeo ou geração de URLs | Prevenção de bugs e redução de complexidade |
