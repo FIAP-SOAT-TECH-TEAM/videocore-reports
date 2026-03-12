@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import com.soat.fiap.videocore.reports.common.observability.trace.TraceContext;
 import com.soat.fiap.videocore.reports.common.observability.trace.WithSpan;
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
+import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.ReportMapper;
 import com.soat.fiap.videocore.reports.infrastructure.common.source.ReportDataSource;
@@ -90,15 +92,46 @@ public class ReportGateway {
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 * Suporta paginação
 	 *
 	 * @param userId
 	 *            identificador do usuário
+	 * @param page
+	 *            número da página
+	 * @param size
+	 *            quantidade de elementos por página
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return lista de {@link Report} encontrados (pode ser vazia)
 	 */
 	@WithSpan(name = "gateway.get.last.reports.by.userId")
-	public List<Report> getLastReportsByUserId(String userId) {
+	public PaginationDTO<Report> getLastReportsByUserId(String userId, int page, int size, String orderField,
+			String orderDirection) {
 
-		var dtos = reportDataSource.getLastReportsByUserId(userId);
+		var dtos = reportDataSource.getLastReportsByUserId(userId, page, size, orderField, orderDirection);
+
+		TraceContext.addEvent("report.object.list", dtos);
+
+		return reportMapper.toPaginationModel(dtos);
+	}
+
+	/**
+	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
+	 * @return lista de {@link Report} encontrados (pode ser vazia)
+	 */
+	@WithSpan(name = "gateway.get.last.reports.by.userId")
+	public List<Report> getLastReportsByUserId(String userId, String orderField, String orderDirection) {
+
+		var dtos = reportDataSource.getLastReportsByUserId(userId, orderField, orderDirection);
 
 		TraceContext.addEvent("report.object.list", dtos);
 
@@ -106,19 +139,19 @@ public class ReportGateway {
 	}
 
 	/**
-	 * Recupera um {@link Report} pelo seu identificador único.
+	 * Recupera os status de reporte mais recentes dos videos enviados por um
+	 * usuário.
 	 *
-	 * @param reportId
-	 *            identificador do reporte
-	 * @return {@link Optional} com o {@link Report} encontrado, ou vazio se não
-	 *         existir
+	 * @param userId
+	 *            identificador do usuário
+	 * @return lista de {@link ProcessStatus} encontrados (pode ser vazia)
 	 */
-	@WithSpan(name = "gateway.get.report.by.id")
-	public Optional<Report> getById(String reportId) {
-		var dto = reportDataSource.getById(reportId);
+	@WithSpan(name = "gateway.get.last.reports.status.by.userId")
+	public List<ProcessStatus> getLastReportsStatusByUserId(String userId) {
+		var status = reportDataSource.getLastReportsStatusByUserId(userId);
 
-		TraceContext.addEvent("report.object", dto);
+		TraceContext.addEvent("report.status.object.list", status);
 
-		return dto.map(reportMapper::toModel);
+		return status;
 	}
 }

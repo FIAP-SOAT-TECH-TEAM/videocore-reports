@@ -6,14 +6,13 @@ import java.util.Optional;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import com.azure.cosmos.models.CosmosPatchItemRequestOptions;
 import com.azure.cosmos.models.CosmosPatchOperations;
 import com.azure.cosmos.models.PartitionKey;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.entity.ReportEntity;
+import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ProcessStatusProjection;
 import com.soat.fiap.videocore.reports.infrastructure.out.persistence.cosmosdb.nosql.projection.ReportTimeProjection;
 
 /**
@@ -148,8 +147,28 @@ public class CosmosDbReportFallbackRepository {
 			}
 
 			@Override
+			public Page<ReportEntity> findByReportTimeIn(List<String> reportTimes, Pageable pageable) {
+				return null;
+			}
+
+			@Override
+			public List<ReportEntity> findByReportTimeIn(List<String> reportTimes, Sort sort) {
+				return List.of();
+			}
+
+			@Override
 			public List<ReportEntity> findByReportTimeIn(List<String> reportTimes) {
 				return List.of();
+			}
+
+			@Override
+			public List<ProcessStatusProjection> findStatusByReportTimeIn(List<String> reportTimes) {
+				return List.of();
+			}
+
+			@Override
+			public long countLatestReportsByUser(String userId) {
+				return 0;
 			}
 		};
 	}

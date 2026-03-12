@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 
 import com.soat.fiap.videocore.reports.core.domain.model.Report;
 import com.soat.fiap.videocore.reports.core.domain.vo.*;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 
 /**
@@ -43,4 +44,14 @@ public interface ReportMapper {
 	@Mapping(target = "metadata", expression = "java(new Metadata(dto.userId(), dto.requestId(), dto.traceId()))")
 	@Mapping(target = "percentStatusProcess", expression = "java(new PercentStatusProcess(dto.percentStatusProcess()))")
 	Report toModel(ReportDto dto);
+
+	/**
+	 * Converte um {@link PaginationDTO} de {@link ReportDto} para
+	 * {@link PaginationDTO} de {@link Report}.
+	 *
+	 * @param paginationDto
+	 *            página contendo DTOs
+	 * @return página contendo modelos de domínio
+	 */
+	PaginationDTO<Report> toPaginationModel(PaginationDTO<ReportDto> paginationDto);
 }

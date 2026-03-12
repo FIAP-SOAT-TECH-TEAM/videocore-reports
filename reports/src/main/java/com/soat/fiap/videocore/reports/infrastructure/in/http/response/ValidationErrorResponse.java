@@ -1,4 +1,4 @@
-package com.soat.fiap.videocore.reports.infrastructure.in.http.exceptions;
+package com.soat.fiap.videocore.reports.infrastructure.in.http.response;
 
 import java.time.LocalDateTime;
 import java.util.Map;

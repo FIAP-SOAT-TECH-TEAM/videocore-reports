@@ -6,8 +6,8 @@ import java.time.Instant;
  * Projeção utilizada para representar o momento do reporte em consultas ao
  * Cosmos DB, especialmente em queries com agregações.
  *
- * @param id
- *            identificador único do registro
+ * @param reportTime
+ *            momento do reporte
  */
-public record ReportTimeProjection(Instant id) {
+public record ReportTimeProjection(Instant reportTime) {
 }

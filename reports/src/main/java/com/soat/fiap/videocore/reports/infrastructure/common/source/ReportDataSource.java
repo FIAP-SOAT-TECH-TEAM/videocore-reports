@@ -3,6 +3,8 @@ package com.soat.fiap.videocore.reports.infrastructure.common.source;
 import java.util.List;
 import java.util.Optional;
 
+import com.soat.fiap.videocore.reports.core.domain.vo.ProcessStatus;
+import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO;
 import com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto;
 
 /** Fonte de dados para operações de persistência de reportes. */
@@ -54,20 +56,43 @@ public interface ReportDataSource {
 
 	/**
 	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
+	 * Suporta paginação
 	 *
 	 * @param userId
 	 *            identificador do usuário
+	 * @param page
+	 *            número da página
+	 * @param size
+	 *            quantidade de elementos por página
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
 	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
-	List<ReportDto> getLastReportsByUserId(String userId);
+	PaginationDTO<ReportDto> getLastReportsByUserId(String userId, int page, int size, String orderField,
+			String orderDirection);
 
 	/**
-	 * Recupera um reporte pelo seu identificador único.
+	 * Recupera os reportes mais recentes dos videos enviados por um usuário.
 	 *
-	 * @param reportId
-	 *            identificador do reporte
-	 * @return {@link Optional} com o {@link ReportDto} encontrado, ou vazio se não
-	 *         existir
+	 * @param userId
+	 *            identificador do usuário
+	 * @param orderField
+	 *            campo de ordenação
+	 * @param orderDirection
+	 *            direção da ordenação
+	 * @return lista com os últimos reportes encontrados (pode ser vazia)
 	 */
-	Optional<ReportDto> getById(String reportId);
+	List<ReportDto> getLastReportsByUserId(String userId, String orderField, String orderDirection);
+
+	/**
+	 * Recupera os status de reporte mais recentes dos videos enviados por um
+	 * usuário.
+	 *
+	 * @param userId
+	 *            identificador do usuário
+	 * @return lista com os últimos status de reportes encontrados (pode ser vazia)
+	 */
+	List<ProcessStatus> getLastReportsStatusByUserId(String userId);
 }
