@@ -124,7 +124,7 @@ O **VideoCore Reports** é o microsserviço responsável por gerenciar os relat�
 | **Service** | Exposição interna no cluster |
 | **Ingress** | Roteamento via Azure Application Gateway (Layer 7) |
 | **ConfigMap** | Configurações não sensíveis |
-| **HPA** | Escalabilidade automática baseada em CPU/memória |
+| **HPA** | Escalabilidade automática baseada em CPU |
 | **SecretProviderClass** | Integração com Azure Key Vault para gerenciamento de segredos |
 
 - O **Application Gateway** recebe tráfego em um **Frontend IP privado**
