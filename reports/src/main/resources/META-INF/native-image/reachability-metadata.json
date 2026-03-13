@@ -194,6 +194,9 @@
       ]
     },
     {
+      "type": "com.azure.core.implementation.util.StringContent"
+    },
+    {
       "type": "com.azure.core.util.ClientOptions"
     },
     {
@@ -277,6 +280,47 @@
       "type": "com.azure.cosmos.implementation.AsyncDocumentClient"
     },
     {
+      "type": "com.azure.cosmos.implementation.ClientSideRequestStatistics$AddressResolutionStatistics",
+      "methods": [
+        {
+          "name": "getEndTimeUTC",
+          "parameterTypes": []
+        },
+        {
+          "name": "getExceptionMessage",
+          "parameterTypes": []
+        },
+        {
+          "name": "getFaultInjectionEvaluationResults",
+          "parameterTypes": []
+        },
+        {
+          "name": "getFaultInjectionRuleId",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStartTimeUTC",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTargetEndpoint",
+          "parameterTypes": []
+        },
+        {
+          "name": "isForceCollectionRoutingMapRefresh",
+          "parameterTypes": []
+        },
+        {
+          "name": "isForceRefresh",
+          "parameterTypes": []
+        },
+        {
+          "name": "isInflightRequest",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.ClientSideRequestStatistics$ClientSideRequestStatisticsSerializer",
       "methods": [
         {
@@ -290,6 +334,56 @@
       "methods": [
         {
           "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.ClientSideRequestStatistics$StoreResponseStatistics",
+      "fields": [
+        {
+          "name": "e2ePolicyCfg"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getExcludedRegions",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPerPartitionCircuitBreakerInfoHolder",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPerPartitionFailoverInfoHolder",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequestOperationType",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequestResourceType",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequestResponseTimeUTC",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequestSessionToken",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequestStartTimeUTC",
+          "parameterTypes": []
+        },
+        {
+          "name": "getSessionTokenEvaluationResults",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStoreResult",
           "parameterTypes": []
         }
       ]
@@ -396,6 +490,15 @@
       ]
     },
     {
+      "type": "com.azure.cosmos.implementation.DiagnosticsInstantSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.DiagnosticsProvider"
     },
     {
@@ -425,6 +528,18 @@
           "parameterTypes": []
         }
       ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.MetadataDiagnosticsContext$MetaDataDiagnosticSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.MetadataDiagnosticsContext$MetadataType"
     },
     {
       "type": "com.azure.cosmos.implementation.OperationType"
@@ -485,6 +600,33 @@
       "type": "com.azure.cosmos.implementation.apachecommons.lang.time.StopWatch"
     },
     {
+      "type": "com.azure.cosmos.implementation.directconnectivity.RntbdConnectionStateListenerMetricsDiagnostics$RntbdConnectionStateListenerDiagnosticsJsonSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.StoreResultDiagnostics$StoreResultDiagnosticsSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdChannelStatistics$RntbdChannelStatsJsonSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdClientChannelHealthChecker$Timestamps"
     },
     {
@@ -492,6 +634,15 @@
     },
     {
       "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdContextNegotiator"
+    },
+    {
+      "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdEndpointStatistics$RntbdEndpointStatsJsonSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "com.azure.cosmos.implementation.directconnectivity.rntbd.RntbdRequestArgs",
@@ -562,6 +713,15 @@
       "type": "com.azure.cosmos.implementation.interceptor.ITransportClientInterceptor"
     },
     {
+      "type": "com.azure.cosmos.implementation.perPartitionAutomaticFailover.PerPartitionFailoverInfoHolder$PerPartitionFailoverInfoHolderSerializer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.azure.cosmos.implementation.perPartitionCircuitBreaker.PartitionLevelCircuitBreakerConfig",
       "fields": [
         {
@@ -600,6 +760,15 @@
         },
         {
           "name": "isPartitionLevelCircuitBreakerEnabled",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.azure.cosmos.implementation.perPartitionCircuitBreaker.PerPartitionCircuitBreakerInfoHolder$PerPartitionCircuitBreakerInfoHolderSerializer",
+      "methods": [
+        {
+          "name": "<init>",
           "parameterTypes": []
         }
       ]
@@ -719,6 +888,17 @@
     },
     {
       "type": "com.azure.cosmos.models.ThroughputProperties"
+    },
+    {
+      "type": "com.azure.cosmos.models.UniqueKeyPolicy",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.fasterxml.jackson.databind.node.ObjectNode"
+          ]
+        }
+      ]
     },
     {
       "type": "com.azure.cosmos.util.CosmosPagedFlux"
@@ -1708,6 +1888,12 @@
           "parameterTypes": [
             "com.soat.fiap.videocore.reports.core.interfaceadapters.gateway.EventPublisherGateway"
           ]
+        },
+        {
+          "name": "publishProcessVideoErrorEvent",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.domain.model.Report"
+          ]
         }
       ]
     },
@@ -2009,7 +2195,37 @@
       "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.dto.PaginationDTO"
     },
     {
-      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ProcessVideoErrorEventDto"
+      "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ProcessVideoErrorEventDto",
+      "methods": [
+        {
+          "name": "frameCutMinutes",
+          "parameterTypes": []
+        },
+        {
+          "name": "percentStatusProcess",
+          "parameterTypes": []
+        },
+        {
+          "name": "reportTime",
+          "parameterTypes": []
+        },
+        {
+          "name": "requestId",
+          "parameterTypes": []
+        },
+        {
+          "name": "traceId",
+          "parameterTypes": []
+        },
+        {
+          "name": "userId",
+          "parameterTypes": []
+        },
+        {
+          "name": "videoName",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "com.soat.fiap.videocore.reports.core.interfaceadapters.dto.ReportDto"
@@ -2051,6 +2267,12 @@
           "parameterTypes": [
             "com.soat.fiap.videocore.reports.infrastructure.common.source.EventPublisherSource",
             "com.soat.fiap.videocore.reports.core.interfaceadapters.mapper.EventMapper"
+          ]
+        },
+        {
+          "name": "publishProcessVideoErrorEvent",
+          "parameterTypes": [
+            "com.soat.fiap.videocore.reports.core.domain.event.ProcessVideoErrorEvent"
           ]
         }
       ]
@@ -6838,6 +7060,12 @@
       "type": "java.util.Collections$SynchronizedCollection"
     },
     {
+      "type": "java.util.Collections$SynchronizedList"
+    },
+    {
+      "type": "java.util.Collections$SynchronizedRandomAccessList"
+    },
+    {
       "type": "java.util.Collections$SynchronizedSet"
     },
     {
@@ -6889,6 +7117,9 @@
       "type": "java.util.Queue"
     },
     {
+      "type": "java.util.RandomAccess"
+    },
+    {
       "type": "java.util.SequencedCollection"
     },
     {
@@ -6923,6 +7154,12 @@
     },
     {
       "type": "java.util.concurrent.CompletionException"
+    },
+    {
+      "type": "java.util.concurrent.ConcurrentHashMap$CollectionView"
+    },
+    {
+      "type": "java.util.concurrent.ConcurrentHashMap$KeySetView"
     },
     {
       "type": "java.util.concurrent.CountDownLatch"
